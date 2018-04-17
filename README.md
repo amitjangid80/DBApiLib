@@ -1,7 +1,5 @@
 # DBApiLib
 
-A library to help with database setup; working with queries like insert, create, delete, drop, select; for using rest api consumtion; shared preferences; image zoom in and zoom out, applying font to the entire layout, checking if internet connection is available or not, setting an image view in square shape, and replacing null in a string and replacing true or false with 1 or 0.
-
 ## Setup
 
 #### Step 1. Add the JitPack repository to your build file 
