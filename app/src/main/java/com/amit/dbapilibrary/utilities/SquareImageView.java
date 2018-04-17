@@ -1,4 +1,4 @@
-package com.amit.dbapilib.utilities;
+package com.amit.dbapilibrary.utilities;
 
 import android.content.Context;
 import android.support.v7.widget.AppCompatImageView;

@@ -1,4 +1,4 @@
-package com.amit.dbapilib.utilities;
+package com.amit.dbapilibrary.utilities;
 
 /*
 * Created By AMIT JANGID

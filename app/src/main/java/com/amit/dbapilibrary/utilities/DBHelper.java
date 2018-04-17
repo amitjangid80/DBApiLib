@@ -1,4 +1,4 @@
-package com.amit.dbapilib.utilities;
+package com.amit.dbapilibrary.utilities;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -7,8 +7,10 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
-/*
+/**
  * Created by AMIT JANGID
+ * this class has method for executing db queries
+ * like: creating table, inserting into table, deleting table, dropping table
 */
 
 public class DBHelper
@@ -20,7 +22,6 @@ public class DBHelper
 
     /**
      * Constructor of the class
-     *
      * you have to set the db name first before using this class.
      *
      * @param context - context

@@ -1,4 +1,4 @@
-package com.amit.dbapilib.utilities;
+package com.amit.dbapilibrary.utilities;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-/*
+/**
 * Created By AMIT JANGID
 * 2018 April 17 - Tuesday - 12:10 PM
 * Database class for creating database for the application111
