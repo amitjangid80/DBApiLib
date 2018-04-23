@@ -22,22 +22,22 @@ import com.amit.dbapilibrary.R;
 public class ToastMsg
 {
     @ColorInt
-    private static int DEFAULT_TEXT_COLOR = Color.parseColor("FFFFFF");
+    private static int DEFAULT_TEXT_COLOR = Color.parseColor("#FFFFFF");
 
     @ColorInt
-    private static int ERROR_COLOR = Color.parseColor("D50000");
+    private static int ERROR_COLOR = Color.parseColor("#D50000");
 
     @ColorInt
-    private static int INFO_COLOR = Color.parseColor("3F51B5");
+    private static int INFO_COLOR = Color.parseColor("#3F51B5");
 
     @ColorInt
-    private static int SUCCESS_COLOR = Color.parseColor("388E3C");
+    private static int SUCCESS_COLOR = Color.parseColor("#388E3C");
 
     @ColorInt
-    private static int WARNING_COLOR = Color.parseColor("FFA900");
+    private static int WARNING_COLOR = Color.parseColor("#FFA900");
 
     @ColorInt
-    private static int NORMAL_COLOR = Color.parseColor("353A3E");
+    private static int NORMAL_COLOR = Color.parseColor("#353A3E");
 
     private static final Typeface LOADED_TOAST_TYPEFACE = Typeface.create("sans-serif-condensed", Typeface.NORMAL);
     private static Typeface currentTypeFace = LOADED_TOAST_TYPEFACE;

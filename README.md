@@ -15,7 +15,7 @@ allprojects{
 #### Step 2. Add the dependency
 ```
 dependencies {
-     implementation 'com.github.amitjangid80:DBApiLib:v1.3'
+     implementation 'com.github.amitjangid80:DBApiLib:v1.5'
 }
 ```
 
