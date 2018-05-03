@@ -57,7 +57,7 @@ public class CircularImageView extends AppCompatImageView
         {
             TypedArray a = context.obtainStyledAttributes(attrs,  R.styleable.CircularImageView, 0,0);
             strokeColor = a.getColor(R.styleable.CircularImageView_strokeColor, Color.TRANSPARENT);
-            strokeWidth = a.getDimension(R.styleable.CircularImageView_strokeWidth, 0);
+            strokeWidth = a.getDimension(R.styleable.CircularImageView_imgStrokeWidth, 0);
             highlighEnable = a.getBoolean(R.styleable.CircularImageView_highlightEnable, true);
             highlightColor = a.getColor(R.styleable.CircularImageView_highlightColor, DEF_PRESS_HIGHTLIGHT_COLOR);
             a.recycle();
