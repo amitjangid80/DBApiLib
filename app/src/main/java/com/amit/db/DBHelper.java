@@ -1,8 +1,10 @@
-package com.amit.dbapilibrary.utilities;
+package com.amit.db;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
+
+import com.amit.utilities.SharedPreferenceData;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

@@ -1,4 +1,4 @@
-package com.amit.dbapilibrary.utilities;
+package com.amit.db;
 
 import android.content.Context;
 import android.database.Cursor;

@@ -1,4 +1,4 @@
-package com.amit.dbapilibrary.utilities;
+package com.amit.utilities;
 
 import android.util.Log;
 
