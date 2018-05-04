@@ -9,7 +9,6 @@ public class TextUtilities
 {
     /**
      * replace null method
-     *
      * this method will replace null with empty space
      *
      * @param string - string where you want to replace null
@@ -37,7 +36,6 @@ public class TextUtilities
 
     /**
      * replace true or false
-     *
      * this method will replace true or false with 1 or 0
      *
      * @param string - string to replace true or false with
