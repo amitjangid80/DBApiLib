@@ -1,1 +1,1 @@
-include ':app', ':dbapilib'
+include ':app', ':dbapilib', ':sample'

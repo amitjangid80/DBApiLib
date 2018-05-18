@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/toggle_popular"
+        android:title="@string/popular" />
+
+    <item
+        android:id="@+id/toggle_a_to_z"
+        android:title="@string/a_z" />
+
+    <item
+        android:id="@+id/toggle_price"
+        android:title="@string/price" />
+</menu>

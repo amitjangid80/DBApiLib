@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <declare-styleable name="CircularImageView">
         <attr name="strokeColor" format="color" />
@@ -27,6 +27,130 @@
         <attr name="selectedColor" format="color|reference" />
         <attr name="switchTabs" format="reference" />
         <attr name="typeface" format="string" />
+    </declare-styleable>
+
+    <!--<declare-styleable name="ProgressBtn">
+        <attr name="progressBarWidth" format="dimension" />
+        <attr name="progressBarColor" format="color" />
+        <attr name="progressBarPadding" format="dimension" />
+        <attr name="initialCornerRadius" format="dimension" />
+        <attr name="finalCornerRadius" format="dimension" />
+    </declare-styleable>-->
+
+    <declare-styleable name="ProgressBtn">
+        <attr name="progressBarWidth" format="dimension" />
+        <attr name="progressBarColor" format="color" />
+        <attr name="paddingProgress" format="dimension" />
+        <attr name="initialCornerRadius" format="dimension" />
+        <attr name="finalCornerRadius" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="IconButton">
+        <attr name="drawableTint" format="color" />
+        <attr name="android:drawablePadding" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="ToggleButton">
+        <attr name="toggleMenu" format="reference" />
+        <attr name="tgMultiSelection" format="boolean" />
+        <attr name="tgAllowDeselection" format="boolean" />
+        <attr name="toggleDividerColor" format="color" />
+        <attr name="toggleSelectedColor" format="color" />
+        <attr name="customLayoutRes" format="reference" />
+        <attr name="toggleModeWidth" format="enum">
+            <enum name="wrap" value="0" />
+            <enum name="even" value="1" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="ToggleButtonLayout">
+        <attr name="menu" format="reference" />
+        <attr name="multipleSelection" format="boolean" />
+        <attr name="allowDeselection" format="boolean" />
+        <attr name="dividerColor" format="color" />
+        <attr name="tgSelectedColor" format="color" />
+        <attr name="customLayout" format="reference" />
+        <attr name="toggleMode" format="enum">
+            <enum name="wrap" value="0" />
+            <enum name="even" value="1" />
+        </attr>
+    </declare-styleable>
+
+    <!--LoadingButton-->
+    <declare-styleable name="LoadingButton">
+        <attr name="btnEnable" format="boolean" />
+        <attr name="btnIdParent" format="integer" />
+        <attr name="btnFont" format="string" />
+        <attr name="btnText" format="string" />
+        <attr name="btnTextColor" format="color" />
+        <attr name="btnBackgroundColor" format="color" />
+        <attr name="btnCircleColor" format="color" />
+        <attr name="btnCircleColorSecond" format="color" />
+        <attr name="btnBackgroundDisableColor" format="color" />
+        <attr name="btnTextSize" format="dimension" />
+        <attr name="btnStateShow" format="integer">
+            <enum name="btnNormal" value="1" />
+            <enum name="btnAnimationStart" value="2" />
+            <enum name="btnProgress" value="3" />
+            <enum name="btnAnimationFinish" value="4" />
+        </attr>
+    </declare-styleable>
+
+    <!--LoadingButton-->
+    <declare-styleable name="buttonLoading">
+        <attr name="BL_enable" format="boolean" />
+        <attr name="BL_idParent" format="integer" />
+        <attr name="BL_font" format="string" />
+        <attr name="BL_text" format="string" />
+        <attr name="BL_textColor" format="color" />
+        <attr name="BL_backgroundColor" format="color" />
+        <attr name="BL_circleColor" format="color" />
+        <attr name="BL_circleColorSecond" format="color" />
+        <attr name="BL_backgroundDisableColor" format="color" />
+        <attr name="BL_textSize" format="dimension" />
+        <attr name="BL_stateShow" format="integer">
+            <enum name="normal" value="1" />
+            <enum name="animationStart" value="2" />
+            <enum name="progress" value="3" />
+            <enum name="animationFinish" value="4" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="CircularProgressButton">
+        <attr name="pb_selectorIdle" format="reference" />
+        <attr name="pb_selectorComplete" format="reference" />
+        <attr name="pb_selectorError" format="reference" />
+        <attr name="pb_textComplete" format="string" />
+        <attr name="pb_textIdle" format="string" />
+        <attr name="pb_textError" format="string" />
+        <attr name="pb_textProgress" format="string" />
+        <attr name="pb_colorProgress" format="color" />
+        <attr name="pb_colorIndicator" format="color" />
+        <attr name="pb_colorIndicatorBackground" format="color" />
+        <attr name="pb_iconError" format="reference" />
+        <attr name="pb_iconComplete" format="reference" />
+        <attr name="pb_cornerRadius" format="dimension" />
+        <attr name="pb_paddingProgress" format="dimension" />
+        <attr name="pb_isIndeterminate" format="boolean" />
+        <attr name="pb_textColorAfterClick" format="color" />
+        <attr name="pb_backgroundColorAfterClick" format="color" />
+        <attr name="pb_selectorCancel" format="reference" />
+        <attr name="pb_iconCancel" format="reference" />
+        <attr name="pb_textCancel" format="string" />
+        <attr name="pb_colorProgressCancelIcon" format="color" />
+        <attr name="pb_colorCancelText" format="color" />
+        <attr name="pb_colorCompleteText" format="color" />
+        <attr name="pb_colorErrorText" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="BaseButton">
+        <attr name="iconSize" format="dimension" />
+        <attr name="iconPadding" format="dimension" />
+        <attr name="iconCenterAligned" format="boolean" />
+        <attr name="roundedCorner" format="boolean" />
+        <attr name="transparentBackground" format="boolean" />
+        <attr name="roundedCornerRadius" format="dimension" />
+        <attr name="android:textColor" tools:ignore="ResourceName" />
     </declare-styleable>
 
 </resources>

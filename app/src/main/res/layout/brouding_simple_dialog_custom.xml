@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/layout_container"
+    android:background="#08000000"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.08" />
+
+        <LinearLayout
+            android:id="@+id/layout_dialog"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.84"
+            android:paddingTop="10dp"
+            android:background="@drawable/brouding_simple_dialog_bg_round_white"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/layout_title_content_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:paddingTop="22dp"
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txt_title"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:lineSpacingExtra="1dp"
+                    android:text="Header :)"
+                    android:textColor="#333333"
+                    android:textSize="19dp" />
+
+            </LinearLayout>
+
+            <ScrollView
+                android:id="@+id/layout_custom"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"/>
+
+            <include layout="@layout/brouding_simple_dialog_include_buttons"
+                android:id="@+id/layout_button_views"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/layout_button_views_height"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.08" />
+
+    </LinearLayout>
+
+</LinearLayout>

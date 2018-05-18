@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">sample</string>
+    <string name="login">Login</string>
+    <string name="bounce">Bounce</string>
+    <string name="library">library</string>
+    <string name="great">Great</string>
+    <string name="it_s_really">It\'s really!</string>
+    <string name="right">right</string>
+    <string name="left">left</string>
+    <string name="both">both</string>
+    <string name="submit">Submit</string>
+    <string name="sign_in_with_facebook">Sign in with Facebook</string>
+    <string name="sign_in_with_google">Sign in with Google</string>
+    <string name="sign_in_with_linked_in">Sign in with LinkedIn</string>
+    <string name="sign_in_with_twitter">Sign in with Twitter</string>
+</resources>

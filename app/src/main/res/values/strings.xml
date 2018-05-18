@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">DBApiLibrary</string>
+    <string name="popular">Popular</string>
+    <string name="a_z">A-Z</string>
+    <string name="price">Price</string>
+    <string name="try_to_scroll">TRY TO SCROLL!</string>
+    <string name="hello">HELLO :)</string>
+    <string name="how_can_i_use_blockbutton">How can I use BlockButton ?</string>
+    <string name="long_text">BlockButton is a view that extends LinearLayout. I\'m thinking of extending RelativeLayout as well and release it.</string>
+    <string name="loading">Loading...</string>
+    <string name="cancel">Cancel</string>
+    <string name="check">Check</string>
+    <string name="don_t_show_again">Don\'t show again</string>
+    <string name="hello_world">Hello World !</string>
+    <string name="header">Header :)</string>
 </resources>
