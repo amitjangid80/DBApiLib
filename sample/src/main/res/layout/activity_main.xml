@@ -11,227 +11,64 @@
         android:id="@+id/rootLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
         android:background="@color/gray"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
         android:padding="10dp">
 
-        <com.amit.ui.ProgressBtn
-            android:id="@+id/progressBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@drawable/btn_bg"
-            android:text="@string/login"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            app:initialCornerRadius="6dp"
-            app:paddingProgress="5dp"
-            app:progressBarColor="@color/btnColor"
-            app:progressBarWidth="4dp" />
+        <com.amit.shinebtn.ShineButton
+            android:id="@+id/shine_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="10dp"
+            android:src="@android:color/darker_gray"
+            app:allow_random_color="false"
+            app:big_shine_color="#FF6666"
+            app:btn_color="@android:color/darker_gray"
+            app:btn_fill_color="#FF6666"
+            app:click_animation_duration="200"
+            app:enable_flashing="false"
+            app:shine_animation_duration="1500"
+            app:shine_count="8"
+            app:shine_turn_angle="10"
+            app:siShape="@raw/heart"
+            app:small_shine_color="#CC9999"
+            app:small_shine_offset_angle="20" />
 
-        <com.amit.imgview.AvatarImageView
+        <!--<com.uniquestudio.library.CircleCheckBox
+            android:id="@+id/circle_check_box"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            app:avatar_backgroundColor="@color/colorPrimary"
-            app:avatar_state="INITIAL"
-            app:avatar_text="a"
-            app:avatar_textColor="@color/white"
-            app:avatar_textSize="48sp"
-            app:highlightEnable="false"
-            app:imgStrokeWidth="5dp"
-            app:strokeColor="@color/colorAccent" />
+            app:border_width="7dp"
+            app:tick_width="2dp" />-->
 
-        <Button
-            android:id="@+id/btnBounce"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/btn_bg"
-            android:text="@string/bounce"
-            android:textColor="@color/white" />
-
-        <com.amit.ui.CircularProgressButton
-            android:id="@+id/circularButton3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:onClick="progressButtonClick"
-            android:textColor="@color/pb_text_state_selector"
-            android:textSize="22sp"
-            app:pb_colorCancelText="@color/orange"
-            app:pb_colorCompleteText="@color/orange"
-            app:pb_colorErrorText="@color/blue"
-            app:pb_colorIndicator="@color/colorButtonCompleteState"
-            app:pb_cornerRadius="48dp"
-            app:pb_iconCancel="@drawable/ic_action_cross"
-            app:pb_iconComplete="@drawable/ic_action_accept"
-            app:pb_iconError="@drawable/ic_action_cancel"
-            app:pb_selectorCancel="@color/pb_cancel_state_selector"
-            app:pb_selectorComplete="@color/pb_complete_state_selector"
-            app:pb_selectorError="@color/pb_error_state_selector"
-            app:pb_selectorIdle="@color/pb_idle_state_selector"
-            app:pb_textColorAfterClick="@color/white"
-            app:pb_textIdle="@string/submit" />
-
-        <com.amit.ui.ToggleButtonLayout
-            android:id="@+id/toggle"
+        <!--<com.github.angads25.toggle.LabeledSwitch
+            android:id="@+id/switchBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="16dp"
             android:layout_marginTop="10dp"
-            android:visibility="gone"
-            app:menu="@menu/toggles" />
+            android:textSize="14sp"
+            app:colorBorder="@color/colorPrimary"
+            app:colorDisabled="@color/gray"
+            app:colorOff="@color/gray"
+            app:colorOn="@color/colorPrimary"
+            app:on="false"
+            app:textOff="Stop"
+            app:textOn="Start" />-->
 
-        <com.amit.ui.ToggleButtonLayout
-            android:id="@+id/toggle_multiple"
+        <!--<me.rishabhkhanna.customtogglebutton.CustomToggleButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="16dp"
-            android:layout_marginTop="16dp"
-            android:visibility="gone"
-            app:dividerColor="@android:color/darker_gray"
-            app:menu="@menu/toggle_multi"
-            app:multipleSelection="true" />
+            android:layout_gravity="center"
+            android:textOff="@string/toggle_button"
+            android:textOn="@string/toggle_button"
+            app:radius="2dp" />-->
 
-        <com.amit.ui.ToggleButtonLayout
-            android:id="@+id/toggle_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="16dp"
-            android:visibility="gone"
-            app:allowDeselection="false"
-            app:customLayout="@layout/view_toggle_button"
-            app:dividerColor="@android:color/darker_gray"
-            app:menu="@menu/toggle_text"
-            app:tgSelectedColor="?attr/colorAccent"
-            app:toggleMode="even" />
+        <!--<com.fenjuly.library.ArrowDownloadButton
+            android:id="@+id/arrow_download_button"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
+            android:layout_marginTop="10dp" />-->
 
-        <com.amit.ui.FacebookButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="@string/sign_in_with_facebook"
-            android:textAlignment="center"
-            app:iconSize="30dp" />
-
-        <com.amit.ui.GoogleButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="@string/sign_in_with_google"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            app:iconSize="30dp" />
-
-        <com.amit.ui.LinkedInButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="@string/sign_in_with_linked_in"
-            android:textAlignment="center"
-            app:iconSize="30dp" />
-
-        <com.amit.ui.TwitterButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="@string/sign_in_with_twitter"
-            android:textAlignment="center"
-            app:iconSize="30dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <com.amit.ui.GoogleButton
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                app:iconSize="30dp"
-                app:roundedCorner="true"
-                app:roundedCornerRadius="75dp" />
-
-            <com.amit.ui.FacebookButton
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                app:iconSize="30dp"
-                app:roundedCorner="true"
-                app:roundedCornerRadius="75dp" />
-
-            <com.amit.ui.TwitterButton
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                app:iconSize="30dp"
-                app:roundedCorner="true"
-                app:roundedCornerRadius="75dp" />
-
-            <com.amit.ui.LinkedInButton
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                app:iconSize="30dp"
-                app:roundedCorner="true"
-                app:roundedCornerRadius="75dp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:layout_marginTop="10dp"
-            android:orientation="vertical">
-
-            <com.amit.ui.GoogleButton
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/sign_in_with_google"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                app:iconCenterAligned="false"
-                app:iconSize="30dp"
-                app:roundedCorner="true" />
-
-            <com.amit.ui.GoogleButton
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:layout_marginTop="10dp"
-                app:iconSize="30dp" />
-
-            <com.amit.ui.GoogleButton
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:layout_marginTop="10dp"
-                app:iconSize="30dp"
-                app:transparentBackground="true" />
-
-            <com.amit.ui.GoogleButton
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/google_plus"
-                app:iconSize="30dp"
-                app:roundedCorner="true"
-                app:roundedCornerRadius="75dp"
-                app:transparentBackground="true" />
-
-        </LinearLayout>
     </LinearLayout>
 </ScrollView>

@@ -13,4 +13,5 @@
     <string name="sign_in_with_google">Sign in with Google</string>
     <string name="sign_in_with_linked_in">Sign in with LinkedIn</string>
     <string name="sign_in_with_twitter">Sign in with Twitter</string>
+    <string name="toggle_button">toggle button</string>
 </resources>
