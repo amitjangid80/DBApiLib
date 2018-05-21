@@ -35,6 +35,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Locale;
 
 /**
  * https://github.com/jaydeepw/android-utils/tree/master/Utils
@@ -381,6 +382,52 @@ public class Utils
         else
         {
             return context.getResources().getColor(id, null);
+        }
+    }
+
+    /**
+     * get Time with AM/PM Method
+     *
+     * This method will show the time in two digits and also am pm
+     * if the time selected is afternoon 02:00 then it will show 02:00 PM
+     * else of the time selected is night 02:00 then it will show 02:00 AM
+     *
+     * @param hours - hours to convert
+     * @param minutes - minutes to convert
+     *
+     * @return String with time appended with AM/PM
+    **/
+    public static String getTimeWithAMPM(int hours, int minutes)
+    {
+        try
+        {
+            String timeStamp = "AM", time;
+
+            if (hours > 12)
+            {
+                timeStamp = "PM";
+                hours -= 12;
+            }
+            else if (hours == 0)
+            {
+                timeStamp = "AM";
+                hours += 12;
+            }
+            else if (hours == 12)
+            {
+                timeStamp = "PM";
+            }
+
+            time = String.format(Locale.getDefault(), "%02d", hours) + ":" +
+                    String.format(Locale.getDefault(), "%02d", minutes) + " " + timeStamp;
+
+            return time;
+        }
+        catch (Exception e)
+        {
+            Log.e("Exception", "in show time with am pm method in generate qr code activity:\n");
+            e.printStackTrace();
+            return "";
         }
     }
 

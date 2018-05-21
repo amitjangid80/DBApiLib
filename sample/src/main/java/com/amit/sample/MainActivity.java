@@ -1,13 +1,24 @@
 package com.amit.sample;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Toast;
+
+import com.amit.dialogs.AlertDialogBox;
+import com.amit.dialogs.AlertDialogListener;
+import com.amit.dialogs.Anim;
+import com.amit.dialogs.Icon;
+import com.amit.shinebtn.ShineButton;
+/*import com.shashank.sony.fancydialoglib.Animation;
+import com.shashank.sony.fancydialoglib.FancyAlertDialog;
+import com.shashank.sony.fancydialoglib.FancyAlertDialogListener;
+import com.shashank.sony.fancydialoglib.Icon;*/
 
 /*import com.uniquestudio.library.CircleCheckBox;*/
-
 /*import com.github.angads25.toggle.LabeledSwitch;
 import com.github.angads25.toggle.interfaces.OnToggledListener;*/
-
 /*import com.fenjuly.library.ArrowDownloadButton;*/
 /*import com.sackcentury.shinebuttonlib.ShineButton;*/
 
@@ -24,6 +35,156 @@ public class MainActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ShineButton shineButton = findViewById(R.id.shine_button);
+        shineButton.init(MainActivity.this);
+
+        shineButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                new AlertDialogBox.Builder(MainActivity.this)
+                        .setTitle("Custom Dialog")
+                        .setBackgroundColor(Color.parseColor("#909090"))  //Don't pass R.color.colorvalue
+                        .setMessage("This is a custom dialog with buttons callback.")
+                        .setNegativeBtnText("Cancel")
+                        .setPositiveBtnBackground(Color.parseColor("#FF4081"))  //Don't pass R.color.colorvalue
+                        .setPositiveBtnText("Ok")
+                        .setNegativeBtnBackground(Color.parseColor("#FFA9A7A8"))  //Don't pass R.color.colorvalue
+                        .setAnim(Anim.POP)
+                        .isCancellable(true)
+                        .setIcon(R.drawable.ic_error_outline_white_48dp, Icon.Visible)
+                        .onPositiveClicked(new AlertDialogListener()
+                        {
+                            @Override
+                            public void onClick()
+                            {
+                                Toast.makeText(getApplicationContext(),"Ok",Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .onNegativeClicked(new AlertDialogListener()
+                        {
+                            @Override
+                            public void onClick()
+                            {
+                                Toast.makeText(getApplicationContext(),"Cancel",Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .build();
+
+                /*new FancyAlertDialog.Builder(MainActivity.this)
+                        .setTitle("Rate us if you like the app")
+                        .setBackgroundColor(Color.parseColor("#303F9F"))  //Don't pass R.color.colorvalue
+                        .setMessage("Do you really want to Exit ?")
+                        .setNegativeBtnText("Cancel")
+                        .setPositiveBtnBackground(Color.parseColor("#FF4081"))  //Don't pass R.color.colorvalue
+                        .setPositiveBtnText("Rate")
+                        .setNegativeBtnBackground(Color.parseColor("#FFA9A7A8"))  //Don't pass R.color.colorvalue
+                        .setAnimation(Animation.SLIDE)
+                        .isCancellable(true)
+                        .setIcon(R.drawable.ic_person_black_24dp, Icon.Visible)
+                        .onPositiveClicked(new FancyAlertDialogListener()
+                        {
+                            @Override
+                            public void OnClick()
+                            {
+                                Toast.makeText(getApplicationContext(),"Rate",Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .onNegativeClicked(new FancyAlertDialogListener()
+                        {
+                            @Override
+                            public void OnClick()
+                            {
+                                Toast.makeText(getApplicationContext(),"Cancel",Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .build();*/
+
+                /*new SimpleDialog.Builder(MainActivity.this)
+                        .setTitle("Hello!!")
+                        .setContent("This is a simple dialog with callback.")
+                        .setBtnConfirmText("OKAY")
+                        .setBtnConfirmTextColor(R.color.colorPrimary)
+                        .onConfirm(new SimpleDialog.BtnCallback()
+                        {
+                            @Override
+                            public void onClick(@NonNull SimpleDialog dialog, @NonNull SimpleDialog.BtnAction which)
+                            {
+                                Log.e(TAG, "onClick: OKAY button was clicked.");
+                            }
+                        })
+                        .setBtnCancelText("Cancel")
+                        .setBtnCancelTextColor(R.color.gray)
+                        .onCancel(new SimpleDialog.BtnCallback()
+                        {
+                            @Override
+                            public void onClick(@NonNull SimpleDialog dialog, @NonNull SimpleDialog.BtnAction which)
+                            {
+                                dialog.dismiss();
+                                Log.e(TAG, "onClick: Cancel button was clicked.");
+                            }
+                        })
+                        .show();*/
+
+
+                /*String key = "zjcSX3TumLzbJfpW\\\\/Zzung==";
+                String padding = "AES/CBC/PKCS5Padding";
+                String value = "AMIT JANGID";
+
+                String encryptedString = encrypt(key, padding, value);
+                Log.e(TAG, "onClick: encrypted value is: " + encryptedString);
+
+                String time = Utils.getTimeWithAMPM(5, 22);
+                Log.e(TAG, "onClick: time is: " + time);*/
+
+                /*ToastMsg.info(MainActivity.this,
+                        "Info toast message.",
+                        Toast.LENGTH_LONG,
+                        true).show();*/
+
+                /*ToastMsg.warning(MainActivity.this,
+                        "Warning toast message.",
+                        Toast.LENGTH_LONG,
+                        true).show();*/
+
+                /*ToastMsg.error(MainActivity.this,
+                        "Error toast message.",
+                        Toast.LENGTH_LONG,
+                        true).show();*/
+
+                /*ToastMsg.success(MainActivity.this,
+                        "Success toast message.",
+                        Toast.LENGTH_LONG,
+                        true).show();*/
+
+                /*ToastMsg.normal(MainActivity.this,
+                        "Normal toast message.",
+                        Toast.LENGTH_LONG,
+                        getResources().getDrawable(R.drawable.ic_action_accept),
+                        true).show();*/
+
+                /*ToastMsg.custom(MainActivity.this,
+                        "This is a custom toast message.",
+                        R.drawable.ic_check_white_48dp,
+                        getResources().getColor(R.color.colorPrimary),
+                        Toast.LENGTH_LONG,
+                        true,
+                        true,
+                        ToastMsg.ToastPosition.CENTER).show();*/
+
+                /**
+                 *
+                 * Cookie Bar 2
+                 *
+                 * https://github.com/AviranAbady/CookieBar2?utm_source=android-arsenal.com&utm_medium=referral&utm_campaign=6122
+                 *
+                 * implementation 'org.aviran.cookiebar2:cookiebar2:1.0.9'
+                 *
+                 * */
+            }
+        });
 
         /**
          * Circle check box

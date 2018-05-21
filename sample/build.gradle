@@ -28,6 +28,9 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support:cardview-v7:27.1.1'
 
+    /*implementation 'com.github.Shashank02051997:FancyAlertDialog-Android:0.1'*/
+    /*implementation 'com.customtoast:CustomToastLib:1.0.0'*/
+    /*implementation 'com.github.Binary-Finery:FabToast:1.0'*/
     /*implementation 'com.uniquestudio:checkbox:1.0.10'*/
     /*implementation 'com.github.angads25:toggle:1.0.0'*/
     /*implementation 'me.rishabhkhanna:CustomToggle:1.0.0'*/

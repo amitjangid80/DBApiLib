@@ -3,6 +3,7 @@ package com.amit.ui;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.CheckResult;
@@ -10,6 +11,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -46,6 +48,11 @@ public class ToastMsg
     private static int textSize = 16; // in SP
     private static boolean tintIcon = true;
 
+    /*public enum toastGravity
+    {
+        TOP, BOTTOM, CENTER
+    }*/
+
     public ToastMsg()
     {
         // avoiding instantiation
@@ -53,153 +60,197 @@ public class ToastMsg
 
     @CheckResult
     public static Toast normal(@NonNull Context context,
-                               @NonNull CharSequence message)
+                               @NonNull CharSequence message,
+                               int toastGravity)
     {
-        return normal(context, message, Toast.LENGTH_SHORT, null, false);
+        return normal(context, message, Toast.LENGTH_SHORT, null, false, toastGravity);
     }
 
     @CheckResult
     public static Toast normal(@NonNull Context context,
                                @NonNull CharSequence message,
-                               Drawable icon)
+                               Drawable icon,
+                               int toastGravity)
     {
-        return normal(context, message, Toast.LENGTH_SHORT, icon, true);
+        return normal(context, message, Toast.LENGTH_SHORT, icon, true, toastGravity);
     }
 
     @CheckResult
     public static Toast normal(@NonNull Context context,
                                @NonNull CharSequence message,
-                               int duration)
+                               int duration,
+                               int toastGravity)
     {
-        return normal(context, message, duration, null, false);
+        return normal(context, message, duration, null, false, toastGravity);
     }
 
     @CheckResult
     public static Toast normal(@NonNull Context context,
                                @NonNull CharSequence message,
-                               int duration, Drawable icon)
+                               int duration,
+                               Drawable icon,
+                               int toastGravity)
     {
-        return normal(context, message, duration, icon, true);
+        return normal(context, message, duration, icon, true, toastGravity);
     }
 
     @CheckResult
     public static Toast normal(@NonNull Context context,
                                @NonNull CharSequence message,
                                int duration, Drawable icon,
-                               boolean withIcon)
+                               boolean withIcon,
+                               int toastGravity)
     {
         return custom(context, message, icon, NORMAL_COLOR,
-                duration, withIcon, true);
-    }
-
-    @CheckResult
-    public static Toast warning(@NonNull Context context,
-                                @NonNull CharSequence message)
-    {
-        return warning(context, message, Toast.LENGTH_SHORT, true);
+                duration, withIcon, true, toastGravity);
     }
 
     @CheckResult
     public static Toast warning(@NonNull Context context,
                                 @NonNull CharSequence message,
-                                int duration)
+                                int toastGravity)
     {
-        return warning(context, message, duration, true);
+        return warning(context, message, Toast.LENGTH_SHORT, true, toastGravity);
     }
 
     @CheckResult
     public static Toast warning(@NonNull Context context,
                                 @NonNull CharSequence message,
-                                int duration, boolean withIcon)
+                                int duration,
+                                int toastGravity)
+    {
+        return warning(context, message, duration, true, toastGravity);
+    }
+
+    @CheckResult
+    public static Toast warning(@NonNull Context context,
+                                @NonNull CharSequence message,
+                                int duration,
+                                boolean withIcon,
+                                int toastGravity)
     {
         return custom(context, message,
                 ToastMsgUtils.getDrawable(context, R.drawable.ic_error_outline_white_48dp),
-                WARNING_COLOR, duration, withIcon, true);
-    }
-
-    @CheckResult
-    public static Toast info(@NonNull Context context,
-                             @NonNull CharSequence message)
-    {
-        return info(context, message, Toast.LENGTH_SHORT, true);
-    }
-
-    @CheckResult
-    public static Toast info(@NonNull Context context,
-                             @NonNull CharSequence message,
-                             int duration)
-    {
-        return info(context, message, duration, true);
+                WARNING_COLOR,
+                duration,
+                withIcon,
+                true,
+                toastGravity);
     }
 
     @CheckResult
     public static Toast info(@NonNull Context context,
                              @NonNull CharSequence message,
-                             int duration, boolean withIcon)
+                             int toastGravity)
+    {
+        return info(context, message, Toast.LENGTH_SHORT, true, toastGravity);
+    }
+
+    @CheckResult
+    public static Toast info(@NonNull Context context,
+                             @NonNull CharSequence message,
+                             int duration,
+                             int toastGravity)
+    {
+        return info(context, message, duration, true, toastGravity);
+    }
+
+    @CheckResult
+    public static Toast info(@NonNull Context context,
+                             @NonNull CharSequence message,
+                             int duration,
+                             boolean withIcon,
+                             int toastGravity)
     {
         return custom(context, message,
                 ToastMsgUtils.getDrawable(context, R.drawable.ic_info_outline_white_48dp),
-                INFO_COLOR, duration, withIcon, true);
-    }
-
-    @CheckResult
-    public static Toast success(@NonNull Context context,
-                                @NonNull CharSequence message)
-    {
-        return success(context, message, Toast.LENGTH_SHORT, true);
-    }
-
-    @CheckResult
-    public static Toast success(@NonNull Context context,
-                                @NonNull CharSequence message,
-                                int duration)
-    {
-        return success(context, message, duration, true);
+                INFO_COLOR,
+                duration,
+                withIcon,
+                true,
+                toastGravity);
     }
 
     @CheckResult
     public static Toast success(@NonNull Context context,
                                 @NonNull CharSequence message,
-                                int duration, boolean withIcon)
+                                int toastGravity)
+    {
+        return success(context, message, Toast.LENGTH_SHORT, true, toastGravity);
+    }
+
+    @CheckResult
+    public static Toast success(@NonNull Context context,
+                                @NonNull CharSequence message,
+                                int duration,
+                                int toastGravity)
+    {
+        return success(context, message, duration, true, toastGravity);
+    }
+
+    @CheckResult
+    public static Toast success(@NonNull Context context,
+                                @NonNull CharSequence message,
+                                int duration,
+                                boolean withIcon,
+                                int toastGravity)
     {
         return custom(context, message,
                 ToastMsgUtils.getDrawable(context, R.drawable.ic_check_white_48dp),
-                SUCCESS_COLOR, duration, withIcon, true);
-    }
-
-    @CheckResult
-    public static Toast error(@NonNull Context context,
-                              @NonNull CharSequence message)
-    {
-        return error(context, message, Toast.LENGTH_SHORT, true);
-    }
-
-    @CheckResult
-    public static Toast error(@NonNull Context context,
-                              @NonNull CharSequence message,
-                              int duration)
-    {
-        return error(context, message, duration, true);
+                SUCCESS_COLOR,
+                duration,
+                withIcon,
+                true,
+                toastGravity);
     }
 
     @CheckResult
     public static Toast error(@NonNull Context context,
                               @NonNull CharSequence message,
-                              int duration, boolean withIcon)
+                              int toastGravity)
+    {
+        return error(context, message, Toast.LENGTH_SHORT, true, toastGravity);
+    }
+
+    @CheckResult
+    public static Toast error(@NonNull Context context,
+                              @NonNull CharSequence message,
+                              int duration,
+                              int toastGravity)
+    {
+        return error(context, message, duration, true, toastGravity);
+    }
+
+    @CheckResult
+    public static Toast error(@NonNull Context context,
+                              @NonNull CharSequence message,
+                              int duration,
+                              boolean withIcon,
+                              int toastGravity)
     {
         return custom(context, message,
                 ToastMsgUtils.getDrawable(context, R.drawable.ic_clear_white_48dp),
-                ERROR_COLOR, duration, withIcon, true);
+                ERROR_COLOR,
+                duration,
+                withIcon,
+                true,
+                toastGravity);
     }
 
     @CheckResult
     public static Toast custom(@NonNull Context context,
                                @NonNull CharSequence message,
-                               Drawable icon, int duration,
-                               boolean withIcon)
+                               Drawable icon,
+                               int duration,
+                               boolean withIcon,
+                               int toastGravity)
     {
         return custom(context, message, icon,
-                -1, duration, withIcon, false);
+                -1,
+                duration,
+                withIcon,
+                false,
+                toastGravity);
     }
 
     @CheckResult
@@ -208,11 +259,16 @@ public class ToastMsg
                                @DrawableRes int iconRes,
                                @ColorInt int tintColor,
                                int duration, boolean withIcon,
-                               boolean shouldTint)
+                               boolean shouldTint,
+                               int toastGravity)
     {
         return custom(context, message,
                 ToastMsgUtils.getDrawable(context, iconRes),
-                tintColor, duration, withIcon, shouldTint);
+                tintColor,
+                duration,
+                withIcon,
+                shouldTint,
+                toastGravity);
     }
 
     @SuppressLint("ShowToast")
@@ -223,7 +279,8 @@ public class ToastMsg
                                @ColorInt int tintColor,
                                int duration,
                                boolean withIcon,
-                               boolean shouldTint)
+                               boolean shouldTint,
+                               int toastGravity)
     {
         final Toast currentToast = new Toast(context);
 
@@ -238,11 +295,14 @@ public class ToastMsg
 
         if (shouldTint)
         {
-            drawableFrame = ToastMsgUtils.tint9PatchDrawableFrame(context, tintColor);
+            // drawableFrame = ToastMsgUtils.tint9PatchDrawableFrame(context, tintColor);
+            drawableFrame = ToastMsgUtils.getDrawable(context, R.drawable.toast_background);
+            drawableFrame.setColorFilter(tintColor, PorterDuff.Mode.ADD);
         }
         else
         {
-            drawableFrame = ToastMsgUtils.getDrawable(context, R.drawable.toast_frame);
+            // drawableFrame = ToastMsgUtils.getDrawable(context, R.drawable.toast_frame);
+            drawableFrame = ToastMsgUtils.getDrawable(context, R.drawable.toast_background);
         }
 
         ToastMsgUtils.setBackground(toastLayout, drawableFrame);
@@ -265,6 +325,26 @@ public class ToastMsg
         {
             toastIcon.setVisibility(View.GONE);
         }
+
+        currentToast.setGravity(toastGravity, 0, 0);
+        
+        /*switch (toastGravity)
+        {
+            case TOP:
+                currentToast.setGravity(Gravity.TOP, 0, 0);
+                break;
+
+            case BOTTOM:
+                currentToast.setGravity(Gravity.BOTTOM, 0, 0);
+                break;
+
+            case CENTER:
+                currentToast.setGravity(Gravity.CENTER, 0, 0);
+                break;
+
+            default:
+                break;
+        }*/
 
         tvToastMessage.setText(message);
         tvToastMessage.setTextColor(DEFAULT_TEXT_COLOR);
