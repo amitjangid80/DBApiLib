@@ -3,19 +3,23 @@ package com.amit.sample;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
+import com.amit.cryptography.AES;
+import com.amit.cryptography.AESCrypt;
 import com.amit.dialog.AlertDialogBox;
 import com.amit.dialog.PromptDialogBox;
 import com.amit.shinebtn.ShineButton;
 import com.amit.ui.ProgressBtn;
 
-import cn.refactor.lib.colordialog.PromptDialog;
 
 
-
+/*import cn.refactor.lib.colordialog.PromptDialog;*/
 /*import com.brouding.simpledialog.SimpleDialog;*/
 /*import com.shashank.sony.fancydialoglib.Animation;
 import com.shashank.sony.fancydialoglib.FancyAlertDialog;
@@ -28,18 +32,30 @@ import com.github.angads25.toggle.interfaces.OnToggledListener;*/
 /*import com.fenjuly.library.ArrowDownloadButton;*/
 /*import com.sackcentury.shinebuttonlib.ShineButton;*/
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+{
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private int count = 0;
     private int progress = 0;
     private ProgressBtn progressBtn;
+
+    private TextInputEditText textPassword;
+    private Button btnEncryptDecryptPassword;
+    private boolean isPasswordEncrypted = false;
+
+
     /*private ArrowDownloadButton downloadButton;*/
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        AESCrypt.DEBUG_LOG_ENABLED = true;
+
+        textPassword = findViewById(R.id.textPassword);
+        btnEncryptDecryptPassword = findViewById(R.id.btnEncryptDecryptPassword);
 
         final ShineButton shineButton = findViewById(R.id.shine_button);
         shineButton.init(MainActivity.this);
@@ -49,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                PromptDialog promptDialog = new PromptDialog(MainActivity.this)
+                /*PromptDialog promptDialog = new PromptDialog(MainActivity.this)
                         .setDialogType(PromptDialog.DIALOG_TYPE_SUCCESS)
                         .setAnimationEnable(true)
                         .setTitleText(getString(R.string.success))
@@ -64,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                         });
 
                 promptDialog.setCancelable(false);
-                promptDialog.show();
+                promptDialog.show();*/
 
                 /*ColorDialog dialog = new ColorDialog(MainActivity.this);
                 dialog.setTitle("Color Dialog");
@@ -456,5 +472,55 @@ public class MainActivity extends AppCompatActivity {
                     }
                 })
                 .show();
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+
+        if (isPasswordEncrypted)
+        {
+            btnEncryptDecryptPassword.setText(getResources().getString(R.string.decrypt_password));
+        }
+        else
+        {
+            btnEncryptDecryptPassword.setText(getResources().getString(R.string.encrypt_password));
+        }
+    }
+
+    public void encryptDecryptPassword(View view)
+    {
+        try
+        {
+            if (btnEncryptDecryptPassword.getText().toString().equalsIgnoreCase(getResources().getString(R.string.encrypt_password)))
+            {
+                String cipherText = AESCrypt.encrypt(
+                        getResources().getString(R.string.app_name),
+                        textPassword.getText().toString().trim());
+
+                textPassword.setText("");
+                textPassword.setText(cipherText);
+
+                Log.e(TAG, "encryptDecryptPassword: cipher text is: " + cipherText);
+                btnEncryptDecryptPassword.setText(getResources().getString(R.string.decrypt_password));
+            }
+            else if (btnEncryptDecryptPassword.getText().toString().equalsIgnoreCase(getResources().getString(R.string.decrypt_password)))
+            {
+                String password = AESCrypt.decrypt(
+                        getResources().getString(R.string.app_name),
+                        textPassword.getText().toString().trim());
+
+                textPassword.setText("");
+                textPassword.setText(password);
+
+                Log.e(TAG, "encryptDecryptPassword: password recovered is: " + password);
+                btnEncryptDecryptPassword.setText(getResources().getString(R.string.encrypt_password));
+            }
+        }
+        catch (Exception e)
+        {
+            Log.e(TAG, "encryptDecryptPassword: exception occurred: ", e);
+        }
     }
 }

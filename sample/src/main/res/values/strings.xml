@@ -37,5 +37,8 @@
     <string name="success">Success</string>
     <string name="ok">OK</string>
     <string name="show_dialog">Show Dialog</string>
+    <string name="password">Password</string>
+    <string name="encrypt_password">Encrypt Password</string>
+    <string name="decrypt_password">Decrypt password</string>
 
 </resources>

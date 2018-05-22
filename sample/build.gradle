@@ -25,7 +25,8 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support:cardview-v7:27.1.1'
 
-    implementation 'com.github.andyxialm:ColorDialog:1.0.0'
+
+    /*implementation 'com.github.andyxialm:ColorDialog:1.0.0'*/
     /*implementation 'com.brouding:android-simple-dialog:0.3.1'*/
     /*implementation 'com.github.abdularis:androidbuttonprogress:v0.1-alpha5'*/
     /*implementation 'com.github.amitjangid80:multiutillib:v1.2.7'*/
@@ -38,4 +39,5 @@ dependencies {
     /*implementation 'com.github.fenjuly:ArrowDownloadButton:9e15b85e8a'*/
     /*implementation 'com.sackcentury:shinebutton:0.2.0'*/
     /*implementation 'com.xiaochendev.progressroundbtn:library:2.0.0'*/
+    implementation 'com.android.support:design:27.1.1'
 }
