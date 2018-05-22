@@ -2,15 +2,21 @@ package com.amit.sample;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
-import com.amit.dialogs.AlertDialogBox;
-import com.amit.dialogs.AlertDialogListener;
-import com.amit.dialogs.Anim;
-import com.amit.dialogs.Icon;
+import com.amit.dialog.AlertDialogBox;
+import com.amit.dialog.PromptDialogBox;
 import com.amit.shinebtn.ShineButton;
+import com.amit.ui.ProgressBtn;
+
+import cn.refactor.lib.colordialog.PromptDialog;
+
+
+
+/*import com.brouding.simpledialog.SimpleDialog;*/
 /*import com.shashank.sony.fancydialoglib.Animation;
 import com.shashank.sony.fancydialoglib.FancyAlertDialog;
 import com.shashank.sony.fancydialoglib.FancyAlertDialogListener;
@@ -22,21 +28,20 @@ import com.github.angads25.toggle.interfaces.OnToggledListener;*/
 /*import com.fenjuly.library.ArrowDownloadButton;*/
 /*import com.sackcentury.shinebuttonlib.ShineButton;*/
 
-public class MainActivity extends AppCompatActivity
-{
+public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private int count = 0;
     private int progress = 0;
+    private ProgressBtn progressBtn;
     /*private ArrowDownloadButton downloadButton;*/
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ShineButton shineButton = findViewById(R.id.shine_button);
+        final ShineButton shineButton = findViewById(R.id.shine_button);
         shineButton.init(MainActivity.this);
 
         shineButton.setOnClickListener(new View.OnClickListener()
@@ -44,34 +49,71 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                new AlertDialogBox.Builder(MainActivity.this)
+                PromptDialog promptDialog = new PromptDialog(MainActivity.this)
+                        .setDialogType(PromptDialog.DIALOG_TYPE_SUCCESS)
+                        .setAnimationEnable(true)
+                        .setTitleText(getString(R.string.success))
+                        .setContentText(getString(R.string.long_text))
+                        .setPositiveListener(getString(R.string.ok), new PromptDialog.OnPositiveListener()
+                        {
+                            @Override
+                            public void onClick(PromptDialog dialog)
+                            {
+                                dialog.dismiss();
+                            }
+                        });
+
+                promptDialog.setCancelable(false);
+                promptDialog.show();
+
+                /*ColorDialog dialog = new ColorDialog(MainActivity.this);
+                dialog.setTitle("Color Dialog");
+                dialog.setContentText("This is a third party color dialog.");
+                dialog.setContentImage(getResources().getDrawable(R.drawable.ic_action_accept));
+                dialog.setPositiveListener("OK", new ColorDialog.onPositiveListener()
+                {
+                    @Override
+                    public void onClick(ColorDialog dialog)
+                    {
+                        Toast.makeText(MainActivity.this, dialog.getPositiveText().toString(), Toast.LENGTH_SHORT).show();
+                    }
+                }).setNegativeListener(getString(R.string.cancel), new ColorDialog.OnNegativeListener()
+                {
+                            @Override
+                            public void onClick(ColorDialog dialog)
+                            {
+                                Toast.makeText(MainActivity.this, dialog.getNegativeText().toString(), Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
+                            }
+
+                        }).show();*/
+
+                /*new AlertDialogBox.Builder(MainActivity.this)
                         .setTitle("Custom Dialog")
                         .setBackgroundColor(Color.parseColor("#909090"))  //Don't pass R.color.colorvalue
                         .setMessage("This is a custom dialog with buttons callback.")
                         .setNegativeBtnText("Cancel")
+                        .setNegativeBtnTextColor(getResources().getColor(R.color.black_shade))
                         .setPositiveBtnBackground(Color.parseColor("#FF4081"))  //Don't pass R.color.colorvalue
                         .setPositiveBtnText("Ok")
+                        .setPositiveBtnTextColor(getResources().getColor(R.color.btnColor))
                         .setNegativeBtnBackground(Color.parseColor("#FFA9A7A8"))  //Don't pass R.color.colorvalue
                         .setAnim(Anim.POP)
-                        .isCancellable(true)
+                        .isCancellable(false)
                         .setIcon(R.drawable.ic_error_outline_white_48dp, Icon.Visible)
-                        .onPositiveClicked(new AlertDialogListener()
-                        {
+                        .onPositiveClicked(new AlertDialogListener() {
                             @Override
-                            public void onClick()
-                            {
-                                Toast.makeText(getApplicationContext(),"Ok",Toast.LENGTH_SHORT).show();
+                            public void onClick() {
+                                Toast.makeText(getApplicationContext(), "Ok", Toast.LENGTH_SHORT).show();
                             }
                         })
-                        .onNegativeClicked(new AlertDialogListener()
-                        {
+                        .onNegativeClicked(new AlertDialogListener() {
                             @Override
-                            public void onClick()
-                            {
-                                Toast.makeText(getApplicationContext(),"Cancel",Toast.LENGTH_SHORT).show();
+                            public void onClick() {
+                                Toast.makeText(getApplicationContext(), "Cancel", Toast.LENGTH_SHORT).show();
                             }
                         })
-                        .build();
+                        .build();*/
 
                 /*new FancyAlertDialog.Builder(MainActivity.this)
                         .setTitle("Rate us if you like the app")
@@ -183,6 +225,48 @@ public class MainActivity extends AppCompatActivity
                  * implementation 'org.aviran.cookiebar2:cookiebar2:1.0.9'
                  *
                  * */
+            }
+        });
+
+        progressBtn = findViewById(R.id.progressBtn);
+        progressBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialogBox.Builder(MainActivity.this)
+                        .setTitle("Custom Dialog")
+                        .setBackgroundColor(Color.parseColor("#909090"))  //Don't pass R.color.colorvalue
+                        .setMessage("This is a custom dialog with buttons callback.")
+                        .setNegativeBtnText("Cancel")
+                        .setNegativeBtnTextColor(getResources().getColor(R.color.black_shade))
+                        .setPositiveBtnBackground(Color.parseColor("#FF4081"))  //Don't pass R.color.colorvalue
+                        .setPositiveBtnText("Ok")
+                        .setPositiveBtnTextColor(getResources().getColor(R.color.btnColor))
+                        .setNegativeBtnBackground(Color.parseColor("#FFA9A7A8"))  //Don't pass R.color.colorvalue
+                        .setAnim(AlertDialogBox.Anim.POP)
+                        .isCancellable(false)
+                        .setIcon(R.drawable.ic_error_outline_white_48dp, AlertDialogBox.Icon.Visible)
+                        .onPositiveClicked(new AlertDialogBox.AlertDialogListener() {
+                            @Override
+                            public void onClick() {
+                                Toast.makeText(getApplicationContext(), "Ok", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .onNegativeClicked(new AlertDialogBox.AlertDialogListener() {
+                            @Override
+                            public void onClick() {
+                                Toast.makeText(getApplicationContext(), "Cancel", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .build();
+
+                progressBtn.startAnimation();
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressBtn.revertAnimation();
+                    }
+                }, 2500);
             }
         });
 
@@ -320,13 +404,13 @@ public class MainActivity extends AppCompatActivity
          **/
 
         /**
-        * Shine button
-        *
-        * implementation 'com.sackcentury:shinebutton:0.2.0'
-        *
-        * https://github.com/ChadCSong/ShineButton?utm_source=android-arsenal.com&utm_medium=referral&utm_campaign=3846
-        *
-        * */
+         * Shine button
+         *
+         * implementation 'com.sackcentury:shinebutton:0.2.0'
+         *
+         * https://github.com/ChadCSong/ShineButton?utm_source=android-arsenal.com&utm_medium=referral&utm_campaign=3846
+         *
+         * */
         /*ShineButton shineButton = (ShineButton) findViewById(R.id.shine_button);
         shineButton.init(MainActivity.this);*/
 
@@ -343,10 +427,34 @@ public class MainActivity extends AppCompatActivity
 
     /**
      * circular progress button
-     *
+     * <p>
      * https://github.com/nihasKalam07/ProgressButton?utm_source=android-arsenal.com&utm_medium=referral&utm_campaign=4913
-     *
+     * <p>
      * implementation 'com.nihaskalam.android:progress-button:1.0.1'
-     *
      **/
+
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        progressBtn.dispose();
+    }
+
+    public void showPromptDialog(View view)
+    {
+        new PromptDialogBox(MainActivity.this)
+                .setDialogType(PromptDialogBox.DIALOG_TYPE_WARNING)
+                .setAnimationEnable(true)
+                .setTitleText("Prompt Dialog")
+                .setContentText(getResources().getString(R.string.long_text))
+                .setPositiveListener(getResources().getString(R.string.ok), new PromptDialogBox.onPositiveListener()
+                {
+                    @Override
+                    public void onClick(PromptDialogBox dialog)
+                    {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
+    }
 }

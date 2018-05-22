@@ -1,10 +1,12 @@
-package com.amit.dialogs;
+package com.amit.dialog;
 
 import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
+import android.support.annotation.ColorInt;
+import android.support.annotation.DrawableRes;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -13,9 +15,13 @@ import android.widget.TextView;
 
 import com.amit.dbapilibrary.R;
 
-import static com.amit.dialogs.Anim.POP;
-import static com.amit.dialogs.Anim.SIDE;
-import static com.amit.dialogs.Anim.SLIDE;
+import static com.amit.dialog.AlertDialogBox.Anim.POP;
+import static com.amit.dialog.AlertDialogBox.Anim.SIDE;
+import static com.amit.dialog.AlertDialogBox.Anim.SLIDE;
+
+/*import static com.amit.dialog.Anim.POP;
+import static com.amit.dialog.Anim.SIDE;
+import static com.amit.dialog.Anim.SLIDE;*/
 
 /**
  * Created by Amit Jangid on 21,May,2018
@@ -23,14 +29,16 @@ import static com.amit.dialogs.Anim.SLIDE;
 @SuppressWarnings({"WeakerAcces", "unused"})
 public class AlertDialogBox
 {
-    private String title, message, positiveBtnText, negativeBtnText;
-    private Activity activity;
-    private int icon;
-    private Icon visibility;
     private Anim Anim;
-    private AlertDialogListener pListener, nListener;
-    private int pBtnColor, nBtnColor, bgColor;
     private boolean cancel;
+    private Icon visibility;
+    private Activity activity;
+
+    private AlertDialogListener pListener, nListener;
+    private String title, message, positiveBtnText, negativeBtnText;
+
+    @DrawableRes private int icon;
+    @ColorInt private int pBtnColor, nBtnColor, bgColor, pBtnTextColor, nBtnTextColor;
 
     private AlertDialogBox(Builder builder)
     {
@@ -48,19 +56,22 @@ public class AlertDialogBox
         this.nBtnColor = builder.nBtnColor;
         this.bgColor = builder.bgColor;
         this.cancel = builder.cancel;
+        this.pBtnTextColor = builder.pBtnTextColor;
+        this.nBtnTextColor = builder.nBtnTextColor;
     }
-
 
     public static class Builder
     {
-        private String title, message, positiveBtnText, negativeBtnText;
-        private Activity activity;
-        private int icon;
-        private Icon visibility;
         private Anim Anim;
-        private AlertDialogListener pListener, nListener;
-        private int pBtnColor, nBtnColor, bgColor;
+        private Icon visibility;
+        private Activity activity;
+
         private boolean cancel;
+        private AlertDialogListener pListener, nListener;
+        private String title, message, positiveBtnText, negativeBtnText;
+
+        @DrawableRes private int icon;
+        @ColorInt private int pBtnColor, pBtnTextColor, nBtnColor, nBtnTextColor, bgColor;
 
         public Builder(Activity activity)
         {
@@ -73,7 +84,7 @@ public class AlertDialogBox
             return this;
         }
 
-        public Builder setBackgroundColor(int bgColor)
+        public Builder setBackgroundColor(@ColorInt int bgColor)
         {
             this.bgColor = bgColor;
             return this;
@@ -88,6 +99,12 @@ public class AlertDialogBox
         public Builder setPositiveBtnText(String positiveBtnText)
         {
             this.positiveBtnText = positiveBtnText;
+            return this;
+        }
+
+        public Builder setPositiveBtnTextColor(int pBtnTextColor)
+        {
+            this.pBtnTextColor = pBtnTextColor;
             return this;
         }
 
@@ -106,6 +123,12 @@ public class AlertDialogBox
         public Builder setNegativeBtnBackground(int nBtnColor)
         {
             this.nBtnColor = nBtnColor;
+            return this;
+        }
+
+        public Builder setNegativeBtnTextColor(int nBtnTextColor)
+        {
+            this.nBtnTextColor = nBtnTextColor;
             return this;
         }
 
@@ -195,10 +218,20 @@ public class AlertDialogBox
                 bgShape.setColor(pBtnColor);
             }
 
+            if (pBtnTextColor != 0)
+            {
+                pBtn.setTextColor(pBtnTextColor);
+            }
+
             if (nBtnColor != 0)
             {
                 GradientDrawable bgShape = (GradientDrawable) nBtn.getBackground();
                 bgShape.setColor(nBtnColor);
+            }
+
+            if (nBtnTextColor != 0)
+            {
+                nBtn.setTextColor(nBtnTextColor);
             }
 
             if (negativeBtnText != null)
@@ -264,5 +297,20 @@ public class AlertDialogBox
             dialog.show();
             return new AlertDialogBox(this);
         }
+    }
+
+    public enum Anim
+    {
+        POP, SIDE, SLIDE
+    }
+
+    public enum Icon
+    {
+        Visible, Gone
+    }
+
+    public interface AlertDialogListener
+    {
+        void onClick();
     }
 }

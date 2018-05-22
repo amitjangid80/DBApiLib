@@ -6,4 +6,14 @@
 
     <color name="white">#FFFFFFFF</color>
     <color name="colorButtonCompleteState">#19CC95</color>
+
+    <color name="colorTextIcons">#FFFFFF</color>
+    <!--<color name="colorAccent">#536DFE</color>-->
+    <color name="colorPrimaryText">#212121</color>
+    <color name="colorSecondaryText">#757575</color>
+    <color name="colorDivider">#BDBDBD</color>
+
+    <color name="background">#d3d3d3</color>
+    <color name="green">#388E3C</color>
+    <color name="red">#F44336</color>
 </resources>

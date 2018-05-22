@@ -9,6 +9,7 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -28,6 +29,7 @@ import android.text.style.StyleSpan;
 import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import java.net.MalformedURLException;
@@ -431,7 +433,15 @@ public class Utils
         }
     }
 
-    /***/
+    /**
+     * dp to px
+     * this method will convert dp to pixles
+     *
+     * @param context - context of the application
+     * @param dp - dp to convert into pixels
+     *
+     * @return - pixels in integer form
+    **/
     public static int dpToPx(Context context, int dp)
     {
         if (xdpi == Float.MIN_VALUE)
@@ -461,20 +471,45 @@ public class Utils
         return color;
     }
 
+    /**
+     * convert dp to pixel
+     * this method will convert dp to pixels
+     *
+     * @param context - context of the application
+     * @param dp - dp to convert into pixels
+     *
+     * @return - pixels in integer form
+    **/
     public static float convertDpToPixel(float dp, Context context)
     {
         Resources resources = context.getResources();
         DisplayMetrics metrics = resources.getDisplayMetrics();
-        return dp * ((float)metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+        return dp * ((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
     }
 
+    /**
+     * convert pixels to dp
+     * this method will converts pixels to dp
+     *
+     * @param context - context of the application
+     * @param px - pixels to be convert into dp
+     *
+     * @return - dp in float form
+    **/
     public static float convertPixelsToDp(float px, Context context)
     {
         Resources resources = context.getResources();
         DisplayMetrics metrics = resources.getDisplayMetrics();
-        return px / ((float)metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+        return px / ((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
     }
 
+    /**
+     * drawable to bitmap
+     * this method will convert a drawable to bitmap
+     *
+     * @param drawable - drawable to be converted into bitmap
+     * @return bitmap
+    **/
     public static Bitmap drawableToBitmap (Drawable drawable)
     {
         if (drawable instanceof BitmapDrawable)
@@ -491,5 +526,50 @@ public class Utils
         drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
         drawable.draw(canvas);
         return bitmap;
+    }
+
+    /**
+     * dp 2 px
+     * this method will convert dp to pixels
+     *
+     * @param context - context of the application
+     * @param dpValue - dpValue to be convert into pixels
+     *
+     * @return - pixels in integer form
+    **/
+    public static int dp2px(Context context, float dpValue)
+    {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
+    }
+
+    /**
+     * convert pixels to dp
+     * this method will converts pixels to dp
+     *
+     * @param context - context of the application
+     * @param pxValue - pxValue to be convert into dp
+     *
+     * @return - dp in float form
+    **/
+    public static int px2dp(Context context, float pxValue)
+    {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (pxValue / scale + 0.5f);
+    }
+
+    /**
+     * get screen size
+     * this method will get the size of the screen
+     *
+     * @param context - context of the application
+     * @return size of the screen as Point
+    **/
+    public static Point getScreenSize(Context context)
+    {
+        Point point = new Point();
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        wm.getDefaultDisplay().getSize(point);
+        return point;
     }
 }

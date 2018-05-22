@@ -35,6 +35,44 @@
             app:small_shine_color="#CC9999"
             app:small_shine_offset_angle="20" />
 
+        <com.amit.ui.ProgressBtn
+            android:id="@+id/progressBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/btn_bg"
+            android:text="@string/login"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:initialCornerRadius="5dp"
+            app:paddingProgress="2dp"
+            app:progressBarColor="@color/white"
+            app:progressBarWidth="2dp" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_bg"
+            android:text="@string/show_dialog"
+            android:onClick="showPromptDialog"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <!--<com.github.abdularis.buttonprogress.DownloadButtonProgress
+            android:id="@+id/button_progress_2"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginTop="20dp"
+            app:cancelIconDrawable="@drawable/ic_action_cancel"
+            app:determinateBackgroundDrawable="@drawable/bg_button_progress"
+            app:finishBackgroundDrawable="@drawable/bg_button_progress"
+            app:finishIconDrawable="@drawable/ic_finish"
+            app:idleBackgroundDrawable="@drawable/bg_button_progress"
+            app:idleIconDrawable="@drawable/ic_download"
+            app:indeterminateBackgroundDrawable="@drawable/bg_button_progress"
+            app:progressDeterminateColor="#ef2241"
+            app:progressIndeterminateColor="#828282" />-->
+
         <!--<com.uniquestudio.library.CircleCheckBox
             android:id="@+id/circle_check_box"
             android:layout_width="100dp"
