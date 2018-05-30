@@ -40,5 +40,8 @@
     <string name="password">Password</string>
     <string name="encrypt_password">Encrypt Password</string>
     <string name="decrypt_password">Decrypt password</string>
+    <string name="add_style_data">Add Style Data</string>
+    <string name="update_style_data">Update Style Data</string>
+    <string name="style_code">Style Code</string>
 
 </resources>

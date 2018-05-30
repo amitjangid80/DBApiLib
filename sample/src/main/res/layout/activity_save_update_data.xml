@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    tools:context=".SaveUpdateDataActivity">
+
+    <Button
+        android:id="@+id/btnAddStyleData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_bg"
+        android:text="@string/add_style_data"
+        android:textColor="@color/white"
+        android:onClick="insertStyleData"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/btnUpdateStyleData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:onClick="updateStyleData"
+        android:background="@drawable/btn_bg"
+        android:text="@string/update_style_data"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+
+</LinearLayout>

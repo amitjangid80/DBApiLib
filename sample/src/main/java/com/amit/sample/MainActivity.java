@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.amit.cryptography.AES;
 import com.amit.cryptography.AESCrypt;
 import com.amit.dialog.AlertDialogBox;
 import com.amit.dialog.PromptDialogBox;
