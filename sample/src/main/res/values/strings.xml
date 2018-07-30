@@ -43,5 +43,6 @@
     <string name="add_style_data">Add Style Data</string>
     <string name="update_style_data">Update Style Data</string>
     <string name="style_code">Style Code</string>
+    <string name="dbapilibrary">DBApiLibrary</string>
 
 </resources>

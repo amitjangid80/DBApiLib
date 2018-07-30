@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity
 
     private int count = 0;
     private int progress = 0;
-    private ProgressBtn progressBtn;
+    // private ProgressBtn progressBtn;
 
     private TextInputEditText textPassword;
     private Button btnEncryptDecryptPassword;
@@ -243,7 +243,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        progressBtn = findViewById(R.id.progressBtn);
+        /*progressBtn = findViewById(R.id.progressBtn);
         progressBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -283,7 +283,7 @@ public class MainActivity extends AppCompatActivity
                     }
                 }, 2500);
             }
-        });
+        });*/
 
         /**
          * Circle check box
@@ -452,12 +452,39 @@ public class MainActivity extends AppCompatActivity
     protected void onDestroy()
     {
         super.onDestroy();
-        progressBtn.dispose();
+        // progressBtn.dispose();
     }
 
     public void showPromptDialog(View view)
     {
-        new PromptDialogBox(MainActivity.this)
+        new AlertDialogBox.Builder(MainActivity.this)
+                .setTitle("Custom Dialog")
+                .setBackgroundColor(Color.parseColor("#909090"))  //Don't pass R.color.colorvalue
+                .setMessage("This is a custom dialog with buttons callback.")
+                .setNegativeBtnText("Cancel")
+                .setNegativeBtnTextColor(getResources().getColor(R.color.black_shade))
+                .setPositiveBtnBackground(Color.parseColor("#FF4081"))  //Don't pass R.color.colorvalue
+                .setPositiveBtnText("Ok")
+                .setPositiveBtnTextColor(getResources().getColor(R.color.btnColor))
+                .setNegativeBtnBackground(Color.parseColor("#FFA9A7A8"))  //Don't pass R.color.colorvalue
+                .setAnim(AlertDialogBox.Anim.POP)
+                .isCancellable(false)
+                .setIcon(R.drawable.ic_error_outline_white_48dp, AlertDialogBox.Icon.Visible)
+                .onPositiveClicked(new AlertDialogBox.AlertDialogListener() {
+                    @Override
+                    public void onClick() {
+                        Toast.makeText(getApplicationContext(), "Ok", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .onNegativeClicked(new AlertDialogBox.AlertDialogListener() {
+                    @Override
+                    public void onClick() {
+                        Toast.makeText(getApplicationContext(), "Cancel", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .build();
+
+        /*new PromptDialogBox(MainActivity.this)
                 .setDialogType(PromptDialogBox.DIALOG_TYPE_WARNING)
                 .setAnimationEnable(true)
                 .setTitleText("Prompt Dialog")
@@ -470,7 +497,7 @@ public class MainActivity extends AppCompatActivity
                         dialog.dismiss();
                     }
                 })
-                .show();
+                .show();*/
     }
 
     @Override
