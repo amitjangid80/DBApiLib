@@ -16,7 +16,84 @@
         android:orientation="vertical"
         android:padding="10dp">
 
+        <RadioGroup
+            android:id="@+id/toggle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/control_switch_background_border"
+            android:checkedButton="@+id/calm"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/calm"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
+                android:layout_weight="1"
+                android:background="@drawable/control_switch_background_selector_middle"
+                android:button="@null"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:text="Calm"
+                android:textColor="@color/control_switch_color_selector" />
+
+            <RadioButton
+                android:id="@+id/rumor"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
+                android:layout_weight="1"
+                android:background="@drawable/control_switch_background_selector_middle"
+                android:button="@null"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:text="Rumor"
+                android:textColor="@color/control_switch_color_selector" />
+
+            <RadioButton
+                android:id="@+id/outbreak"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginBottom="3dp"
+                android:layout_weight="1"
+                android:background="@drawable/control_switch_background_selector"
+                android:button="@null"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:text="Outbreak"
+                android:textColor="@color/control_switch_color_selector" />
+        </RadioGroup>
+
+        <com.amit.ui.SwitchButton
+            android:id="@+id/switchButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:padding="10dp"
+            app:curvedSelection="true"
+            app:selectedTab="0"
+            app:strokeRadius="20dp"
+            app:strokeWidth="2dp"
+            app:switchTabs="@array/gender_array"
+            app:textSize="18sp" />
+
         <TextView
+            android:id="@+id/displayFourTextView"
             style="@style/TextAppearance.AppCompat.Display4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -64,6 +141,7 @@
             android:text="Title" />
 
         <TextView
+            android:id="@+id/textViewBody"
             style="@style/TextAppearance.AppCompat.Body1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -117,8 +195,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:gravity="center"
-            android:textColor="@color/black"
-            android:text="Sub Head" />
+            android:text="Sub Head"
+            android:textColor="@color/black" />
 
         <TextView
             style="@style/TextAppearance.AppCompat.Tooltip"
@@ -126,8 +204,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:gravity="center"
-            android:textColor="@color/black"
-            android:text="Tooltip" />
+            android:text="Tooltip"
+            android:textColor="@color/black" />
 
         <TextView
             style="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
@@ -135,8 +213,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:gravity="center"
-            android:textColor="@color/black"
-            android:text="SearchResult.Subtitle" />
+            android:text="SearchResult.Subtitle"
+            android:textColor="@color/black" />
 
         <TextView
             style="@style/TextAppearance.AppCompat.SearchResult.Title"
@@ -144,8 +222,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:gravity="center"
-            android:textColor="@color/black"
-            android:text="SearchResult.Title" />
+            android:text="SearchResult.Title"
+            android:textColor="@color/black" />
 
         <TextView
             style="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
@@ -153,8 +231,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:gravity="center"
-            android:textColor="@color/black"
-            android:text="Toolbar.Title" />
+            android:text="Toolbar.Title"
+            android:textColor="@color/black" />
 
         <com.amit.shinebtn.ShineButton
             android:id="@+id/shine_button"
@@ -201,8 +279,8 @@
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/dashed_layout"
             android:hint="@string/password"
             app:passwordToggleEnabled="true">

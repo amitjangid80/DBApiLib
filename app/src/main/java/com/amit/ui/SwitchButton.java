@@ -1,5 +1,6 @@
 package com.amit.ui;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -18,6 +19,7 @@ import android.view.View;
 
 import com.amit.dbapilibrary.R;
 
+@SuppressLint("DrawAllocation")
 public class SwitchButton extends View
 {
     private static final String TAG = SwitchButton.class.getSimpleName();
@@ -25,13 +27,14 @@ public class SwitchButton extends View
     private String[] mTabTexts = {"Male", "Female"};
     private int mNumOfTabs = mTabTexts.length;
 
-    private static final float TEXT_SIZE = 14;
+    private static final float TEXT_SIZE = 50; // changed text size to 30 from 14
     private static final float STROKE_WIDTH = 2;
     private static final float STROKE_RADIUS = 0;
 
     private static final int SELECTED_TAB = 0;
     private static final String FONTS_DIR = "fonts/";
     private static final int SELECTED_COLOR = 0xffeb7b00;
+    private static final boolean CURVED_SELECTION = false;
 
     private Paint mFillPaint;
     private Paint mStrokePaint;
@@ -48,6 +51,7 @@ public class SwitchButton extends View
     private float mStrokeWidth;
     private float mStrokeRadius;
     private float mTextHeightOffSet;
+    private boolean mCurvedSelection;
 
     private int mSelectedTab;
     private int mSelectedColor;
@@ -81,7 +85,7 @@ public class SwitchButton extends View
      * @param attrs - attribute set, set by the user
      *
      * this method gets all the attributes defined and used by the user
-    **/
+     **/
     private void initAttrs(Context context, AttributeSet attrs)
     {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SwitchButton);
@@ -91,6 +95,7 @@ public class SwitchButton extends View
         mStrokeWidth = a.getDimension(R.styleable.SwitchButton_strokeWidth, STROKE_WIDTH);
         mSelectedColor = a.getColor(R.styleable.SwitchButton_selectedColor, SELECTED_COLOR);
         mStrokeRadius = a.getDimension(R.styleable.SwitchButton_strokeRadius, STROKE_RADIUS);
+        mCurvedSelection = a.getBoolean(R.styleable.SwitchButton_curvedSelection, CURVED_SELECTION);
 
         int mSwitchTabsResId = a.getResourceId(R.styleable.SwitchButton_switchTabs, 0);
 
@@ -119,6 +124,7 @@ public class SwitchButton extends View
         mFillPaint = new Paint();
         mFillPaint.setColor(mSelectedColor);
         mFillPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        mFillPaint.setFlags(Paint.ANTI_ALIAS_FLAG);
         mStrokePaint.setAntiAlias(true);
 
         mSelectedTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
@@ -187,7 +193,7 @@ public class SwitchButton extends View
      * @param measureSpec - measure spec
      *
      * @return - returns integer
-    **/
+     **/
     private int getExpectedSize(int size, int measureSpec)
     {
         int result = size;
@@ -233,6 +239,11 @@ public class SwitchButton extends View
         float right = mWidth - mStrokeWidth * 0.5f;
         float bottom = mHeight - mStrokeWidth * 0.5f;
 
+        if (mNumOfTabs > 2)
+        {
+            mCurvedSelection = false;
+        }
+
         //draw rounded rectangle
         canvas.drawRoundRect(new RectF(left, top, right, bottom), mStrokeRadius, mStrokeRadius, mStrokePaint);
 
@@ -253,11 +264,11 @@ public class SwitchButton extends View
                 //draw selected tab
                 if (i == 0)
                 {
-                    drawLeftPath(canvas, left, top, bottom);
+                    drawLeftPath(canvas, left, top, right, bottom);
                 }
                 else if (i == mNumOfTabs - 1)
                 {
-                    drawRightPath(canvas, top, right, bottom);
+                    drawRightPath(canvas, left, top, right, bottom);
                 }
                 else
                 {
@@ -288,8 +299,8 @@ public class SwitchButton extends View
      * @param top - top
      *
      * @param bottom - bottom
-    **/
-    private void drawLeftPath(Canvas canvas, float left, float top, float bottom)
+     **/
+    private void drawLeftPath(Canvas canvas, float left, float top, float right, float bottom)
     {
         Path leftPath = new Path();
         leftPath.moveTo(left + mStrokeRadius, top);
@@ -308,6 +319,12 @@ public class SwitchButton extends View
                 180, 90);
 
         canvas.drawPath(leftPath, mFillPaint);
+
+        if (mCurvedSelection)
+        {
+            RectF ovalBounds = new RectF((mWidth / 2f) - 1f * mStrokeRadius, top, (mWidth / 2f) + 1f * mStrokeRadius, bottom);
+            canvas.drawOval(ovalBounds, mFillPaint);
+        }
     }
 
     /**
@@ -320,8 +337,8 @@ public class SwitchButton extends View
      * @param right - right
      *
      * @param bottom - bottom
-    **/
-    private void drawRightPath(Canvas canvas, float top, float right, float bottom)
+     **/
+    private void drawRightPath(Canvas canvas, float left, float top, float right, float bottom)
     {
         Path rightPath = new Path();
         rightPath.moveTo(right - mStrokeRadius, top);
@@ -340,6 +357,12 @@ public class SwitchButton extends View
                 0, -90);
 
         canvas.drawPath(rightPath, mFillPaint);
+
+        if (mCurvedSelection)
+        {
+            RectF ovalBounds = new RectF((mWidth / 2f) - 1f * mStrokeRadius, top, (mWidth / 2f) + 1f * mStrokeRadius, bottom);
+            canvas.drawOval(ovalBounds, mFillPaint);
+        }
     }
 
     /**
@@ -352,7 +375,7 @@ public class SwitchButton extends View
      * @param oldw - old width
      *
      * @param oldh - old height
-    **/
+     **/
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh)
     {
@@ -381,7 +404,7 @@ public class SwitchButton extends View
      *
      * @param event - event
      * @return true or false
-    **/
+     **/
     @Override
     public boolean onTouchEvent(MotionEvent event)
     {

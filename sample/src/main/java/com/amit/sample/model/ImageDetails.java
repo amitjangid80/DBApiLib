@@ -22,7 +22,6 @@ public class ImageDetails
     @PrimaryKey(autoGenerate = true)
     private int imgCode;
 
-
     private int styleCode;
     private int imgSyncStatus;
 

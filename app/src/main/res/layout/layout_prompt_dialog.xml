@@ -10,7 +10,7 @@
     <LinearLayout
         android:id="@+id/llTop"
         android:layout_width="match_parent"
-        android:layout_height="75dp"
+        android:layout_height="70dp"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -27,7 +27,7 @@
     <LinearLayout
         android:id="@+id/topLayout"
         android:layout_width="match_parent"
-        android:layout_height="10dp"
+        android:layout_height="40dp"
         android:background="@android:color/white"
         android:orientation="vertical">
 
@@ -59,10 +59,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="start"
-            android:paddingBottom="10dp"
             android:paddingLeft="10dp"
-            android:paddingRight="10dp"
             android:paddingTop="5dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
             android:textColor="@color/color_dialog_content_prompt"
             android:textSize="16sp"
             android:visibility="visible" />

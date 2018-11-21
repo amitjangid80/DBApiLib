@@ -13,7 +13,13 @@ import com.amit.sample.model.StyleDetails;
 /**
  * Created by Amit Jangid on 24,May,2018
 **/
-@Database(entities = {StyleDetails.class, ImageDetails.class}, version = 1, exportSchema = false)
+@Database(entities =
+        {
+                StyleDetails.class,
+                ImageDetails.class
+        },
+        version = 1,
+        exportSchema = false)
 @TypeConverters(DateConverter.class)
 public abstract class AppDatabase extends RoomDatabase
 {

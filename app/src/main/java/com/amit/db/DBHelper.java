@@ -6,28 +6,31 @@ import android.util.Log;
 
 import com.amit.utilities.SharedPreferenceData;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 /**
  * Created by AMIT JANGID
+ * 2018 Feb 01 - Thursday - 02:55 PM
+ *
  * this class has method for executing db queries
  * like: creating table, inserting into table, deleting table, dropping table
-*/
-
+ */
+@SuppressWarnings("unused")
 public class DBHelper
 {
     private static final String TAG = DBHelper.class.getSimpleName();
 
     private Database db;
-    private Cursor cursor;
 
     /**
      * Constructor of the class
      * you have to set the db name first before using this class.
      *
      * @param context - context
-    **/
+     **/
+    @SuppressWarnings("unused")
     public DBHelper(Context context)
     {
         SharedPreferenceData sharedPreferenceData = new SharedPreferenceData(context);
@@ -35,7 +38,6 @@ public class DBHelper
     }
 
     // region COMMENTS OF EXECUTE DATABASE OPERATIONS METHOD
-
     /**
      * Created By AMIT JANGID
      * 2018 Feb 01 - Thursday - 02:57 PM
@@ -54,9 +56,9 @@ public class DBHelper
      *
      * parameter #2:
      * @param values - This parameter is an object of LinkedHashMap
-     *               - this parameter will contain set of Key & Value
+     *               - this parameter will contain set of Key and Value
      *                 to create table or insert data or update we will have to pass this parameter with data
-     *               - FOR EXAMPLE: - values.put("Name", "'Amit'") - this for inserting data & updating data
+     *               - FOR EXAMPLE: - values.put("Name", "'Amit'") - this for inserting data and updating data
      *                           - values.put("Name", "TEXT") - this for creating table
      *
      * parameter #3
@@ -126,10 +128,12 @@ public class DBHelper
      *
      * @return true or false
      **/
-
     // endregion
-    public boolean executeDatabaseOperations(String tableName, String operations,
-                                             LinkedHashMap<String, String> values, boolean hasConditions,
+    @SuppressWarnings("unused")
+    public boolean executeDatabaseOperations(String tableName,
+                                             String operations,
+                                             LinkedHashMap<String, String> values,
+                                             boolean hasConditions,
                                              LinkedHashMap<String, String> conditionalValues)
     {
         try
@@ -324,6 +328,49 @@ public class DBHelper
         }
     }
 
+    // region COMMENTS FOR executeQuery method
+    /**
+     * 2018 Feb 01 - Thursday - 03:52 PM
+     * Execute Select Query
+     *
+     * parameters for this method are
+     *
+     * @param query - query that you want to execute
+     *
+     * @return cursor with records from the table
+    **/
+    // endregion COMMENTS FOR executeQuery method
+    @SuppressWarnings("unused")
+    public Cursor executeSelectQuery(String query)
+    {
+        try
+        {
+            // query execution
+            Cursor cursor = db.getWritableDatabase().rawQuery(query, null);
+
+            // if cursor is not null then moving the position to first
+            // and returning the cursor
+            if (cursor != null)
+            {
+                cursor.moveToFirst();
+            }
+            else
+            {
+                Log.e(TAG, "executeSelectQuery: cursor was null. No data found.");
+                return null;
+            }
+
+            return cursor;
+        }
+        catch (Exception e)
+        {
+            Log.e(TAG, "executeSelectQuery: in database helper class:\n");
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    // region COMMENTS FOR executeQuery method
     /**
      * 2018 Feb 01 - Thursday - 03:52 PM
      * Execute Select Query
@@ -342,7 +389,7 @@ public class DBHelper
      *                            then the user has to pass conditionalValues
      *                            else it can be null
      *
-     * the below lines are not in use to ignore it
+     * the below lines are not in use so ignore it
      *** s - for selecting values from table
      *     - pass * in values parameter when doing select operations
      *       when you want to select every thing from the table
@@ -351,35 +398,35 @@ public class DBHelper
      *       when you want to select one or multiple columns from the table
      *       no matter condition is there or not
      **/
-    public Cursor executeSelectQuery(String tableName, String values, boolean hasConditions,
-                                     LinkedHashMap<String, String> conditionalValues)
+    // endregion COMMENTS FOR executeQuery method
+    @SuppressWarnings("unused")
+    public Cursor executeSelectQuery(String tableName,
+                                     String values,
+                                     boolean hasConditions,
+                                     StringBuilder conditionalValues)
     {
         try
         {
-            if (cursor != null)
-            {
-                cursor.close();
-            }
+            Cursor cursor;
 
             if (values != null)
             {
                 String query;
 
+                // check if has condition is tru
+                // if yes the conditional values should not be null
                 if (hasConditions)
                 {
+                    // check ig conditional values is passed
+                    // it should be of string builder type
+                    // where user has to pass values to be passed in where clause
+                    //
+                    // FOR EX: firstName = 'FirstNameValue' OR
+                    //         firstName LIKE %Term to be searched%
                     if (conditionalValues != null)
                     {
-                        String strConditionalValues = conditionalValues.toString();
-                        strConditionalValues = strConditionalValues.replace("{", "");
-                        strConditionalValues = strConditionalValues.replace("}", "");
-                        strConditionalValues = strConditionalValues.replace(",", " AND");
-
-                        if (strConditionalValues.contains("LIKE ="))
-                        {
-                            strConditionalValues = strConditionalValues.replace("=", "");
-                        }
-
-                        query = "SELECT " + values + " FROM " + tableName + " WHERE " + strConditionalValues;
+                        // building conditional query
+                        query = "SELECT " + values + " FROM " + tableName + " WHERE " + conditionalValues.toString() + "";
                         Log.e(TAG, "executeSelectQuery: Select query with conditions is: " + query);
                     }
                     else
@@ -390,12 +437,16 @@ public class DBHelper
                 }
                 else
                 {
+                    // building non conditional values
                     query = "SELECT " + values + " FROM " + tableName;
                     Log.e(TAG, "executeSelectQuery: Select query without conditions is: " + query);
                 }
 
+                // executing query
                 cursor = db.getWritableDatabase().rawQuery(query, null);
 
+                // if cursor is not null then moving the position to first
+                // and returning the cursor
                 if (cursor != null)
                 {
                     cursor.moveToFirst();
@@ -422,6 +473,7 @@ public class DBHelper
         }
     }
 
+    // region COMMENTS FOR getRecordCount method
     /**
      * 2018 Feb 02 - Friday - 01:36 PM
      * Get Record Count
@@ -449,36 +501,41 @@ public class DBHelper
      * *********************************************************************************************
      *
      *** @return this method will return the count of the record in the table
-     * */
+     **/
+    // endregion COMMENTS FOR getRecordCount method
+    @SuppressWarnings("unused")
     public int getRecordCount(String tableName,
                               String values,
                               boolean hasConditions,
-                              LinkedHashMap<String, String> conditionalValues)
+                              StringBuilder conditionalValues)
     {
         try
         {
-            values = values.replace("[", "");
-            values = values.replace("]", "");
+            String query;
 
-            String query = "";
-
-            if (!hasConditions)
+            // check if has condition is true
+            // if yes then conditional values should be passed
+            if (hasConditions)
             {
-                query = "SELECT " + values + " FROM " + tableName;
-            }
-            else if (conditionalValues != null)
-            {
-                String strConditionalValues = conditionalValues.toString();
-                strConditionalValues = strConditionalValues.replace("[", "");
-                strConditionalValues = strConditionalValues.replace("]", "");
-                strConditionalValues = strConditionalValues.replace(",", " AND");
-
-                if (strConditionalValues.contains("LIKE ="))
+                // checking if conditional values is not null
+                // if yes then then building query with conditions
+                if (conditionalValues != null)
                 {
-                    strConditionalValues = strConditionalValues.replace("=", "");
+                    // building conditional query
+                    query = "SELECT COUNT(" + values + ") FROM " + tableName + " WHERE " + conditionalValues.toString() + "";
+                    Log.e(TAG, "getRecordCount: query with condition is: " + query);
                 }
-
-                query = "SELECT " + values + " FROM " + tableName + " WHERE " + strConditionalValues + "";
+                else
+                {
+                    // building non conditional query
+                    Log.e(TAG, "getRecordCount: conditional value was null.");
+                    return 0;
+                }
+            }
+            else
+            {
+                query = "SELECT COUNT(" + values + ") FROM " + tableName + "";
+                Log.e(TAG, "getRecordCount: query without condition is: " + query);
             }
 
             if (!query.equalsIgnoreCase(""))
@@ -496,6 +553,320 @@ public class DBHelper
             Log.e(TAG, "getRecordCount: in database helper class:\n");
             e.printStackTrace();
             return 0;
+        }
+    }
+
+    /**
+     * 2018 September 07 - Friday - 05:39 PM
+     * is table exists method
+     *
+     * this method will check if a table exists in database
+     * if yes is will not execute create table query
+     * else it will execute
+     *
+     * @param tableName - name of the table to check if that table exists or not
+     *
+     * @return true - if table exists in database
+     *         false - if table not exists in database
+     **/
+    @SuppressWarnings("unused")
+    public boolean isTableExists(String tableName)
+    {
+        try
+        {
+            // query for checking if table exists in database
+            String query = "SELECT DISTINCT tbl_name FROM sqlite_master WHERE tbl_name = '" + tableName + "'";
+
+            // executing the query using cursor
+            Cursor cursor = db.getReadableDatabase().rawQuery(query, null);
+
+            // checking if cursor is not null
+            if (cursor != null)
+            {
+                // cursor is not null, moving the cursor position to first
+                cursor.moveToFirst();
+
+                // getting the count from cursor
+                int count = cursor.getCount();
+
+                // closing the cursor
+                cursor.close();
+
+                // returning true if table exists in database
+                // else false if table does not exists in database
+                return count > 0;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        catch (Exception e)
+        {
+            Log.e(TAG, "isTableExists: exception in is table exists method:\n");
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * 2018 August 13 - Monday - 12:34 PM
+     * get max field method
+     *
+     * this method will get max value of the field in the table
+     *
+     * @param field - primary key of the table to get the max value or
+     *             an integer field of the table to get the max value
+     *
+     * @param tableName - table name from where you need to get max value
+     *
+     * @return - max value of the field passed
+     **/
+    public int getMaxId(String field, String tableName)
+    {
+        try
+        {
+            if (field != null && field.length() != 0)
+            {
+                if (tableName.length() == 0)
+                {
+                    Log.e(TAG, "getMaxId: table name is required which was not passed");
+                    return 0;
+                }
+
+                String query = "SELECT MAX(" + field + ") AS ID FROM " + tableName;
+                Cursor cursor = db.getReadableDatabase().rawQuery(query, null);
+
+                if (cursor != null)
+                {
+                    cursor.moveToFirst();
+                    int id = cursor.getInt(cursor.getColumnIndex("ID"));
+
+                    cursor.close();
+                    return id;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        catch (Exception e)
+        {
+            Log.e(TAG, "getMaxId: exception while getting max field from table:\n");
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    /**
+     * 2018 August 20 - Monday - 04:01 PM
+     * execute query method
+     *
+     * this method is used to execute a query
+     * this method will return true if the query is executed successfully
+     *
+     * @param query - query that you want to execute without getting any particular result.
+     *
+     * @return - true if query was successful
+     *           false if query was not successful.
+     **/
+    public boolean executeQuery(String query)
+    {
+        try
+        {
+            if (query != null && !query.equalsIgnoreCase(""))
+            {
+                db.getWritableDatabase().execSQL(query);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        catch (Exception ex)
+        {
+            Log.e(TAG, "executeQuery: exception while executing query:\n");
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * 2018 Feb 01 - Thursday - 03:52 PM
+     * Execute Select Query
+     *
+     * parameters for this method are
+     *
+     * @param tableName - name of the table to perform select operation
+     *
+     * @param values - values to perform select query on
+     *                 Ex: "*" or "id, firstName"
+     *
+     * @param hasConditions - if you want to use the where clause in select query
+     *                        then this parameter should be set to true
+     *                        else this parameter can be false
+     *
+     * @param conditionalValues - if the hasConditions is set to true
+     *                            then the user has to pass conditionalValues
+     *                            else it can be null
+     *
+     * @param tClass - Pass your Model class like this
+     *                 Ex: ModelClass.class
+     *                 this is required for setting the values
+     *
+     * @return ArrayList of Type pass as class
+     *
+    **/
+    @SuppressWarnings("unchecked")
+    public <T> ArrayList<T> executeSelectQuery(String tableName,
+                                                String values,
+                                                boolean hasConditions,
+                                                StringBuilder conditionalValues,
+                                                Class<T> tClass)
+    {
+        try
+        {
+            Cursor cursor;
+            ArrayList<T> tArrayList = new ArrayList<>();
+
+            if (values != null)
+            {
+                String query;
+
+                // check if has condition is tru
+                // if yes the conditional values should not be null
+                if (hasConditions)
+                {
+                    // check ig conditional values is passed
+                    // it should be of string builder type
+                    // where user has to pass values to be passed in where clause
+                    //
+                    // FOR EX: firstName = 'FirstNameValue' OR
+                    //         firstName LIKE %Term to be searched%
+                    if (conditionalValues != null)
+                    {
+                        // generating query with conditions
+                        query = "SELECT " + values + " FROM " + tableName + " WHERE " + conditionalValues.toString();
+                        Log.e(TAG, "executeSelectQuery: Select query with conditions is: " + query);
+                    }
+                    else
+                    {
+                        // conditional values was not passed
+                        Log.e(TAG, "executeSelectQuery: conditional values is null.");
+                        return null;
+                    }
+                }
+                else
+                {
+                    // generating query without conditions
+                    query = "SELECT " + values + " FROM " + tableName;
+                    Log.e(TAG, "executeSelectQuery: Select query without conditions is: " + query);
+                }
+
+                // executing query
+                cursor = db.getWritableDatabase().rawQuery(query, null);
+
+                // if cursor is not null then moving the position to first
+                // and returning the cursor
+                if (cursor != null && cursor.moveToFirst())
+                {
+                    //#region LOOP FOR EXTRACTING DATA FROM DATABASE
+                    for (int i = 0; i < cursor.getCount(); i++)
+                    {
+                        // setting new instance of the class passed
+                        // for invoking the values returned from database
+                        Object instance = tClass.newInstance();
+
+                        //#region LOOP FOR COUNT OF COLUMNS
+                        for (int j = 0; j < cursor.getColumnCount(); j++)
+                        {
+                            try
+                            {
+                                //#region LOOP FOR GETTING ALL USER DECLARED METHODS
+                                for (Method method : tClass.getDeclaredMethods())
+                                {
+                                    // getting column name from database
+                                    String columnName = cursor.getColumnName(j).toLowerCase();
+
+                                    // getting name of the methods which are user declared or created
+                                    String methodName = method.getName().toLowerCase();
+
+                                    // checking for set method only for setting the value
+                                    // with prefix set followed by the name of column from database
+                                    if (methodName.contains("set" + columnName))
+                                    {
+                                        // getting name of the methods which are user declared or created
+                                        // with parameter types for setting value
+                                        method = tClass.getDeclaredMethod(method.getName(), method.getParameterTypes());
+                                        String parameterType = method.getParameterTypes()[0].toString();
+
+                                        // checking if parameter type is int
+                                        if (int.class == method.getParameterTypes()[0])
+                                        {
+                                            // getting int value from database
+                                            method.invoke(instance, cursor.getInt(j));
+                                        }
+                                        // checking if parameter type is boolean
+                                        else if (boolean.class == method.getParameterTypes()[0])
+                                        {
+                                            // getting string value from database
+                                            method.invoke(instance, cursor.getString(j));
+                                        }
+                                        else if (float.class == method.getParameterTypes()[0])
+                                        {
+                                            method.invoke(instance, cursor.getFloat(j));
+                                        }
+                                        else if (double.class == method.getParameterTypes()[0])
+                                        {
+                                            method.invoke(instance, String.valueOf(cursor.getString(j)));
+                                        }
+                                        else
+                                        {
+                                            method.invoke(instance, String.valueOf(cursor.getString(j)));
+                                        }
+                                    }
+                                }
+                                //#region LOOP FOR GETTING ALL USER DECLARED METHODS
+                            }
+                            catch (Exception e)
+                            {
+                                Log.e(TAG, "executeSelectQuery1: exception while type casting:\n");
+                                e.printStackTrace();
+                            }
+                        }
+                        //#endregion LOOP FOR COUNT OF COLUMNS
+
+                        tArrayList.add((T) instance);
+                        cursor.moveToNext();
+                    }
+                    //#endregion LOOP FOR EXTRACTING DATA FROM DATABASE
+
+                    cursor.close();
+                    return tArrayList;
+                }
+                else
+                {
+                    Log.e(TAG, "executeSelectQuery: cursor was null. No data found.");
+                    return null;
+                }
+            }
+            else
+            {
+                Log.e(TAG, "executeSelectQuery: values was null for select query.");
+                return null;
+            }
+        }
+        catch (Exception e)
+        {
+            Log.e(TAG, "executeSelectQuery: in database helper class:\n");
+            e.printStackTrace();
+            return null;
         }
     }
 }

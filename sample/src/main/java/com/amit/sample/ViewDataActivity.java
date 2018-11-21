@@ -84,6 +84,7 @@ public class ViewDataActivity extends AppCompatActivity implements StyleDetailsL
         try
         {
             final LiveData<List<StyleDetails>> mStyleDetails = mDb.styleDetailsDao().getAllStyleDetails();
+
             mStyleDetails.observe(this, new Observer<List<StyleDetails>>()
             {
                 @Override
@@ -93,8 +94,6 @@ public class ViewDataActivity extends AppCompatActivity implements StyleDetailsL
                     mAdapter.setStyleDetails(styleDetails);
                 }
             });
-
-
         }
         catch (Exception e)
         {

@@ -45,4 +45,9 @@
     <string name="style_code">Style Code</string>
     <string name="dbapilibrary">DBApiLibrary</string>
 
+    <string-array name="gender_array">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
 </resources>

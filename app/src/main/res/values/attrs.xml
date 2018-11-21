@@ -27,6 +27,7 @@
         <attr name="selectedColor" format="color|reference" />
         <attr name="switchTabs" format="reference" />
         <attr name="typeface" format="string" />
+        <attr name="curvedSelection" format="boolean" />
     </declare-styleable>
 
     <!--<declare-styleable name="ProgressBtn">

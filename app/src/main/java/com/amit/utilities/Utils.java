@@ -32,6 +32,9 @@ import android.util.Log;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.lang.reflect.WildcardType;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -46,6 +49,25 @@ public class Utils
 {
     private static final String TAG = Utils.class.getSimpleName();
     private static float xdpi = Float.MIN_VALUE;
+
+    static Type getParameterUpperBound(int index, ParameterizedType type)
+    {
+        Type[] types = type.getActualTypeArguments();
+
+        if (index < 0 || index >= types.length)
+        {
+            throw new IllegalArgumentException("Index " + index + " not in range [0," + types.length + ") for " + type);
+        }
+
+        Type paramType = types[index];
+
+        if (paramType instanceof WildcardType)
+        {
+            return ((WildcardType) paramType).getUpperBounds()[0];
+        }
+
+        return paramType;
+    }
 
     /**
      * is Sd Card Mounted

@@ -1,8 +1,9 @@
 package com.amit.sample;
 
+import android.content.Intent;
+import android.database.DatabaseUtils;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -11,10 +12,17 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.amit.cryptography.AESCrypt;
+import com.amit.db.DBHelper;
 import com.amit.dialog.AlertDialogBox;
 import com.amit.dialog.PromptDialogBox;
+import com.amit.sample.model.LibraryTestModel;
+import com.amit.sample.model.Model_MemberList;
 import com.amit.shinebtn.ShineButton;
-import com.amit.ui.ProgressBtn;
+import com.amit.ui.SwitchButton;
+import com.amit.utilities.SharedPreferenceData;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 
 
@@ -42,7 +50,7 @@ public class MainActivity extends AppCompatActivity
     private TextInputEditText textPassword;
     private Button btnEncryptDecryptPassword;
     private boolean isPasswordEncrypted = false;
-
+    private android.widget.TextView displayFourTextView;
 
     /*private ArrowDownloadButton downloadButton;*/
 
@@ -51,10 +59,162 @@ public class MainActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         AESCrypt.DEBUG_LOG_ENABLED = true;
+        DBHelper dbHelper = new DBHelper(this);
+
+        SharedPreferenceData sharedPreferenceData = new SharedPreferenceData(MainActivity.this);
+        sharedPreferenceData.setValue("dbName", "testDB");
+
+        /*String tableName = "Member";
+        LinkedHashMap<String, String> values = new LinkedHashMap<>();
+        values.put("Code", "INTEGER PRIMARY KEY");
+        values.put("AccountNo", "TEXT");
+        values.put("GujAccountNo", "TEXT");
+        values.put("GujLocName", "TEXT");
+        values.put("GujMemberCode", "INTEGER");
+        values.put("GujMemberName", "TEXT");
+        values.put("LocationCode", "INTEGER");
+        values.put("LocationName", "TEXT");
+        values.put("MemberCode", "INTEGER");
+        values.put("MemberName", "TEXT");
+
+        dbHelper.executeDatabaseOperations(tableName,
+                "c",
+                values,
+                false,
+                null);*/
+
+        /*values = new LinkedHashMap<>();
+        values.put("Code", DatabaseUtils.sqlEscapeString("1"));
+        values.put("AccountNo", DatabaseUtils.sqlEscapeString("2"));
+        values.put("GujAccountNo", DatabaseUtils.sqlEscapeString("3"));
+        values.put("GujLocName", DatabaseUtils.sqlEscapeString("4"));
+        values.put("GujMemberCode", DatabaseUtils.sqlEscapeString("5"));
+        values.put("GujMemberName", DatabaseUtils.sqlEscapeString("6"));
+        values.put("LocationCode", DatabaseUtils.sqlEscapeString("7"));
+        values.put("LocationName", DatabaseUtils.sqlEscapeString("8"));
+        values.put("MemberCode", DatabaseUtils.sqlEscapeString("9"));
+        values.put("MemberName", DatabaseUtils.sqlEscapeString("10"));
+
+        dbHelper.executeDatabaseOperations(tableName,
+                "i",
+                values,
+                false,
+                null);*/
+
+        /*try
+        {
+            ArrayList<Model_MemberList> modelMemberListArrayList = dbHelper.executeSelectQuery(
+                    tableName, "*",
+                    false,
+                    null,
+                    Model_MemberList.class);
+
+            if (modelMemberListArrayList != null)
+            {
+                for (int i = 0; i < modelMemberListArrayList.size(); i++)
+                {
+                    Log.e(TAG, "onCreate: values in array list is: " + modelMemberListArrayList.get(i));
+                    Log.e(TAG, "onCreate: location Name is: " + modelMemberListArrayList.get(i).getLocationName());
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        tableName = "LibraryTest";
+        values = new LinkedHashMap<>();
+        values.put("code", "INTEGER PRIMARY KEY");
+        values.put("value", "REAL");
+        values.put("locked", "INTEGER");
+        values.put("description", "TEXT");
+
+        dbHelper.executeDatabaseOperations(tableName,
+                "c",
+                values,
+                false,
+                null);*/
+
+        /*for (int i = 0; i < 5; i++)
+        {
+            values = new LinkedHashMap<>();
+            values.put("code", DatabaseUtils.sqlEscapeString(String.valueOf(i + 1)));
+            values.put("value", DatabaseUtils.sqlEscapeString(String.valueOf((i + 1) + ".0")));
+            values.put("locked", DatabaseUtils.sqlEscapeString("0"));
+            values.put("description", DatabaseUtils.sqlEscapeString("This is test data no: " + (i + 1)));
+
+            dbHelper.executeDatabaseOperations(tableName,
+                    "i",
+                    values,
+                    false,
+                    null);
+        }*/
+
+        ArrayList<LibraryTestModel> libraryTestModels = dbHelper.executeSelectQuery(
+                "LibraryTest", "code, value",
+                false,
+                null,
+                LibraryTestModel.class);
+
+        if (libraryTestModels != null)
+        {
+            for (int i = 0; i < libraryTestModels.size(); i++)
+            {
+                Log.e(TAG, "onCreate: code's value is: " + libraryTestModels.get(i).getCode());
+                Log.e(TAG, "onCreate: value's value is: " + libraryTestModels.get(i).getValue());
+                Log.e(TAG, "onCreate: locked's value is: " + libraryTestModels.get(i).isLocked());
+                Log.e(TAG, "onCreate: description's value is: " + libraryTestModels.get(i).getDescription());
+            }
+        }
+
+        /*ArrayList<StyleDetails> styleDetailsArrayList = dbHelper.executeSelectQuery(
+                "StyleDetails",
+                "*",
+                false,
+                null);
+
+        Log.e(TAG, "onCreate: style details array list is: " + styleDetailsArrayList);*/
+
+        ((SwitchButton) findViewById(R.id.switchButton)).setOnSwitchListener(new SwitchButton.OnSwitchListener()
+        {
+            @Override
+            public void onSwitch(int position, String tabText)
+            {
+                PromptDialogBox promptDialogBox = new PromptDialogBox(MainActivity.this)
+                        .setDialogType(PromptDialogBox.DIALOG_TYPE_ERROR)
+                        .setAnimationEnable(true)
+                        .setTitleText(getResources().getString(R.string.error))
+                        .setContentText(getResources().getString(R.string.app_name))
+                        .setPositiveListener("YES", new PromptDialogBox.onPositiveListener()
+                        {
+                            @Override
+                            public void onClick(PromptDialogBox dialog)
+                            {
+                                dialog.dismiss();
+                            }
+                        });
+
+                promptDialogBox.setCancelable(false);
+                promptDialogBox.show();
+            }
+        });
+
 
         textPassword = findViewById(R.id.textPassword);
         btnEncryptDecryptPassword = findViewById(R.id.btnEncryptDecryptPassword);
+
+        /*try
+        {
+            displayFourTextView.setText("Testing for exception and getting stack trace");
+        }
+        catch(Exception e)
+        {
+            Log.e(TAG, "Exception occurred.");
+            e.printStackTrace();
+        }*/
 
         final ShineButton shineButton = findViewById(R.id.shine_button);
         shineButton.init(MainActivity.this);
@@ -472,8 +632,11 @@ public class MainActivity extends AppCompatActivity
                 .setIcon(R.drawable.ic_error_outline_white_48dp, AlertDialogBox.Icon.Visible)
                 .onPositiveClicked(new AlertDialogBox.AlertDialogListener() {
                     @Override
-                    public void onClick() {
+                    public void onClick()
+                    {
                         Toast.makeText(getApplicationContext(), "Ok", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(MainActivity.this, SaveUpdateDataActivity.class));
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.anim_stay);
                     }
                 })
                 .onNegativeClicked(new AlertDialogBox.AlertDialogListener() {
