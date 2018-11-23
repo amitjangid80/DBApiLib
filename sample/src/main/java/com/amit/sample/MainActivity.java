@@ -1,9 +1,11 @@
 package com.amit.sample;
 
+import android.Manifest;
 import android.content.Intent;
-import android.database.DatabaseUtils;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -15,16 +17,15 @@ import com.amit.cryptography.AESCrypt;
 import com.amit.db.DBHelper;
 import com.amit.dialog.AlertDialogBox;
 import com.amit.dialog.PromptDialogBox;
+import com.amit.location.GeoLocation;
 import com.amit.sample.model.LibraryTestModel;
-import com.amit.sample.model.Model_MemberList;
 import com.amit.shinebtn.ShineButton;
 import com.amit.ui.SwitchButton;
 import com.amit.utilities.SharedPreferenceData;
+import com.location.aravind.getlocation.GeoLocator;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-
-
 
 /*import cn.refactor.lib.colordialog.PromptDialog;*/
 /*import com.brouding.simpledialog.SimpleDialog;*/
@@ -52,6 +53,8 @@ public class MainActivity extends AppCompatActivity
     private boolean isPasswordEncrypted = false;
     private android.widget.TextView displayFourTextView;
 
+    private GeoLocation geoLocation;
+
     /*private ArrowDownloadButton downloadButton;*/
 
     @Override
@@ -65,6 +68,56 @@ public class MainActivity extends AppCompatActivity
 
         SharedPreferenceData sharedPreferenceData = new SharedPreferenceData(MainActivity.this);
         sharedPreferenceData.setValue("dbName", "testDB");
+
+        /*final SegmentedControl segmented_control = findViewById(R.id.segmented_control);
+
+        segmented_control.addOnSegmentSelectListener(new OnSegmentSelectedListener()
+        {
+            @Override
+            public void onSegmentSelected(SegmentViewHolder segmentViewHolder, boolean isSelected, boolean isReselected)
+            {
+                ToastMsg.success(MainActivity.this,
+                        "Selected segment is: " + segmented_control.getSelectedViewHolder().getSegmentData() +
+                        " and selected segment's position is: " + segmented_control.getSelectedViewHolder().getAbsolutePosition(),
+                        ToastMsg.ToastPosition.CENTER).show();
+            }
+        });*/
+
+        /*try
+        {
+            GeoLocator geoLocator = new GeoLocator(getApplicationContext(),MainActivity.this);
+            Log.e(TAG, "onCreate: address of current location  is: " + geoLocator.getAddress());
+            Log.e(TAG, "onCreate: latitude of current location  is: " + geoLocator.getLattitude());
+            Log.e(TAG, "onCreate: longitude of current location  is: " + geoLocator.getLongitude());
+            Log.e(TAG, "onCreate: known name of current location is: " + geoLocator.getKnownName());
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }*/
+
+        try
+        {
+            geoLocation = new GeoLocation(MainActivity.this);
+            Log.e(TAG, "onCreate: address of current location is: " + geoLocation.getAddress());
+            Log.e(TAG, "onCreate: latitude of current location is: " + geoLocation.getLatitude());
+            Log.e(TAG, "onCreate: longitude of current location is: " + geoLocation.getLongitude());
+
+            String city = geoLocation.getCity();
+            String state = geoLocation.getState();
+            String country = geoLocation.getCountry();
+            String premises = geoLocation.getPremises();
+            String knownName = geoLocation.getKnownName();
+            String postalCode = geoLocation.getPostalCode();
+            String subLocality = geoLocation.getSubLocality();
+            String subAdminArea = geoLocation.getSubAdminArea();
+            String thoroughFare = geoLocation.getThoroughFare();
+            String subThoroughFare = geoLocation.getSubThoroughFare();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
 
         /*String tableName = "Member";
         LinkedHashMap<String, String> values = new LinkedHashMap<>();
@@ -153,10 +206,19 @@ public class MainActivity extends AppCompatActivity
                     null);
         }*/
 
-        ArrayList<LibraryTestModel> libraryTestModels = dbHelper.executeSelectQuery(
-                "LibraryTest", "code, value",
+        // String tableName = "LibraryTest";
+
+        /*ArrayList<LibraryTestModel> libraryTestModels = dbHelper.executeSelectQuery(
+                tableName, "*",
                 false,
                 null,
+                LibraryTestModel.class);*/
+
+        /*ArrayList<LibraryTestModel> libraryTestModels = dbHelper.executeSelectQuery(
+                tableName,
+                "*",
+                false,
+                "code = 1",
                 LibraryTestModel.class);
 
         if (libraryTestModels != null)
@@ -169,6 +231,30 @@ public class MainActivity extends AppCompatActivity
                 Log.e(TAG, "onCreate: description's value is: " + libraryTestModels.get(i).getDescription());
             }
         }
+
+        LinkedHashMap<String, String> values = new LinkedHashMap<>();
+        values.put("code", "10");
+        values.put("value", "10.1");
+        values.put("locked", "0");
+        values.put("description", "Insert with transaction");
+
+        Log.e(TAG, "onCreate: insert with transaction start time is: " + System.currentTimeMillis());
+        dbHelper.executeInsertWithTransaction(tableName, values);
+        Log.e(TAG, "onCreate: insert with transaction end time is: " + System.currentTimeMillis());
+
+        values = new LinkedHashMap<>();
+        values.put("code", "20");
+        values.put("value", "20.1");
+        values.put("locked", "1");
+        values.put("description", "'Insert without transaction.'");
+
+        Log.e(TAG, "onCreate: insert without transaction start time is: " + System.currentTimeMillis());
+        dbHelper.executeDatabaseOperations(tableName,
+                "i",
+                values,
+                false,
+                null);
+        Log.e(TAG, "onCreate: insert without transaction end time is: " + System.currentTimeMillis());*/
 
         /*ArrayList<StyleDetails> styleDetailsArrayList = dbHelper.executeSelectQuery(
                 "StyleDetails",
@@ -711,5 +797,21 @@ public class MainActivity extends AppCompatActivity
         {
             Log.e(TAG, "encryptDecryptPassword: exception occurred: ", e);
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
+    {
+        switch (requestCode)
+        {
+            case GeoLocation.REQUEST_LOCATION:
+
+                geoLocation = new GeoLocation(MainActivity.this);
+                Log.e(TAG, "onRequestPermissionsResult: address is: " + geoLocation.getAddress());
+
+                break;
+        }
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }

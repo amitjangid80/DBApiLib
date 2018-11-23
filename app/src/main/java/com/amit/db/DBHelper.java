@@ -2,9 +2,11 @@ package com.amit.db;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
 import com.amit.utilities.SharedPreferenceData;
+import com.amit.utilities.TextUtils;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -16,13 +18,13 @@ import java.util.LinkedHashMap;
  *
  * this class has method for executing db queries
  * like: creating table, inserting into table, deleting table, dropping table
- */
-@SuppressWarnings("unused")
+**/
+@SuppressWarnings({"unused", "unchecked"})
 public class DBHelper
 {
     private static final String TAG = DBHelper.class.getSimpleName();
 
-    private Database db;
+    private final Database db;
 
     /**
      * Constructor of the class
@@ -30,7 +32,6 @@ public class DBHelper
      *
      * @param context - context
      **/
-    @SuppressWarnings("unused")
     public DBHelper(Context context)
     {
         SharedPreferenceData sharedPreferenceData = new SharedPreferenceData(context);
@@ -129,7 +130,6 @@ public class DBHelper
      * @return true or false
      **/
     // endregion
-    @SuppressWarnings("unused")
     public boolean executeDatabaseOperations(String tableName,
                                              String operations,
                                              LinkedHashMap<String, String> values,
@@ -155,6 +155,9 @@ public class DBHelper
                     {
                         Log.e(TAG, "executeDatabaseOperations: map of values for create query is: " + values.toString());
 
+                        // extracting all the values from hash map
+                        // removing brackets from hash map
+                        // and replacing = sign with space
                         String strValues = values.toString();
                         strValues = strValues.replace("{", "");
                         strValues = strValues.replace("}", "");
@@ -166,9 +169,7 @@ public class DBHelper
                     else
                     {
                         Log.e(TAG, "executeDatabaseOperations: Values was null for creating table in.....");
-                        // return "Values was null for creating table.....";
                         return false;
-                        // return null;
                     }
 
                     break;
@@ -178,12 +179,14 @@ public class DBHelper
                 case "d":
 
                     // while performing delete where clause is compulsory if deleting single record
+                    //
                     // -- if you want to delete single row then values can be null,
                     //    hasCondition has to be true and conditional values cannot be null
                     // -- if you want to delete all the records of the table
                     //    then just pass the table name and operation as "d"
                     //    rest of the parameters like values can be null,
                     //    has condition can be false and conditional values can be false
+                    //
                     // checking if has conditions is set to true or not
                     // if yes then checking if conditional values array list is not null
                     // if not null then converting the conditional values array list to string
@@ -194,6 +197,8 @@ public class DBHelper
                         // checking if conditional values array list if not null
                         if (conditionalValues != null)
                         {
+                            // extracting all the values from hash map
+                            // removing brackets from hash map
                             String strConditionalValues = conditionalValues.toString();
                             strConditionalValues = strConditionalValues.replace("{", "");
                             strConditionalValues = strConditionalValues.replace("}", "");
@@ -204,20 +209,13 @@ public class DBHelper
                         else
                         {
                             Log.e(TAG, "executeDatabaseOperations: Conditional values was null for Delete query.....");
-                            // return "Conditional values was null for Delete query.....";
                             return false;
-                            // return null;
                         }
                     }
                     else
                     {
                         query = "DELETE FROM " + tableName;
                         Log.e(TAG, "executeDatabaseOperations: delete query: " + query);
-
-                        // Log.e(TAG, "executeDatabaseOperations: False passed for has conditions parameter while performing delete query.....");
-                        // return "False passed for has conditions parameter while performing delete query.....";
-                        // return false;
-                        // return null;
                     }
 
                     break;
@@ -246,15 +244,21 @@ public class DBHelper
                         Log.e(TAG, "executeDatabaseOperations: map of values for insert query is: " + values.toString());
                         ArrayList<String> strValuesList = new ArrayList<>();
 
+                        // this loop extracts all the values from hash map
+                        // using the key set
                         for (String k : values.keySet())
                         {
                             strValuesList.add(values.get(k));
                         }
 
+                        // the below code extracts all the key set from hash map
+                        // removing brackets from hash map
                         String fields = values.keySet().toString();
                         fields = fields.replace("[", "");
                         fields = fields.replace("]", "");
 
+                        // extracting all the values from hash map
+                        // removing brackets from hash map
                         String strValues = strValuesList.toString();
                         strValues = strValues.replace("[", "");
                         strValues = strValues.replace("]", "");
@@ -265,9 +269,7 @@ public class DBHelper
                     else
                     {
                         Log.e(TAG, "executeDatabaseOperations: Values was null while inserting data in table.....");
-                        // return "Values was null while inserting data in table.....";
                         return false;
-                        // return null;
                     }
 
                     break;
@@ -284,10 +286,14 @@ public class DBHelper
                     {
                         if (values != null && conditionalValues != null)
                         {
+                            // extracting all the values from hash map
+                            // removing brackets from hash map
                             String strValues = values.toString();
                             strValues = strValues.replace("{", "");
                             strValues = strValues.replace("}", "");
 
+                            // extracting all the values from hash map
+                            // removing brackets from hash map
                             String strConditionalValues = conditionalValues.toString();
                             strConditionalValues = strConditionalValues.replace("{", "");
                             strConditionalValues = strConditionalValues.replace("}", "");
@@ -298,17 +304,13 @@ public class DBHelper
                         else
                         {
                             Log.e(TAG, "executeDatabaseOperations: Values or Conditional values was null for update query.....");
-                            // return "Values or Conditional values was null for update query.....";
                             return false;
-                            // return null;
                         }
                     }
                     else
                     {
                         Log.e(TAG, "executeDatabaseOperations: False passed for has conditions parameter while performing update query.....");
-                        // return "False passed for has conditions parameter while performing update query.....";
                         return false;
-                        // return null;
                     }
 
                     break;
@@ -340,7 +342,6 @@ public class DBHelper
      * @return cursor with records from the table
     **/
     // endregion COMMENTS FOR executeQuery method
-    @SuppressWarnings("unused")
     public Cursor executeSelectQuery(String query)
     {
         try
@@ -399,7 +400,6 @@ public class DBHelper
      *       no matter condition is there or not
      **/
     // endregion COMMENTS FOR executeQuery method
-    @SuppressWarnings("unused")
     public Cursor executeSelectQuery(String tableName,
                                      String values,
                                      boolean hasConditions,
@@ -470,6 +470,233 @@ public class DBHelper
             Log.e(TAG, "executeSelectQuery: in database helper class:\n");
             e.printStackTrace();
             return null;
+        }
+    }
+
+    //#region COMMENTS FOR executeSelectQuery method
+    /**
+     * 2018 Feb 01 - Thursday - 03:52 PM
+     * Execute Select Query
+     *
+     * parameters for this method are
+     *
+     * @param tableName - name of the table to perform select operation
+     *
+     * @param values - values to perform select query on
+     *                 Ex: "*" or "id, firstName"
+     *
+     * @param hasConditions - if you want to use the where clause in select query
+     *                        then this parameter should be set to true
+     *                        else this parameter can be false
+     *
+     * @param conditionalValues - if the hasConditions is set to true
+     *                            then the user has to pass conditionalValues
+     *                            else it can be null
+     *
+     * @param tClass - Pass your Model class like this
+     *                 Ex: ModelClass.class
+     *                 this is required for setting the values
+     *
+     * @return ArrayList of Type pass as class
+     *
+    **/
+    //#endregion COMMENTS FOR executeSelectQuery method
+    public <T> ArrayList<T> executeSelectQuery(String tableName,
+                                               String values,
+                                               boolean hasConditions,
+                                               String conditionalValues,
+                                               Class<T> tClass)
+    {
+        try
+        {
+            Cursor cursor;
+            ArrayList<T> tArrayList = new ArrayList<>();
+
+            if (values != null)
+            {
+                String query;
+
+                // check if has condition is tru
+                // if yes the conditional values should not be null
+                if (hasConditions)
+                {
+                    // check ig conditional values is passed
+                    // it should be of string builder type
+                    // where user has to pass values to be passed in where clause
+                    //
+                    // FOR EX: firstName = 'FirstNameValue' OR
+                    //         firstName LIKE %Term to be searched%
+                    if (conditionalValues != null)
+                    {
+                        // generating query with conditions
+                        query = "SELECT " + values + " FROM " + tableName + " WHERE " + conditionalValues.toString();
+                        Log.e(TAG, "executeSelectQuery: Select query with conditions is: " + query);
+                    }
+                    else
+                    {
+                        // conditional values was not passed
+                        Log.e(TAG, "executeSelectQuery: conditional values is null.");
+                        return null;
+                    }
+                }
+                else
+                {
+                    // generating query without conditions
+                    query = "SELECT " + values + " FROM " + tableName;
+                    Log.e(TAG, "executeSelectQuery: Select query without conditions is: " + query);
+                }
+
+                // executing query
+                cursor = db.getWritableDatabase().rawQuery(query, null);
+
+                // if cursor is not null then moving the position to first
+                // and returning the cursor
+                if (cursor != null && cursor.moveToFirst())
+                {
+                    //#region LOOP FOR EXTRACTING DATA FROM DATABASE
+                    for (int i = 0; i < cursor.getCount(); i++)
+                    {
+                        // setting new instance of the class passed
+                        // for invoking the values returned from database
+                        Object instance = tClass.newInstance();
+
+                        //#region LOOP FOR COUNT OF COLUMNS
+                        for (int j = 0; j < cursor.getColumnCount(); j++)
+                        {
+                            try
+                            {
+                                //#region LOOP FOR GETTING ALL USER DECLARED METHODS
+                                for (Method method : tClass.getDeclaredMethods())
+                                {
+                                    // getting column name from database
+                                    String columnName = cursor.getColumnName(j).toLowerCase();
+
+                                    // getting name of the methods which are user declared or created
+                                    String methodName = method.getName().toLowerCase();
+
+                                    // checking for set method only for setting the value
+                                    // with prefix set followed by the name of column from database
+                                    if (methodName.contains("set" + columnName))
+                                    {
+                                        // getting name of the methods which are user declared or created
+                                        // with parameter types for setting value
+                                        method = tClass.getDeclaredMethod(method.getName(), method.getParameterTypes());
+                                        String parameterType = method.getParameterTypes()[0].toString();
+
+                                        // checking if parameter type is int
+                                        if (int.class == method.getParameterTypes()[0])
+                                        {
+                                            // getting int value from database
+                                            method.invoke(instance, cursor.getInt(j));
+                                        }
+                                        // checking if parameter type is boolean
+                                        else if (boolean.class == method.getParameterTypes()[0])
+                                        {
+                                            // getting string value from database
+                                            method.invoke(instance, cursor.getString(j));
+                                        }
+                                        // checking if parameter type is float
+                                        else if (float.class == method.getParameterTypes()[0])
+                                        {
+                                            // getting float value from database
+                                            method.invoke(instance, cursor.getFloat(j));
+                                        }
+                                        // checking if parameter type is double
+                                        else if (double.class == method.getParameterTypes()[0])
+                                        {
+                                            // getting double value from database
+                                            method.invoke(instance, String.valueOf(cursor.getDouble(j)));
+                                        }
+                                        // any other data type will be get string from database
+                                        else
+                                        {
+                                            // getting string value from database
+                                            method.invoke(instance, String.valueOf(cursor.getString(j)));
+                                        }
+                                    }
+                                }
+                                //#region LOOP FOR GETTING ALL USER DECLARED METHODS
+                            }
+                            catch (Exception e)
+                            {
+                                Log.e(TAG, "executeSelectQuery: exception while type casting:\n");
+                                e.printStackTrace();
+                            }
+                        }
+                        //#endregion LOOP FOR COUNT OF COLUMNS
+
+                        tArrayList.add((T) instance);
+                        cursor.moveToNext();
+                    }
+                    //#endregion LOOP FOR EXTRACTING DATA FROM DATABASE
+
+                    cursor.close();
+                    return tArrayList;
+                }
+                else
+                {
+                    Log.e(TAG, "executeSelectQuery: cursor was null. No data found.");
+                    return null;
+                }
+            }
+            else
+            {
+                Log.e(TAG, "executeSelectQuery: values was null for select query.");
+                return null;
+            }
+        }
+        catch (Exception e)
+        {
+            Log.e(TAG, "executeSelectQuery: in database helper class:\n");
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public boolean executeInsertWithTransaction(String tableName, LinkedHashMap<String, String> values)
+    {
+        try
+        {
+            if (tableName != null && values != null)
+            {
+                Log.e(TAG, "executeDatabaseOperations: map of values for insert query is: " + values.toString());
+                StringBuilder indexBuilder = new StringBuilder();
+                ArrayList<String> valuesArrayList = new ArrayList<>();
+
+                for (String k : values.keySet())
+                {
+                    valuesArrayList.add(values.get(k));
+                    indexBuilder.append("?").append(",");
+                }
+
+                String query = "INSERT INTO " + tableName + " VALUES (" + TextUtils.removeLastChar(indexBuilder.toString()) + ")";
+                Log.e(TAG, "executeInsertWithTransaction: query with indexes is: " + query);
+
+                db.getWritableDatabase().beginTransaction();
+                SQLiteStatement sqLiteStatement = db.getWritableDatabase().compileStatement(query);
+
+                for (String k : values.keySet())
+                {
+                    int position = valuesArrayList.indexOf(values.get(k)) + 1;
+                    sqLiteStatement.bindString(position, values.get(k));
+                }
+
+                Log.e(TAG, "executeInsertWithTransaction: generated sq lite statement is: " + sqLiteStatement);
+                sqLiteStatement.execute();
+                sqLiteStatement.clearBindings();
+
+                db.getWritableDatabase().setTransactionSuccessful();
+                db.getWritableDatabase().endTransaction();
+                return true;
+            }
+
+            return false;
+        }
+        catch (Exception e)
+        {
+            Log.e(TAG, "executeInsertWithTransaction: exception while performing insert with transaction:\n");
+            e.printStackTrace();
+            return false;
         }
     }
 
@@ -694,179 +921,6 @@ public class DBHelper
             Log.e(TAG, "executeQuery: exception while executing query:\n");
             ex.printStackTrace();
             return false;
-        }
-    }
-
-    /**
-     * 2018 Feb 01 - Thursday - 03:52 PM
-     * Execute Select Query
-     *
-     * parameters for this method are
-     *
-     * @param tableName - name of the table to perform select operation
-     *
-     * @param values - values to perform select query on
-     *                 Ex: "*" or "id, firstName"
-     *
-     * @param hasConditions - if you want to use the where clause in select query
-     *                        then this parameter should be set to true
-     *                        else this parameter can be false
-     *
-     * @param conditionalValues - if the hasConditions is set to true
-     *                            then the user has to pass conditionalValues
-     *                            else it can be null
-     *
-     * @param tClass - Pass your Model class like this
-     *                 Ex: ModelClass.class
-     *                 this is required for setting the values
-     *
-     * @return ArrayList of Type pass as class
-     *
-    **/
-    @SuppressWarnings("unchecked")
-    public <T> ArrayList<T> executeSelectQuery(String tableName,
-                                                String values,
-                                                boolean hasConditions,
-                                                StringBuilder conditionalValues,
-                                                Class<T> tClass)
-    {
-        try
-        {
-            Cursor cursor;
-            ArrayList<T> tArrayList = new ArrayList<>();
-
-            if (values != null)
-            {
-                String query;
-
-                // check if has condition is tru
-                // if yes the conditional values should not be null
-                if (hasConditions)
-                {
-                    // check ig conditional values is passed
-                    // it should be of string builder type
-                    // where user has to pass values to be passed in where clause
-                    //
-                    // FOR EX: firstName = 'FirstNameValue' OR
-                    //         firstName LIKE %Term to be searched%
-                    if (conditionalValues != null)
-                    {
-                        // generating query with conditions
-                        query = "SELECT " + values + " FROM " + tableName + " WHERE " + conditionalValues.toString();
-                        Log.e(TAG, "executeSelectQuery: Select query with conditions is: " + query);
-                    }
-                    else
-                    {
-                        // conditional values was not passed
-                        Log.e(TAG, "executeSelectQuery: conditional values is null.");
-                        return null;
-                    }
-                }
-                else
-                {
-                    // generating query without conditions
-                    query = "SELECT " + values + " FROM " + tableName;
-                    Log.e(TAG, "executeSelectQuery: Select query without conditions is: " + query);
-                }
-
-                // executing query
-                cursor = db.getWritableDatabase().rawQuery(query, null);
-
-                // if cursor is not null then moving the position to first
-                // and returning the cursor
-                if (cursor != null && cursor.moveToFirst())
-                {
-                    //#region LOOP FOR EXTRACTING DATA FROM DATABASE
-                    for (int i = 0; i < cursor.getCount(); i++)
-                    {
-                        // setting new instance of the class passed
-                        // for invoking the values returned from database
-                        Object instance = tClass.newInstance();
-
-                        //#region LOOP FOR COUNT OF COLUMNS
-                        for (int j = 0; j < cursor.getColumnCount(); j++)
-                        {
-                            try
-                            {
-                                //#region LOOP FOR GETTING ALL USER DECLARED METHODS
-                                for (Method method : tClass.getDeclaredMethods())
-                                {
-                                    // getting column name from database
-                                    String columnName = cursor.getColumnName(j).toLowerCase();
-
-                                    // getting name of the methods which are user declared or created
-                                    String methodName = method.getName().toLowerCase();
-
-                                    // checking for set method only for setting the value
-                                    // with prefix set followed by the name of column from database
-                                    if (methodName.contains("set" + columnName))
-                                    {
-                                        // getting name of the methods which are user declared or created
-                                        // with parameter types for setting value
-                                        method = tClass.getDeclaredMethod(method.getName(), method.getParameterTypes());
-                                        String parameterType = method.getParameterTypes()[0].toString();
-
-                                        // checking if parameter type is int
-                                        if (int.class == method.getParameterTypes()[0])
-                                        {
-                                            // getting int value from database
-                                            method.invoke(instance, cursor.getInt(j));
-                                        }
-                                        // checking if parameter type is boolean
-                                        else if (boolean.class == method.getParameterTypes()[0])
-                                        {
-                                            // getting string value from database
-                                            method.invoke(instance, cursor.getString(j));
-                                        }
-                                        else if (float.class == method.getParameterTypes()[0])
-                                        {
-                                            method.invoke(instance, cursor.getFloat(j));
-                                        }
-                                        else if (double.class == method.getParameterTypes()[0])
-                                        {
-                                            method.invoke(instance, String.valueOf(cursor.getString(j)));
-                                        }
-                                        else
-                                        {
-                                            method.invoke(instance, String.valueOf(cursor.getString(j)));
-                                        }
-                                    }
-                                }
-                                //#region LOOP FOR GETTING ALL USER DECLARED METHODS
-                            }
-                            catch (Exception e)
-                            {
-                                Log.e(TAG, "executeSelectQuery1: exception while type casting:\n");
-                                e.printStackTrace();
-                            }
-                        }
-                        //#endregion LOOP FOR COUNT OF COLUMNS
-
-                        tArrayList.add((T) instance);
-                        cursor.moveToNext();
-                    }
-                    //#endregion LOOP FOR EXTRACTING DATA FROM DATABASE
-
-                    cursor.close();
-                    return tArrayList;
-                }
-                else
-                {
-                    Log.e(TAG, "executeSelectQuery: cursor was null. No data found.");
-                    return null;
-                }
-            }
-            else
-            {
-                Log.e(TAG, "executeSelectQuery: values was null for select query.");
-                return null;
-            }
-        }
-        catch (Exception e)
-        {
-            Log.e(TAG, "executeSelectQuery: in database helper class:\n");
-            e.printStackTrace();
-            return null;
         }
     }
 }
