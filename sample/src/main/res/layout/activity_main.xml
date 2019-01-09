@@ -16,6 +16,18 @@
         android:orientation="vertical"
         android:padding="10dp">
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="pickImage"
+            android:text="@string/pick_image" />
+
+        <ImageView
+            android:id="@+id/imageFromDatabase"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/app_name" />
+
         <segmented_control.widget.custom.android.com.segmentedcontrol.SegmentedControl
             android:id="@+id/segmented_control"
             android:layout_width="match_parent"
@@ -23,13 +35,13 @@
             android:layout_margin="8dp"
             app:bottomRightRadius="10dp"
             app:columnCount="2"
-            app:strokeWidth="2dp"
             app:distributeEvenly="false"
             app:radiusForEverySegment="true"
             app:segmentHorizontalMargin="2dp"
             app:segmentVerticalMargin="2dp"
             app:segments="@array/gender_array"
             app:selectedStrokeColor="@color/blue"
+            app:strokeWidth="2dp"
             app:textVerticalPadding="10dp"
             app:topLeftRadius="10dp" />
 

@@ -44,6 +44,8 @@
     <string name="update_style_data">Update Style Data</string>
     <string name="style_code">Style Code</string>
     <string name="dbapilibrary">DBApiLibrary</string>
+    <string name="pick_image">Pick Image</string>
+    <string name="testing_database_for_transaction">Testing Database for Transaction</string>
 
     <string-array name="gender_array">
         <item>Male</item>

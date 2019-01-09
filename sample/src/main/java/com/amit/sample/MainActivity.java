@@ -1,31 +1,34 @@
 package com.amit.sample;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.amit.cryptography.AESCrypt;
 import com.amit.db.DBHelper;
+import com.amit.db.DbData;
 import com.amit.dialog.AlertDialogBox;
 import com.amit.dialog.PromptDialogBox;
 import com.amit.location.GeoLocation;
-import com.amit.sample.model.LibraryTestModel;
+import com.amit.sample.model.Image;
+import com.amit.sample.model.StoneAssortmentHeader;
 import com.amit.shinebtn.ShineButton;
 import com.amit.ui.SwitchButton;
-import com.amit.utilities.SharedPreferenceData;
-import com.location.aravind.getlocation.GeoLocator;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 
 /*import cn.refactor.lib.colordialog.PromptDialog;*/
 /*import com.brouding.simpledialog.SimpleDialog;*/
@@ -44,6 +47,9 @@ public class MainActivity extends AppCompatActivity
 {
     private static final String TAG = MainActivity.class.getSimpleName();
 
+    private static final int CAMERA_CLICK_CODE = 100;
+    private static final int GALLERY_PICK_CODE = 101;
+
     private int count = 0;
     private int progress = 0;
     // private ProgressBtn progressBtn;
@@ -55,6 +61,9 @@ public class MainActivity extends AppCompatActivity
 
     private GeoLocation geoLocation;
 
+    private DBHelper dbHelper;
+    private ImageView imageFromDatabase;
+
     /*private ArrowDownloadButton downloadButton;*/
 
     @Override
@@ -64,10 +73,94 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         AESCrypt.DEBUG_LOG_ENABLED = true;
-        DBHelper dbHelper = new DBHelper(this);
+        dbHelper = new DBHelper(this);
 
-        SharedPreferenceData sharedPreferenceData = new SharedPreferenceData(MainActivity.this);
-        sharedPreferenceData.setValue("dbName", "testDB");
+        imageFromDatabase = findViewById(R.id.imageFromDatabase);
+
+        ArrayList<StoneAssortmentHeader> stoneAssortmentHeaderArrayList = dbHelper.getAllRecords(
+                "StoneAssortmentHeader",
+                false,
+                "code",
+                StoneAssortmentHeader.class);
+
+        ArrayList<StoneAssortmentHeader> stoneAssortmentHeaderArrayList1 = dbHelper.getAllRecords(
+                "StoneAssortmentHeader",
+                "code = 2",
+                false,
+                "code",
+                StoneAssortmentHeader.class);
+
+        for (int i = 0; i < stoneAssortmentHeaderArrayList.size(); i++)
+        {
+            Log.e(TAG, "onCreate: code from database is: " + stoneAssortmentHeaderArrayList.get(i).getCode());
+            Log.e(TAG, "onCreate: user code from database is: " + stoneAssortmentHeaderArrayList.get(i).getUserCode());
+            Log.e(TAG, "onCreate: device id from database is: " + stoneAssortmentHeaderArrayList.get(i).getDeviceId());
+            Log.e(TAG, "onCreate: device name from database is: " + stoneAssortmentHeaderArrayList.get(i).getDeviceName());
+        }
+
+        /*dbHelper.addColumnForTable(new DbColumns("code", "integer"))
+                .addColumnForTable(new DbColumns("userCode", "integer"))
+                .addColumnForTable(new DbColumns("deviceId", "text"))
+                .addColumnForTable(new DbColumns("deviceName", "text"))
+                .addColumnForTable(null)
+                .createTable("StoneAssortmentHeader");
+
+        dbHelper.addDataForTable(new DbData("code", 1))
+                .addDataForTable(new DbData("userCode", 1))
+                .addDataForTable(new DbData("deviceId", DeviceUtils.getDeviceID(MainActivity.this)))
+                .addDataForTable(new DbData("deviceName", DeviceUtils.getDeviceName()))
+                .addDataForTable(null)
+                .insertData("StoneAssortmentHeader");*/
+
+        /*dbHelper.addColumnForTable(new DbColumns("code", "integer"))
+                .addColumnForTable(new DbColumns("image", "blob"))
+                .createTable("UserImage");*/
+
+        /*Db db = Db.init(MainActivity.this, "USER DB", null, 1);
+
+        db.setTableName("users_tbl")
+                .addColumn(new DbColumns("code", new String[]{"integer", "not null"}))
+                .addColumn(new DbColumns("firstName", new String[]{"text", "not null"}))
+                .addColumn(new DbColumns("lastName", "text"))
+                .addColumn(new DbColumns("mobileNo", "text"))
+                .doneTableColumn();
+
+        db.setTableName("user_tbl")
+                .addColumn(new DbColumns("user_tbl_code", "integer"))
+                .addColumn(new DbColumns("user_tbl_fName", "text"))
+                .addColumn(new DbColumns("user_tbl_lName", "text"))
+                .doneTableColumn();
+
+        db.setTableName("users_tbl")
+                .addData("code", 1)
+                .addData("firstName", "Amit")
+                .addData("lastName", "Jangid")
+                .addData("mobileNo", "9870855429")
+                .doneAddingData();
+
+        db.setTableName("user_tbl")
+                .addData("user_tbl_code", 1)
+                .addData("user_tbl_fName", "Amit")
+                .addData("user_tbl_lName", "Jangid")
+                .doneAddingData();
+
+        Cursor cursor = db.setTableName("user_tbl").getAllData();
+        Log.e(TAG, "onCreate: getting all data: " + cursor.getCount());*/
+
+        /*SharedPreferenceData sharedPreferenceData = new SharedPreferenceData(MainActivity.this);
+        sharedPreferenceData.setValue("dbName", "USER_DB");*/
+
+        /*ArrayList<StoneAssortmentHeader> stoneAssortmentHeaders = dbHelper.executeSelectQuery(
+                "users",
+                "*",
+                true,
+                "mobileNo = '9870855429'",
+                true,
+                "CODE",
+                true,
+                StoneAssortmentHeader.class);
+
+        Log.e(TAG, "onCreate: data retrieved is: " + stoneAssortmentHeaders.get(0).getDocNo());*/
 
         /*final SegmentedControl segmented_control = findViewById(R.id.segmented_control);
 
@@ -96,7 +189,7 @@ public class MainActivity extends AppCompatActivity
             e.printStackTrace();
         }*/
 
-        try
+        /*try
         {
             geoLocation = new GeoLocation(MainActivity.this);
             Log.e(TAG, "onCreate: address of current location is: " + geoLocation.getAddress());
@@ -117,7 +210,7 @@ public class MainActivity extends AppCompatActivity
         catch (Exception e)
         {
             e.printStackTrace();
-        }
+        }*/
 
         /*String tableName = "Member";
         LinkedHashMap<String, String> values = new LinkedHashMap<>();
@@ -813,5 +906,137 @@ public class MainActivity extends AppCompatActivity
         }
 
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode)
+        {
+            case GALLERY_PICK_CODE:
+
+                try
+                {
+                    if (resultCode == RESULT_OK && data.getData() != null)
+                    {
+                        Uri selectedImage = data.getData();
+                        Bitmap bitmap = decodeUri(selectedImage);
+                        // imgProfileImage.setImageBitmap(bitmap);
+
+                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                        byte[] bytes = stream.toByteArray();
+
+                        // calling insert user image method
+                        // insertUserImage(bytes);
+
+                        dbHelper.addDataForTable(new DbData("code", 5))
+                                .insertData("UserImage");
+
+                        ArrayList<Image> imageArrayList = dbHelper.getAllRecords(
+                                "UserImage",
+                                "code = 5",
+                                true,
+                                null,
+                                Image.class);
+
+                        byte[] imageByte = imageArrayList.get(0).getImage();
+                        bitmap = BitmapFactory.decodeByteArray(imageByte, 0, imageByte.length);
+                        imageFromDatabase.setImageBitmap(bitmap);
+                    }
+                    else
+                    {
+                        Log.e(TAG, "onActivityResult: Image not selected:\n");
+                    }
+                }
+                catch (Exception e)
+                {
+                    Log.e(TAG, "onActivityResult: exception getting image:\n");
+                    e.printStackTrace();
+                }
+
+                break;
+
+            case CAMERA_CLICK_CODE:
+
+                try
+                {
+                    if (resultCode == RESULT_OK && data.getExtras() != null)
+                    {
+                        Bundle myExtras = data.getExtras();
+                        Bitmap bitmap = (Bitmap) myExtras.get("data");
+                        // imgProfileImage.setImageBitmap(bitmap);
+
+                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                        byte[] bytes = stream.toByteArray();
+
+                        // calling insert user image method
+                        // insertUserImage(bytes);
+                    }
+                    else
+                    {
+                        Log.e(TAG, "onActivityResult: Image not captured:\n");
+                    }
+                }
+                catch (Exception e)
+                {
+                    Log.e(TAG, "onActivityResult: exception while capturing image:\n");
+                    e.printStackTrace();
+                }
+
+                break;
+        }
+    }
+
+    /**
+     * 2019 January 07 - Monday - 04:37 PM
+     * decode uri method
+     *
+     * this method will compress the selected image
+    **/
+    private Bitmap decodeUri(Uri selectedImage)
+    {
+        try
+        {
+            // The new size we want to scale to
+            int scale = 1;
+            final int REQUIRED_SIZE = 140;
+
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true;
+
+            BitmapFactory.decodeStream(getContentResolver().openInputStream(selectedImage), null, options);
+
+            int tempWidth = options.outWidth;
+            int tempHeight = options.outHeight;
+
+            while (tempWidth / 2 >= REQUIRED_SIZE && tempHeight / 2 >= REQUIRED_SIZE)
+            {
+                tempWidth /= 2;
+                tempHeight /= 2;
+                scale *= 2;
+            }
+
+            BitmapFactory.Options decodeOptions = new BitmapFactory.Options();
+            decodeOptions.inSampleSize = scale;
+
+            return BitmapFactory.decodeStream(getContentResolver().openInputStream(selectedImage), null, decodeOptions);
+        }
+        catch (Exception e)
+        {
+            Log.e(TAG, "decodeUri: exception while decoding uri:\n");
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void pickImage(View view)
+    {
+        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+        photoPickerIntent.setType("image/*");
+        startActivityForResult(photoPickerIntent, GALLERY_PICK_CODE);
     }
 }
