@@ -6,10 +6,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TextInputEditText;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -26,9 +22,14 @@ import com.amit.sample.model.Image;
 import com.amit.sample.model.StoneAssortmentHeader;
 import com.amit.shinebtn.ShineButton;
 import com.amit.ui.SwitchButton;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 /*import cn.refactor.lib.colordialog.PromptDialog;*/
 /*import com.brouding.simpledialog.SimpleDialog;*/

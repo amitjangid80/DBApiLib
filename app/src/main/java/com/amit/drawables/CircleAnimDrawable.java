@@ -11,14 +11,15 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.Animatable;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Property;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
 
 import com.amit.interfaces.OnAnimEndListener;
 import com.amit.interfaces.OnAnimUpdateListener;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 public class CircleAnimDrawable extends Drawable implements Animatable
 {

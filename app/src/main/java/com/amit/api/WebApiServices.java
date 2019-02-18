@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.provider.Settings.Secure;
-import android.support.v4.util.Pair;
 import android.util.Log;
 
 import com.amit.utilities.SharedPreferenceData;
@@ -18,6 +17,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
+import androidx.core.util.Pair;
 
 /*
 * Created By AMIT JANGID

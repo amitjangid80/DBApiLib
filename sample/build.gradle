@@ -9,6 +9,7 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
+        // multiDexEnabled true
     }
 
     buildTypes {
@@ -17,22 +18,41 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
     implementation project(':app')
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation 'com.android.support:cardview-v7:28.0.0'
+
+    //noinspection GradleCompatible
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+
+    // multi dex dependencies
+    // implementation 'androidx.multidex:multidex:2.0.1'
+
+    // pix image picker library
+    // implementation 'com.fxn769:pix:1.2.5'
 
     // Room Database dependencies
     implementation 'android.arch.persistence.room:runtime:1.1.1'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     annotationProcessor 'android.arch.persistence.room:compiler:1.1.1'
+
+    // glide dependencies
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
 
     // live data dependencies
     implementation 'android.arch.lifecycle:extensions:1.1.1'
     annotationProcessor 'android.arch.lifecycle:compiler:1.1.1'
+
+    // implementation 'com.github.amitjangid80:multiutillib:v1.6.0'
+
     /*implementation 'com.github.andyxialm:ColorDialog:1.0.0'*/
     /*implementation 'com.brouding:android-simple-dialog:0.3.1'*/
     /*implementation 'com.github.abdularis:androidbuttonprogress:v0.1-alpha5'*/
@@ -57,4 +77,22 @@ dependencies {
 
     // geo locator
     implementation 'com.github.AravindVijay7:GeoLocator-Android:1.0.2'
+
+    // masaccio library
+    implementation 'it.subito:masaccio-library:1.0.0'
+
+    // image picker library
+    implementation 'com.github.dhaval2404:imagepicker:1.0'
+
+    // just bar library
+    // implementation 'com.irozon.justbar:justbar:1.0.1'
+
+    // glide face detection library
+    /*implementation('com.github.aryarohit07:glide-facedetection-transformation:0.3.0') {
+        exclude group: 'com.android.support'
+    }
+
+    implementation('com.github.aryarohit07:picasso-facedetection-transformation:0.3.0') {
+        exclude group: 'com.android.support'
+    }*/
 }

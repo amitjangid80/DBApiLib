@@ -8,11 +8,12 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.GradientDrawable;
-import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
 
 import com.amit.dbapilibrary.R;
 import com.amit.utilities.Utils;
+
+import androidx.appcompat.widget.AppCompatButton;
 
 public class BaseButton extends AppCompatButton
 {

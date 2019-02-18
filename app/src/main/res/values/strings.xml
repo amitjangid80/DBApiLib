@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">DBApiLibrary</string>
+    <string name="title_choose_image_provider">Choose</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="title_gallery">Gallery</string>
+    <string name="title_camera">Camera</string>
+
     <string name="popular">Popular</string>
     <string name="a_z">A-Z</string>
     <string name="price">Price</string>
@@ -7,11 +12,24 @@
     <string name="hello">HELLO :)</string>
     <string name="how_can_i_use_blockbutton">How can I use BlockButton ?</string>
     <string name="long_text">BlockButton is a view that extends LinearLayout. I\'m thinking of extending RelativeLayout as well and release it.</string>
-    <string name="loading">Loading...</string>
+    <string name="loading">Loading\.\.\.</string>
     <string name="cancel">Cancel</string>
     <string name="check">Check</string>
     <string name="don_t_show_again">Don\'t show again</string>
     <string name="hello_world">Hello World !</string>
     <string name="header">Header :)</string>
     <string name="ok">OK</string>
+
+    <string name="message_gallery_permission_denied">Read External Storage permissions is needed to select Image. Please turn on requested permissions from Settings > Permissions.</string>
+    <string name="message_camera_permission_denied">Camera and External Storage permissions are needed to capture image. Turning off any permission won\'t allow application run smoothly. Please turn on all requested permissions from Settings > Permissions.</string>
+    <string name="permission_gallery_denied">
+        <![CDATA[Storage permissions are needed to Pick Gallery Image. Please turn on requested permissions from Settings > Permissions.]]></string>
+    <string name="permission_camera_denied">
+        <![CDATA[Camera and Storage permissions are needed to capture image. Please all both requested permissions from Settings > Permissions.]]></string>
+
+    <string name="error_failed_to_create_camera_image_file">Failed to create Camera image file</string>
+    <string name="error_failed_pick_gallery_image">Failed to pick Gallery image</string>
+    <string name="error_failed_to_crop_image">Failed to crop image</string>
+    <string name="error_failed_to_compress_image">Failed to compress image</string>
+    <string name="image_picker_provider_authority_suffix">.provider</string>
 </resources>

@@ -1,13 +1,15 @@
 package com.amit.sample;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.amit.db.DBHelper;
+import com.amit.db.DbColumns;
 import com.amit.db.DbData;
 
 import java.util.Random;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class DbTestActivity extends AppCompatActivity
 {
@@ -38,14 +40,14 @@ public class DbTestActivity extends AppCompatActivity
         try
         {
             // creating user table
-            /*dbHelper.addColumnForTable(new DbColumns("ID", new String[]{"integer", "primary key", "autoincrement"}))
+            dbHelper.addColumnForTable(new DbColumns("ID", new String[]{"integer", "primary key", "autoincrement"}))
                     .addColumnForTable(new DbColumns("firstName", "text"))
                     .addColumnForTable(new DbColumns("lastName", "text"))
                     .addColumnForTable(new DbColumns("mobileNo", "text"))
                     .addColumnForTable(new DbColumns("age", "integer"))
                     .addColumnForTable(new DbColumns("height", "real"))
                     .addColumnForTable(new DbColumns("image", "blob"))
-                    .createTable("User");*/
+                    .createTable("User");
 
             // dbHelper.db.getWritableDatabase().execSQL("DELETE FROM User");
 
@@ -53,7 +55,7 @@ public class DbTestActivity extends AppCompatActivity
             Log.e(TAG, "createAndSaveData: Db Transaction beginning at: " + System.currentTimeMillis());
 
             // dbHelper.db.getWritableDatabase().beginTransaction();
-            String query = "INSERT INTO User (age, firstName, mobileNo, height, lastName, image) VALUES (?, ?, ?, ?, ?, ?)";
+            // String query = "INSERT INTO User (age, firstName, mobileNo, height, lastName, image) VALUES (?, ?, ?, ?, ?, ?)";
             // SQLiteStatement statement = dbHelper.db.getWritableDatabase().compileStatement(query);
 
             for (int i = 0; i < 5; i++)
@@ -77,6 +79,7 @@ public class DbTestActivity extends AppCompatActivity
                         .insertData("User");
             }
 
+            // dbHelper.insertDataWithTransaction("User");
             Log.e(TAG, "createAndSaveData: Db Transaction ending at: " + System.currentTimeMillis());
 
             // dbHelper.db.getWritableDatabase().setTransactionSuccessful();

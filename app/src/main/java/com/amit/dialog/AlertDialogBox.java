@@ -5,8 +5,6 @@ import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
-import android.support.annotation.ColorInt;
-import android.support.annotation.DrawableRes;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -14,6 +12,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amit.dbapilibrary.R;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.DrawableRes;
 
 import static com.amit.dialog.AlertDialogBox.Anim.POP;
 import static com.amit.dialog.AlertDialogBox.Anim.SIDE;
@@ -37,8 +38,10 @@ public class AlertDialogBox
     private AlertDialogListener pListener, nListener;
     private String title, message, positiveBtnText, negativeBtnText;
 
-    @DrawableRes private int icon;
-    @ColorInt private int pBtnColor, nBtnColor, bgColor, pBtnTextColor, nBtnTextColor;
+    @DrawableRes
+    private int icon;
+    @ColorInt
+    private int pBtnColor, nBtnColor, bgColor, pBtnTextColor, nBtnTextColor;
 
     private AlertDialogBox(Builder builder)
     {

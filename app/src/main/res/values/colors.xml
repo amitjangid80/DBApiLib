@@ -61,4 +61,7 @@
     <color name="color_type_warning">#e8bd4b</color>
     <color name="color_type_success">#90b06e</color>
 
+    <color name="dialog_choose_icon_color">#757575</color>
+    <color name="dialog_choose_text_color">#757575</color>
+
 </resources>

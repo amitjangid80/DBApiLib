@@ -1,7 +1,8 @@
 package com.amit.ui;
 
 import android.graphics.drawable.Drawable;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.Nullable;
 
 public class Toggle
 {

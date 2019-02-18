@@ -17,10 +17,6 @@ import android.graphics.drawable.InsetDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
 import android.os.Handler;
-import android.support.annotation.ColorRes;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
 
@@ -31,6 +27,11 @@ import com.amit.interfaces.AnimBtn;
 import com.amit.interfaces.CustomizeByCode;
 import com.amit.interfaces.OnAnimEndListener;
 import com.amit.utilities.Utils;
+
+import androidx.annotation.ColorRes;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.core.content.ContextCompat;
 
 public class ProgressBtn extends AppCompatButton implements AnimBtn, CustomizeByCode
 {

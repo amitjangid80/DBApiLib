@@ -1,8 +1,8 @@
 package com.amit.sample.db;
 
-import android.arch.persistence.room.TypeConverter;
-
 import java.util.Date;
+
+import androidx.room.TypeConverter;
 
 /**
  * Created by Amit Jangid on 24,May,2018

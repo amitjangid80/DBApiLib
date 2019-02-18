@@ -1,7 +1,6 @@
 package com.amit.sample;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +10,8 @@ import com.amit.sample.model.StyleDetails;
 
 import java.util.Date;
 import java.util.Random;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class SaveUpdateDataActivity extends AppCompatActivity
 {

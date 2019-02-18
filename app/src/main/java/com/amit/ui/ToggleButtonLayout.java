@@ -5,14 +5,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.support.annotation.ColorInt;
-import android.support.annotation.IntDef;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.MenuRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.view.menu.MenuBuilder;
-import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -30,6 +22,15 @@ import com.amit.utilities.Utils;
 import java.lang.annotation.Retention;
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.IntDef;
+import androidx.annotation.LayoutRes;
+import androidx.annotation.MenuRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.view.menu.MenuBuilder;
+import androidx.cardview.widget.CardView;
 
 import static java.lang.annotation.RetentionPolicy.SOURCE;
 
@@ -71,7 +72,7 @@ public class ToggleButtonLayout extends CardView {
     //callbacks
     private OnToggledListener listener;
 
-    private OnClickListener onClickListener = new OnClickListener() {
+    private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             Toggle toggle = (Toggle) v.getTag(R.id.tabToggleId);

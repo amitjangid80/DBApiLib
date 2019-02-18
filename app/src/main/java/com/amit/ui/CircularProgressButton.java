@@ -15,8 +15,6 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
 import android.util.StateSet;
 import android.view.animation.BounceInterpolator;
@@ -28,6 +26,9 @@ import com.amit.drawables.StrokeGradientDrawable;
 import com.amit.interfaces.OnAnimEndListener;
 import com.amit.interfaces.OnAnimUpdateListener;
 import com.amit.interfaces.OnAnimUpdateTimeListener;
+
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.core.content.ContextCompat;
 
 public class CircularProgressButton extends AppCompatButton implements OnAnimUpdateListener
 {
