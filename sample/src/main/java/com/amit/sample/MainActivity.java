@@ -443,7 +443,7 @@ public class MainActivity extends AppCompatActivity
 
                         }).show();*/
 
-                /*new AlertDialogBox.Builder(MainActivity.this)
+                /*new AlertDialogBox.Builder1(MainActivity.this)
                         .setTitle("Custom Dialog")
                         .setBackgroundColor(Color.parseColor("#909090"))  //Don't pass R.color.colorvalue
                         .setMessage("This is a custom dialog with buttons callback.")
@@ -470,7 +470,7 @@ public class MainActivity extends AppCompatActivity
                         })
                         .build();*/
 
-                /*new FancyAlertDialog.Builder(MainActivity.this)
+                /*new FancyAlertDialog.Builder1(MainActivity.this)
                         .setTitle("Rate us if you like the app")
                         .setBackgroundColor(Color.parseColor("#303F9F"))  //Don't pass R.color.colorvalue
                         .setMessage("Do you really want to Exit ?")
@@ -499,7 +499,7 @@ public class MainActivity extends AppCompatActivity
                         })
                         .build();*/
 
-                /*new SimpleDialog.Builder(MainActivity.this)
+                /*new SimpleDialog.Builder1(MainActivity.this)
                         .setTitle("Hello!!")
                         .setContent("This is a simple dialog with callback.")
                         .setBtnConfirmText("OKAY")
@@ -587,7 +587,7 @@ public class MainActivity extends AppCompatActivity
         progressBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new AlertDialogBox.Builder(MainActivity.this)
+                new AlertDialogBox.Builder1(MainActivity.this)
                         .setTitle("Custom Dialog")
                         .setBackgroundColor(Color.parseColor("#909090"))  //Don't pass R.color.colorvalue
                         .setMessage("This is a custom dialog with buttons callback.")
@@ -735,7 +735,7 @@ public class MainActivity extends AppCompatActivity
                Simple Dialog Dependency
                implementation 'com.brouding:android-simple-dialog:0.3.1'
 
-                new SimpleDialog.Builder(MainActivity.this)
+                new SimpleDialog.Builder1(MainActivity.this)
                         .setContent("This is a progress simple dialog.")
                         .showProgress(true)
                         .setBtnCancelText("Cancel")

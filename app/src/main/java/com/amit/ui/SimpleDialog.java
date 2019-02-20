@@ -649,26 +649,26 @@ public class SimpleDialog extends Dialog implements View.OnClickListener
             return this;
         }
 
-        /*public Builder setPermanentCheck(@NonNull String preferenceName, @NonNull String preferenceKey) {
+        /*public Builder1 setPermanentCheck(@NonNull String preferenceName, @NonNull String preferenceKey) {
             this.preferenceName = preferenceName;
             this.permanentCheckKey = preferenceKey;
             return this;
         }*/
 
-        /*public Builder setBtnPermanentCheckText(@NonNull String message)
+        /*public Builder1 setBtnPermanentCheckText(@NonNull String message)
         {
             setBtnPermanentCheckText(message, false);
             return this;
         }
 
-        public Builder setBtnPermanentCheckText(@NonNull String message, boolean isBold)
+        public Builder1 setBtnPermanentCheckText(@NonNull String message, boolean isBold)
         {
             this.permanentCheckText = message;
             this.isPermanentTextBold = isBold;
             return this;
         }
 
-        public Builder setBtnPermanentCheckTextSizeDp(@IntRange int textSizeDp)
+        public Builder1 setBtnPermanentCheckTextSizeDp(@IntRange int textSizeDp)
         {
             this.permanentTextSize = textSizeDp;
             return this;
@@ -719,7 +719,7 @@ public class SimpleDialog extends Dialog implements View.OnClickListener
             return this;
         }
 
-        /*public Builder onConfirm(@NonNull BtnCallbackWithPermanentCheck callback)
+        /*public Builder1 onConfirm(@NonNull BtnCallbackWithPermanentCheck callback)
         {
             this.onConfirmWithPermanentCheckCallback = callback;
             return this;

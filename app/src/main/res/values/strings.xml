@@ -4,6 +4,7 @@
     <string name="action_cancel">Cancel</string>
     <string name="title_gallery">Gallery</string>
     <string name="title_camera">Camera</string>
+    <string name="permissions_loader_meta_key">permissionsLoader</string>
 
     <string name="popular">Popular</string>
     <string name="a_z">A-Z</string>
