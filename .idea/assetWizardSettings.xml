@@ -18,7 +18,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/image/ic_photo_camera_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_search_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -28,11 +28,9 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="height" value="48" />
-                            <entry key="outputName" value="ic_photo_camera_black_48dp" />
+                            <entry key="outputName" value="spinner_search_con" />
                             <entry key="overrideSize" value="true" />
                             <entry key="sourceFile" value="C:\Users\amitj" />
-                            <entry key="width" value="48" />
                           </map>
                         </option>
                       </PersistentState>

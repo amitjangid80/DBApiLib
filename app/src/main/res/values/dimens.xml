@@ -3,4 +3,8 @@
     <dimen name="btn_height">42dp</dimen>
     <dimen name="pb_stroke_width">3dp</dimen>
     <dimen name="layout_button_views_height">42dp</dimen>
+
+    <dimen name="alert_width">290dp</dimen>
+    <dimen name="common_circle_width">3dp</dimen>
+    <dimen name="progress_circle_radius">34dp</dimen>
 </resources>

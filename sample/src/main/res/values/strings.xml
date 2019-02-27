@@ -47,6 +47,7 @@
     <string name="pick_image">Pick Image</string>
     <string name="testing_database_for_transaction">Testing Database for Transaction</string>
     <string name="set_image_with_glide">Set Image With Glide</string>
+    <string name="select_gender">Select Gender</string>
 
     <string-array name="gender_array">
         <item>Male</item>

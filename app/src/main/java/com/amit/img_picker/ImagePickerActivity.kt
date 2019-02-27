@@ -1,5 +1,6 @@
 package com.amit.img_picker
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
@@ -10,6 +11,7 @@ import com.amit.img_picker.provider.CameraProvider
 import com.amit.img_picker.provider.CompressionProvider
 import com.amit.img_picker.provider.CropProvider
 import com.amit.img_picker.provider.GalleryProvider
+import com.amit.permission.PermissionHelper
 import java.io.File
 
 /**
@@ -29,6 +31,15 @@ class ImagePickerActivity : FragmentActivity()
     {
         super.onCreate(savedInstanceState)
         loadBundle()
+
+        val requestPermissionsList = arrayOf(
+                Manifest.permission.CAMERA,
+                Manifest.permission.WRITE_CONTACTS,
+                Manifest.permission.READ_CONTACTS,
+                Manifest.permission.READ_CALENDAR,
+                Manifest.permission.WRITE_CALENDAR)
+
+        PermissionHelper.requestPermission(this, 100, requestPermissionsList)
     }
 
     /**

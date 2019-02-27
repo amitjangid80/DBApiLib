@@ -7,12 +7,40 @@
     android:orientation="vertical"
     tools:context=".ImagePickerActivity">
 
+    <jrizani.jrspinner.JRSpinner
+        android:id="@+id/spn_my_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:hint="@string/select_gender"
+        android:textColor="@color/colorPrimary"
+        app:backgroundTint="@color/colorPrimary"
+        app:jrs_icon_tint="@color/colorPrimary"
+        app:jrs_title="Choose"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.amit.ui.ASpinner
+        android:id="@+id/mySpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:hint="@string/select_gender"
+        android:textColor="@color/black_shade"
+        app:backgroundTint="@color/colorPrimary"
+        app:layout_constraintTop_toBottomOf="@id/spn_my_spinner"
+        app:spinner_dialog_icon_tint="@color/colorPrimary"
+        app:spinner_dialog_title="@string/select_gender"
+        app:spinner_dialog_title_color="@color/colorPrimary" />
+
     <ImageView
         android:id="@+id/imgSelectedImage"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:contentDescription="@string/pick_image"
         android:scaleType="fitCenter"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/btnPickImage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,6 +56,7 @@
         android:text="@string/pick_image"
         android:textColor="@color/white"
         android:textSize="18sp"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/divider"
         app:layout_constraintHorizontal_weight="1"
@@ -38,6 +67,7 @@
         android:layout_width="1dp"
         android:layout_height="50dp"
         android:background="@color/white"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/button_continue"
         app:layout_constraintStart_toEndOf="@id/btnPickImage" />
@@ -52,6 +82,7 @@
         android:text="@string/set_image_with_glide"
         android:textColor="@color/white"
         android:textSize="18sp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_weight="1"

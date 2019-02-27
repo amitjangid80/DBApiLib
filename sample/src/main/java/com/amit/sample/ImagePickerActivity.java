@@ -3,22 +3,25 @@ package com.amit.sample;
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.amit.img_picker.ImagePicker;
+import com.amit.dialog.sweetAlert.SweetAlertDialog;
 import com.amit.permission.AutoPermissions;
 import com.amit.permission.AutoPermissionsListener;
 import com.amit.permission.PermissionHelper;
+import com.amit.ui.ASpinner;
 
 import org.jetbrains.annotations.NotNull;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import jrizani.jrspinner.JRSpinner;
 
 // import com.fxn.pix.Pix;
 // import com.github.dhaval2404.imagepicker.ImagePicker;
@@ -27,7 +30,6 @@ public class ImagePickerActivity extends AppCompatActivity implements AutoPermis
     private static final int GALLERY_PICK_CODE = 101;
     private final String TAG = ImagePickerActivity.class.getSimpleName();
     private ImageView imgSelectedImage;
-
     // private PermissionHelper permissionHelper;
 
     @Override
@@ -58,8 +60,26 @@ public class ImagePickerActivity extends AppCompatActivity implements AutoPermis
         // AutoPermissions.Companion.loadSelectedPermission(this, GALLERY_PICK_CODE, requestPermissionsList);
         // AutoPermissions.Companion.loadSelectedPermissions(this, GALLERY_PICK_CODE, requestPermissionsList);
 
-        // PermissionHelper.Companion.requestPermission(this, GALLERY_PICK_CODE, requestPermissionsList);
+        PermissionHelper.Companion.requestPermission(this, 100, Manifest.permission.CAMERA);
+        PermissionHelper.Companion.requestPermission(this, GALLERY_PICK_CODE, requestPermissionsList);
         PermissionHelper.Companion.requestAllPermissions(this, GALLERY_PICK_CODE);
+
+        JRSpinner jrSpinner = findViewById(R.id.spn_my_spinner);
+        // jrSpinner.setExpandTint(R.color.colorPrimary);
+        jrSpinner.setTitle(getResources().getString(R.string.select_gender));
+        jrSpinner.setItems(getResources().getStringArray(R.array.gender_array));
+        jrSpinner.setOnItemClickListener(position -> Log.e(TAG, "onItemClick: selected position is: " + position));
+
+        ASpinner mySpinner = findViewById(R.id.mySpinner);
+        mySpinner.setExpandTint(R.color.google_plus);
+        mySpinner.setTitle(getResources().getString(R.string.select_gender));
+        mySpinner.setItems(getResources().getStringArray(R.array.gender_array));
+
+        mySpinner.setOnItemClickListener((selectedItem, position) ->
+        {
+            Log.e(TAG, "onItemClick: selected item is: " + selectedItem);
+            Log.e(TAG, "onItemClick: selected item's position is: " + position);
+        });
     }
 
     @Override
@@ -102,10 +122,16 @@ public class ImagePickerActivity extends AppCompatActivity implements AutoPermis
     }
 
     public void pickImage(View view) {
-        ImagePicker.Companion.with(this)
+        /*ImagePicker.Companion.with(this)
                 .cameraOnly()
                 .compress(100)
-                .start(GALLERY_PICK_CODE);
+                .start(GALLERY_PICK_CODE);*/
+
+        SweetAlertDialog pDialog = new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE);
+        pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        pDialog.setTitleText("Loading");
+        pDialog.setCancelable(false);
+        pDialog.show();
     }
 
     public void setImageWithGlide(View view) {
@@ -113,21 +139,18 @@ public class ImagePickerActivity extends AppCompatActivity implements AutoPermis
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
-    {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         AutoPermissions.Companion.parsePermissions(this, requestCode, permissions, this);
     }
 
     @Override
-    public void onGranted(int requestCode, @NotNull String[] permissions)
-    {
+    public void onGranted(int requestCode, @NotNull String[] permissions) {
 
     }
 
     @Override
-    public void onDenied(int requestCode, @NotNull String[] permissions)
-    {
+    public void onDenied(int requestCode, @NotNull String[] permissions) {
 
     }
 }
