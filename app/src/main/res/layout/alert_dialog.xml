@@ -94,6 +94,7 @@
             android:background="@drawable/warning_circle" />
 
         <ImageView
+            android:id="@+id/warning_i"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:contentDescription="@string/app_name"
@@ -128,7 +129,7 @@
         android:singleLine="true"
         android:text="@string/title"
         android:textColor="#575757"
-        android:textSize="19sp" />
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/content_text"
@@ -144,7 +145,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:gravity="center">
 
         <Button

@@ -6,6 +6,7 @@ import android.util.Log;
 import com.amit.db.DBHelper;
 import com.amit.db.DbColumns;
 import com.amit.db.DbData;
+import com.amit.ui.BottomAppBar;
 
 import java.util.Random;
 
@@ -24,9 +25,12 @@ public class DbTestActivity extends AppCompatActivity
         setContentView(R.layout.activity_db_test);
 
         dbHelper = new DBHelper(DbTestActivity.this);
-
+        BottomAppBar bottomAppBar = findViewById(R.id.bottomAppBar);
+        
+        bottomAppBar.setOnItemSelectListener(index -> Log.e(TAG, "onItemSelected: selected index is: " + index));
+        
         // calling create and save data method
-        createAndSaveData();
+        // createAndSaveData();
     }
 
     /**
@@ -58,7 +62,7 @@ public class DbTestActivity extends AppCompatActivity
             // String query = "INSERT INTO User (age, firstName, mobileNo, height, lastName, image) VALUES (?, ?, ?, ?, ?, ?)";
             // SQLiteStatement statement = dbHelper.db.getWritableDatabase().compileStatement(query);
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 20000; i++)
             {
                 // inserting records in user table
                 /*statement.bindLong(1, randomAgeGenerator());
@@ -75,11 +79,11 @@ public class DbTestActivity extends AppCompatActivity
                         .addDataForTable(new DbData("firstName", randomStringGenerator()))
                         .addDataForTable(new DbData("mobileNo", randomMobileNoGenerator()))
                         .addDataForTable(new DbData("height", 5.6))
-                        .addDataForTable(new DbData("lastName", randomStringGenerator()))
-                        .insertData("User");
+                        .addDataForTable(new DbData("lastName", randomStringGenerator()));
+                        // .insertData("User");
             }
 
-            // dbHelper.insertDataWithTransaction("User");
+            dbHelper.insertDataWithTransaction("User", 5);
             Log.e(TAG, "createAndSaveData: Db Transaction ending at: " + System.currentTimeMillis());
 
             // dbHelper.db.getWritableDatabase().setTransactionSuccessful();

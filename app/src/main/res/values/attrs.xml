@@ -192,5 +192,15 @@
         <attr name="pivotY" format="fraction" />
     </declare-styleable>
 
+    <declare-styleable name="BottomAppBar">
+        <attr name="bar_tabs" format="reference" />
+        <attr name="bar_text_color" format="color" />
+        <attr name="bar_text_size" format="dimension" />
+        <attr name="bar_initial_index" format="integer" />
+        <attr name="bar_indicator_color" format="color" />
+        <attr name="bar_background_color" format="color" />
+        <attr name="bar_indicator_height" format="dimension" />
+    </declare-styleable>
+
 </resources>
 

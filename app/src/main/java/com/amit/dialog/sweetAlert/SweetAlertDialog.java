@@ -55,6 +55,7 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener
     private FrameLayout mProgressFrame;
     private SuccessTickView mSuccessTick;
     private ImageView mErrorX;
+    private ImageView mWarningI;
     private View mSuccessLeftMask;
     private View mSuccessRightMask;
     private Drawable mCustomImgDrawable;
@@ -176,6 +177,7 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener
         mSuccessRightMask = mSuccessFrame.findViewById(R.id.mask_right);
         mCustomImage = findViewById(R.id.custom_image);
         mWarningFrame = findViewById(R.id.warning_frame);
+        mWarningI = mWarningFrame.findViewById(R.id.warning_i);
         mConfirmButton = findViewById(R.id.confirm_button);
         mCancelButton = findViewById(R.id.cancel_button);
         mProgressHelper.setProgressWheel(findViewById(R.id.progressWheel));
@@ -201,6 +203,7 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener
         mConfirmButton.setBackgroundResource(R.drawable.blue_button_background);
         mErrorFrame.clearAnimation();
         mErrorX.clearAnimation();
+        mWarningI.clearAnimation();
         mSuccessTick.clearAnimation();
         mSuccessLeftMask.clearAnimation();
         mSuccessRightMask.clearAnimation();
@@ -217,6 +220,11 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener
         {
             mSuccessTick.startTickAnim();
             mSuccessRightMask.startAnimation(mSuccessBowAnim);
+        }
+        else if (mAlertType == WARNING_TYPE)
+        {
+            mWarningFrame.startAnimation(mErrorInAnim);
+            mWarningI.startAnimation(mErrorXInAnim);
         }
     }
 

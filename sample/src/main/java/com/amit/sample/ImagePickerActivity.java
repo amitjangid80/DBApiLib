@@ -129,7 +129,8 @@ public class ImagePickerActivity extends AppCompatActivity implements AutoPermis
 
         SweetAlertDialog pDialog = new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE);
         pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
-        pDialog.setTitleText("Loading");
+        pDialog.setTitleText("Login Successful...");
+        // pDialog.setContentText(getResources().getString(R.string.success));
         pDialog.setCancelable(false);
         pDialog.show();
     }
