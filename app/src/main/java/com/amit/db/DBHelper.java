@@ -9,21 +9,22 @@ import android.util.Log;
 import com.amit.utilities.SharedPreferenceData;
 import com.amit.utilities.TextUtils;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.Set;
 import java.util.TreeSet;
-import java.util.stream.Collectors;
 
 /**
  * Created by AMIT JANGID 2018 Feb 01 - Thursday - 02:55 PM
  * <p>
  * this class has method for executing db queries like: creating table, inserting into table,
  * deleting table, dropping table
- **/
-@SuppressWarnings({"unused", "unchecked"})
+**/
+@SuppressWarnings({"unused", "unchecked", "UnusedReturnValue"})
 public class DBHelper
 {
     private static final String TAG = DBHelper.class.getSimpleName();
@@ -567,7 +568,7 @@ public class DBHelper
                     {
                         // setting new instance of the class passed
                         // for invoking the values returned from database
-                        Object instance = tClass.newInstance();
+                        T instance = tClass.newInstance();
                         
                         //#region LOOP FOR COUNT OF COLUMNS
                         for (int j = 0; j < cursor.getColumnCount(); j++)
@@ -634,7 +635,7 @@ public class DBHelper
                         }
                         //#endregion LOOP FOR COUNT OF COLUMNS
                         
-                        tArrayList.add((T) instance);
+                        tArrayList.add(instance);
                         cursor.moveToNext();
                     }
                     //#endregion LOOP FOR EXTRACTING DATA FROM DATABASE
@@ -800,7 +801,7 @@ public class DBHelper
      * @param tableName - name of the table to check if that table exists or not
      *
      * @return true - if table exists in database false - if table not exists in database
-     **/
+    **/
     @SuppressWarnings("unused")
     public boolean isTableExists(String tableName)
     {
@@ -851,7 +852,7 @@ public class DBHelper
      * @param tableName - table name from where you need to get max value
      *
      * @return - max value of the field passed
-     **/
+    **/
     public int getMaxId(String field, String tableName)
     {
         try
@@ -902,7 +903,7 @@ public class DBHelper
      * @param query - query that you want to execute without getting any particular result.
      *
      * @return - true if query was successful false if query was not successful.
-     **/
+    **/
     public boolean executeQuery(String query)
     {
         try
@@ -929,7 +930,7 @@ public class DBHelper
      * 2019 January 08 - Tuesday - 12:02 PM add columns method
      * <p>
      * this method will be used for adding columns and data types for the columns
-     **/
+    **/
     public DBHelper addColumnForTable(DbColumns dbColumns)
     {
         if (dbColumns == null || dbColumns.toString().isEmpty())
@@ -1115,7 +1116,7 @@ public class DBHelper
         
         // this is final query
         String query = queryBuilder.toString() + indexesBuilder.toString();
-        Log.e(TAG, "insertDataWithTransaction: Insert query with transaction is: " + query);
+        // Log.e(TAG, "insertDataWithTransaction: Insert query with transaction is: " + query);
         
         // starting database transaction for inserting records
         db.getWritableDatabase().beginTransaction();
@@ -1179,32 +1180,69 @@ public class DBHelper
         // return this;
     }
     
+    //#region COMMENTS FOR updateData method
+    /**
+     * 2019 January 08 - Tuesday - 04:28 PM
+     * update data method
+     *
+     * @param tableName      - name of the table on which update query is to be performed
+     *
+     * @param whereClause    - name of the column to check whether the record is present so the data is updated
+     *                         pass this parameter in the way given in example below
+     *                         Ex: code = ? or ID = ? etc // this is important
+     *
+     * @param whereArgs      - data of the column name provided to check if record is present for data update
+     *                         here you need to pass the data for the corresponding where clause
+     *                         Ex: 1 or 2 etc
+     *
+     * this method will update records of the table in database
+     * this method uses database's update method for updating records
+     *
+     * parameter whereClause and whereArgs must be passed in the form given
+    **/
+    //#endregion COMMENTS FOR updateData method
     public DBHelper updateData(String tableName, String whereClause, String whereArgs)
     {
-        if (dbDataArrayList == null || dbDataArrayList.size() == 0)
+        // checking if table name was provided or not
+        if (tableName == null || tableName.isEmpty())
         {
-            Log.e(TAG, "insertData: Data not provided.");
+            Log.e(TAG, "updateData: Table name was null or empty.");
             return this;
         }
         
-        db.getWritableDatabase().beginTransaction();
+        // checking if column name was provided or not
+        if (whereClause == null || whereClause.isEmpty())
+        {
+            Log.e(TAG, "updateData: Column name was null or empty.");
+            return this;
+        }
+        
+        // checking if column data was provided or not
+        if (whereArgs == null || whereArgs.isEmpty())
+        {
+            Log.e(TAG, "updateData: Column data was null or empty.");
+            return this;
+        }
+        
+        // checking if data was provided or not
+        if (dbDataArrayList == null || dbDataArrayList.size() == 0)
+        {
+            Log.e(TAG, "updateData: Data was not provided for updating records.");
+            return this;
+        }
+        
+        // content values for putting column name
+        // and data for inserting into database table
         ContentValues contentValues = new ContentValues();
         
+        // loop for no of data provided
         for (int i = 0; i < dbDataArrayList.size(); i++)
         {
-            if (dbDataArrayList.get(i).columnData != null)
-            {
-                // contentValues.put(dbDataArrayList.get(i).columnName, dbDataArrayList.get(i).columnData);
-            }
-            /*else if (dbDataArrayList.get(i).bytesData != null)
-            {
-                contentValues.put(dbDataArrayList.get(i).columnName, dbDataArrayList.get(i).bytesData);
-            }*/
+            // adding column names and column data into content values
+            contentValues.put(dbDataArrayList.get(i).columnName, dbDataArrayList.get(i).columnData.toString());
         }
         
         db.getWritableDatabase().update(tableName, contentValues, whereClause, new String[]{whereArgs});
-        db.getWritableDatabase().setTransactionSuccessful();
-        db.getWritableDatabase().endTransaction();
         dbDataArrayList = new ArrayList<>();
         
         return this;
@@ -1244,7 +1282,7 @@ public class DBHelper
                 {
                     // setting new instance of the class passed
                     // for invoking the values returned from database
-                    Object instance = tClass.newInstance();
+                    T instance = tClass.newInstance();
                     
                     //#region LOOP FOR COUNT OF COLUMNS
                     for (int j = 0; j < cursor.getColumnCount(); j++)
@@ -1315,7 +1353,7 @@ public class DBHelper
                     }
                     //#endregion LOOP FOR COUNT OF COLUMNS
                     
-                    tArrayList.add((T) instance);
+                    tArrayList.add(instance);
                     cursor.moveToNext();
                 }
                 //#endregion LOOP FOR EXTRACTING DATA FROM DATABASE
@@ -1377,7 +1415,7 @@ public class DBHelper
                 {
                     // setting new instance of the class passed
                     // for invoking the values returned from database
-                    Object instance = tClass.newInstance();
+                    T instance = tClass.newInstance();
                     
                     //#region LOOP FOR COUNT OF COLUMNS
                     for (int j = 0; j < cursor.getColumnCount(); j++)
@@ -1395,7 +1433,7 @@ public class DBHelper
                                 
                                 // checking for set method only for setting the value
                                 // with prefix set followed by the name of column from database
-                                if (methodName.contains("set" + columnName))
+                                if (methodName.startsWith("set" + columnName))
                                 {
                                     // getting name of the methods which are user declared or created
                                     // with parameter types for setting value
@@ -1429,7 +1467,7 @@ public class DBHelper
                                     // checking if parameter type is byte array
                                     else if (byte[].class == method.getParameterTypes()[0])
                                     {
-                                        method.invoke(instance, cursor.getBlob(j));
+                                        method.invoke(instance, (Object) cursor.getBlob(j));
                                     }
                                     /*else if (Blob.class == method.getParameterTypes()[0])
                                     {
@@ -1456,7 +1494,7 @@ public class DBHelper
                     }
                     //#endregion LOOP FOR COUNT OF COLUMNS
                     
-                    tArrayList.add((T) instance);
+                    tArrayList.add(instance);
                     cursor.moveToNext();
                 }
                 //#endregion LOOP FOR EXTRACTING DATA FROM DATABASE
@@ -1475,6 +1513,124 @@ public class DBHelper
             Log.e(TAG, "getAllRecords: exception while getting all records:\n");
             e.printStackTrace();
             return null;
+        }
+    }
+    
+    public boolean insertDataWithJson(String tableName, Object object)
+    {
+        try
+        {
+            JSONArray jsonArray = new JSONArray();
+            
+            if (object == null)
+            {
+                Log.e(TAG, "insertData: object value cannot be null.");
+                return false;
+            }
+            
+            if (object instanceof ArrayList)
+            {
+                Log.e(TAG, "insertDataWithJson: cannot parse array list, you can use json object or json array.");
+                return false;
+            }
+            
+            if (object instanceof JSONObject)
+            {
+                Iterator<String> iterator = ((JSONObject) object).keys();
+                
+                while (iterator.hasNext())
+                {
+                    String key = iterator.next();
+                    jsonArray = ((JSONObject) object).getJSONArray(key);
+    
+                    Log.e(TAG, "insertData: json array for " + key + " is: " + jsonArray);
+                }
+            }
+            else if (object instanceof JSONArray)
+            {
+                jsonArray = (JSONArray) object;
+            }
+    
+            for (int i = 0; i < jsonArray.length(); i++)
+            {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                Iterator<String> iterator = jsonObject.keys();
+                
+                while (iterator.hasNext())
+                {
+                    String columnName = iterator.next();
+                    String columnData = jsonObject.getString(columnName);
+    
+                    // Log.e(TAG, "insertData: name of column from json is: " + columnName);
+                    // Log.e(TAG, "insertData: value of column from json is: " + columnData);
+                    
+                    this.addDataForTable(new DbData(columnName, columnData));
+                }
+            }
+    
+            this.insertDataWithTransaction(tableName, 5);
+            return true;
+        }
+        catch (Exception e)
+        {
+            Log.e(TAG, "insertData: exception while inserting data using json:\n");
+            e.printStackTrace();
+            
+            return false;
+        }
+    }
+    
+    public boolean insertDataWithJsonAndTransaction(String tableName, Object object, int tableColumnCount)
+    {
+        try
+        {
+            JSONArray jsonArray = new JSONArray();
+            
+            if (object == null)
+            {
+                Log.e(TAG, "insertData: object value cannot be null.");
+                return false;
+            }
+            
+            if (object instanceof JSONObject)
+            {
+                Iterator<String> iterator = ((JSONObject) object).keys();
+                
+                while (iterator.hasNext())
+                {
+                    String key = iterator.next();
+                    jsonArray = ((JSONObject) object).getJSONArray(key);
+                    
+                    // Log.e(TAG, "insertData: json array for " + key + " is: " + jsonArray);
+                }
+            }
+            else if (object instanceof JSONArray)
+            {
+                jsonArray = (JSONArray) object;
+            }
+            
+            for (int i = 0; i < jsonArray.length(); i++)
+            {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                Iterator<String> iterator = jsonObject.keys();
+                
+                while (iterator.hasNext())
+                {
+                    String columnName = iterator.next();
+                    String columnData = jsonObject.getString(columnName);
+                    this.addDataForTable(new DbData(columnName, columnData));
+                }
+            }
+            
+            this.insertDataWithTransaction(tableName, tableColumnCount);
+            return true;
+        }
+        catch (Exception e)
+        {
+            Log.e(TAG, "insertData: exception while inserting data using json:\n");
+            e.printStackTrace();
+            
+            return false;
         }
     }
 }

@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="@color/white"
+    android:fillViewport="true"
     android:orientation="vertical"
     tools:context=".DbTestActivity">
 
-    <com.amit.ui.BottomAppBar
-        android:id="@+id/bottomAppBar"
+    <ListView
+        android:id="@+id/lvUsersList"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        app:bar_background_color="@color/white"
-        app:bar_indicator_color="@color/black"
-        app:bar_tabs="@xml/tabs"
-        app:bar_text_color="@color/black"
-        app:bar_text_size="5sp" />
+        android:layout_height="match_parent"
+        android:footerDividersEnabled="false"
+        android:overScrollFooter="@color/transparent"
+        tools:listitem="@layout/item_users_list" />
 
 </LinearLayout>
