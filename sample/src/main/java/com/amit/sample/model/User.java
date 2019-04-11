@@ -5,7 +5,7 @@ package com.amit.sample.model;
 **/
 public class User
 {
-    private int id;
+    private int _id;
     private int age;
     private float height;
     
@@ -13,14 +13,14 @@ public class User
     private String lastName;
     private String firstName;
     
-    public int getId()
+    public int get_id()
     {
-        return id;
+        return _id;
     }
     
-    public void setId(int id)
+    public void set_id(int _id)
     {
-        this.id = id;
+        this._id = _id;
     }
     
     public int getAge()

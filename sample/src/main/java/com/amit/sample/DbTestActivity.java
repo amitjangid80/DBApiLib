@@ -8,11 +8,7 @@ import android.util.Log;
 import android.widget.ListView;
 
 import com.amit.db.DBHelper;
-import com.amit.db.DbColumns;
-import com.amit.sample.adapter.UserListAdapter;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.amit.sample.adapter.UserListCursorAdapter;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -57,6 +53,8 @@ public class DbTestActivity extends AppCompatActivity
     {
         try
         {
+            ListView lvUsersList = findViewById(R.id.lvUsersList);
+            
             /*ProgressDialog progressDialog = ProgressDialog.show(this, null, "please wait.....", true, false);
             progressDialog.dismiss();*/
             
@@ -86,22 +84,22 @@ public class DbTestActivity extends AppCompatActivity
             }*/
             
             // creating user table
-            dbHelper.addColumnForTable(new DbColumns("_id", new String[]{"integer", "primary key", "autoincrement"}))
+            /*dbHelper.addColumnForTable(new DbColumns("_id", new String[]{"integer", "primary key", "autoincrement"}))
                     .addColumnForTable(new DbColumns("firstName", "text"))
                     .addColumnForTable(new DbColumns("lastName", "text"))
                     .addColumnForTable(new DbColumns("mobileNo", "text"))
                     .addColumnForTable(new DbColumns("age", "integer"))
                     .addColumnForTable(new DbColumns("height", "real"))
-                    .createTable("User");
+                    .createTable("User");*/
             
             // dbHelper.db.getWritableDatabase().execSQL("DELETE FROM User");
-            Log.e(TAG, "createAndSaveData: Transaction for 20000 records");
+            /*Log.e(TAG, "createAndSaveData: Transaction for 20000 records");
             Log.e(TAG, "createAndSaveData: Db Transaction beginning at: " + System.currentTimeMillis());
             
             JSONObject object = new JSONObject();
             JSONArray jsonArray = new JSONArray();
             
-            for (int i = 0; i < 80000; i++)
+            for (int i = 0; i < 20000; i++)
             {
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("firstName", randomStringGenerator());
@@ -115,13 +113,19 @@ public class DbTestActivity extends AppCompatActivity
             
             object.put("", jsonArray);
             dbHelper.insertDataWithJsonAndTransaction("User", object, 5);
-            Log.e(TAG, "createAndSaveData: Db Transaction ending at: " + System.currentTimeMillis());
+            Log.e(TAG, "createAndSaveData: Db Transaction ending at: " + System.currentTimeMillis());*/
             
             Cursor cursor = dbHelper.executeSelectQuery("SELECT * FROM User");
-            UserListAdapter userListAdapter = new UserListAdapter(this, cursor);
+            UserListCursorAdapter userListCursorAdapter = new UserListCursorAdapter(this, cursor);
+            lvUsersList.setAdapter(userListCursorAdapter);
             
-            ListView lvUsersList = findViewById(R.id.lvUsersList);
-            lvUsersList.setAdapter(userListAdapter);
+            /*ArrayList<User> userArrayList = dbHelper.getAllRecordsV2(
+                    "User", true, null, User.class);
+    
+            Log.e(TAG, "createAndSaveData: users array list size is: " + userArrayList.size());
+            
+            UserListBaseAdapter userListBaseAdapter = new UserListBaseAdapter(this, userArrayList);
+            lvUsersList.setAdapter(userListBaseAdapter);*/
             
             /*Cursor cursor = dbHelper.executeSelectQuery("SELECT * FROM User");
             

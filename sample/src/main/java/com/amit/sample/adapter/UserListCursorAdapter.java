@@ -15,11 +15,11 @@ import androidx.cursoradapter.widget.CursorAdapter;
 /**
  * Created by AMIT JANGID on 10/04/2019.
 **/
-public class UserListAdapter extends CursorAdapter
+public class UserListCursorAdapter extends CursorAdapter
 {
-    private final String TAG = UserListAdapter.class.getSimpleName();
+    private final String TAG = UserListCursorAdapter.class.getSimpleName();
     
-    public UserListAdapter(Context context, Cursor c)
+    public UserListCursorAdapter(Context context, Cursor c)
     {
         super(context, c, 0);
     }

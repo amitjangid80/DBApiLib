@@ -14,6 +14,7 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.TreeSet;
@@ -24,7 +25,7 @@ import java.util.TreeSet;
  * this class has method for executing db queries like: creating table, inserting into table,
  * deleting table, dropping table
 **/
-@SuppressWarnings({"unused", "unchecked", "UnusedReturnValue"})
+@SuppressWarnings({"unused", "unchecked", "UnusedReturnValue", "WeakerAccess"})
 public class DBHelper
 {
     private static final String TAG = DBHelper.class.getSimpleName();
@@ -1416,6 +1417,288 @@ public class DBHelper
                     // setting new instance of the class passed
                     // for invoking the values returned from database
                     T instance = tClass.newInstance();
+                    String[] columnNames = cursor.getColumnNames();
+                    
+                    //#region LOOP FOR COUNT OF COLUMNS
+                    for (int j = 0; j < cursor.getColumnCount(); j++)
+                    {
+                        try
+                        {
+                            //#region LOOP FOR GETTING ALL USER DECLARED METHODS
+                            for (Method method : tClass.getDeclaredMethods())
+                            {
+                                // getting column name from database
+                                String columnName = cursor.getColumnName(j).toLowerCase();
+                                
+                                // getting name of the methods which are user declared or created
+                                String methodName = method.getName().toLowerCase();
+                                
+                                // checking for set method only for setting the value
+                                // with prefix set followed by the name of column from database
+                                if (methodName.startsWith("set" + columnName))
+                                {
+                                    // getting name of the methods which are user declared or created
+                                    // with parameter types for setting value
+                                    method = tClass.getDeclaredMethod(method.getName(), method.getParameterTypes());
+                                    String parameterType = method.getParameterTypes()[0].toString();
+                                    
+                                    // checking if parameter type is int
+                                    if (int.class == method.getParameterTypes()[0])
+                                    {
+                                        // getting int value from database
+                                        method.invoke(instance, cursor.getInt(j));
+                                    }
+                                    // checking if parameter type is boolean
+                                    else if (boolean.class == method.getParameterTypes()[0])
+                                    {
+                                        // getting string value from database
+                                        method.invoke(instance, cursor.getString(j));
+                                    }
+                                    // checking if parameter type is float
+                                    else if (float.class == method.getParameterTypes()[0])
+                                    {
+                                        // getting float value from database
+                                        method.invoke(instance, cursor.getFloat(j));
+                                    }
+                                    // checking if parameter type is double
+                                    else if (double.class == method.getParameterTypes()[0])
+                                    {
+                                        // getting double value from database
+                                        method.invoke(instance, String.valueOf(cursor.getDouble(j)));
+                                    }
+                                    // checking if parameter type is byte array
+                                    else if (byte[].class == method.getParameterTypes()[0])
+                                    {
+                                        method.invoke(instance, (Object) cursor.getBlob(j));
+                                    }
+                                    /*else if (Blob.class == method.getParameterTypes()[0])
+                                    {
+                                        method.invoke(instance, cursor.getBlob(j));
+                                    }*/
+                                    /*else if (byte[].class == method.getParameterTypes()[0])
+                                    {
+                                        method.invoke(instance, cursor.getBlob(j).toString().getBytes());
+                                    }*/
+                                    // any other data type will be get string from database
+                                    else
+                                    {
+                                        // getting string value from database
+                                        method.invoke(instance, String.valueOf(cursor.getString(j)));
+                                    }
+                                }
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            Log.e(TAG, "executeSelectQuery: exception while type casting:\n");
+                            e.printStackTrace();
+                        }
+                    }
+                    //#endregion LOOP FOR COUNT OF COLUMNS
+                    
+                    tArrayList.add(instance);
+                    cursor.moveToNext();
+                }
+                //#endregion LOOP FOR EXTRACTING DATA FROM DATABASE
+                
+                cursor.close();
+                return tArrayList;
+            }
+            else
+            {
+                Log.e(TAG, "executeSelectQuery: cursor was null. No data found.");
+                return null;
+            }
+        }
+        catch (Exception e)
+        {
+            Log.e(TAG, "getAllRecords: exception while getting all records:\n");
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    public <T> ArrayList<T> getAllRecordsV2(String tableName,
+                                          boolean isAscending,
+                                          String orderByColumnName,
+                                          Class<T> tClass)
+    {
+        try
+        {
+            Cursor cursor;
+            String orderBy = "";
+            ArrayList<T> tArrayList = new ArrayList<>();
+            
+            if (tableName == null || tableName.isEmpty())
+            {
+                Log.e(TAG, "getAllRecords: table name was not provided. please provide table name.");
+                return null;
+            }
+            
+            if (!isAscending && orderByColumnName != null && !orderByColumnName.isEmpty())
+            {
+                orderBy = " ORDER BY " + orderByColumnName + " DESC";
+            }
+            
+            String query = "SELECT * FROM " + tableName + orderBy;
+            Log.e(TAG, "getAllRecords: generated select query is: " + query);
+            
+            cursor = db.getWritableDatabase().rawQuery(query, null);
+            
+            if (cursor != null && cursor.moveToFirst())
+            {
+                //#region LOOP FOR EXTRACTING DATA FROM DATABASE
+                for (int i = 0; i < cursor.getCount(); i++)
+                {
+                    // setting new instance of the class passed
+                    // for invoking the values returned from database
+                    T instance = tClass.newInstance();
+    
+                    // getting all column names from cursor
+                    String[] columnNames = cursor.getColumnNames();
+                    Log.e(TAG, "getAllRecordsV2: column names are: " + Arrays.toString(columnNames));
+                    
+                    //#region LOOP FOR COUNT OF COLUMNS
+                    for (int j = 0; j < cursor.getColumnCount(); j++)
+                    {
+                        try
+                        {
+                            //#region LOOP FOR GETTING ALL USER DECLARED METHODS
+                            for (Method method : tClass.getDeclaredMethods())
+                            {
+                                // getting column name from database
+                                String columnName = cursor.getColumnName(j).toLowerCase();
+                                
+                                // getting name of the methods which are user declared or created
+                                String methodName = method.getName().toLowerCase();
+                                
+                                // checking for set method only for setting the value
+                                // with prefix set followed by the name of column from database
+                                if (methodName.contains("set" + columnName))
+                                {
+                                    // getting name of the methods which are user declared or created
+                                    // with parameter types for setting value
+                                    method = tClass.getDeclaredMethod(method.getName(), method.getParameterTypes());
+                                    String parameterType = method.getParameterTypes()[0].toString();
+                                    
+                                    // checking if parameter type is int
+                                    if (int.class == method.getParameterTypes()[0])
+                                    {
+                                        // getting int value from database
+                                        method.invoke(instance, cursor.getInt(j));
+                                    }
+                                    // checking if parameter type is boolean
+                                    else if (boolean.class == method.getParameterTypes()[0])
+                                    {
+                                        // getting string value from database
+                                        method.invoke(instance, cursor.getString(j));
+                                    }
+                                    // checking if parameter type is float
+                                    else if (float.class == method.getParameterTypes()[0])
+                                    {
+                                        // getting float value from database
+                                        method.invoke(instance, cursor.getFloat(j));
+                                    }
+                                    // checking if parameter type is double
+                                    else if (double.class == method.getParameterTypes()[0])
+                                    {
+                                        // getting double value from database
+                                        method.invoke(instance, String.valueOf(cursor.getDouble(j)));
+                                    }
+                                    // checking if parameter type is byte array
+                                    /*else if (byte[].class == method.getParameterTypes()[0])
+                                    {
+                                        method.invoke(instance, Arrays.toString(cursor.getBlob(j)).getBytes());
+                                    }*/
+                                    // any other data type will be get string from database
+                                    else
+                                    {
+                                        // getting string value from database
+                                        method.invoke(instance, String.valueOf(cursor.getString(j)));
+                                    }
+                                }
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            Log.e(TAG, "executeSelectQuery: exception while type casting:\n");
+                            e.printStackTrace();
+                        }
+                    }
+                    //#endregion LOOP FOR COUNT OF COLUMNS
+                    
+                    tArrayList.add(instance);
+                    cursor.moveToNext();
+                }
+                //#endregion LOOP FOR EXTRACTING DATA FROM DATABASE
+                
+                cursor.close();
+                return tArrayList;
+            }
+            else
+            {
+                Log.e(TAG, "executeSelectQuery: cursor was null. No data found.");
+                return null;
+            }
+        }
+        catch (Exception e)
+        {
+            Log.e(TAG, "getAllRecords: exception while getting all records:\n");
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    public <T> ArrayList<T> getAllRecordsV2(String tableName,
+                                          String conditionalValues,
+                                          boolean isAscending,
+                                          String orderByColumnName,
+                                          Class<T> tClass)
+    {
+        try
+        {
+            Cursor cursor;
+            String orderBy = "", whereClause = "";
+            ArrayList<T> tArrayList = new ArrayList<>();
+            
+            if (tableName == null || tableName.isEmpty())
+            {
+                Log.e(TAG, "getAllRecords: table name was not provided. please provide table name.");
+                return null;
+            }
+            
+            if (conditionalValues != null && !conditionalValues.isEmpty())
+            {
+                whereClause = " WHERE " + conditionalValues;
+            }
+            
+            if (isAscending && (orderByColumnName != null && !orderByColumnName.isEmpty()))
+            {
+                orderBy = " ORDER BY " + orderByColumnName;
+            }
+            
+            if (!isAscending && (orderByColumnName != null && !orderByColumnName.isEmpty()))
+            {
+                orderBy = " ORDER BY " + orderByColumnName + " DESC";
+            }
+            
+            String query = "SELECT * FROM " + tableName + whereClause + orderBy;
+            Log.e(TAG, "getAllRecords: generated select query is: " + query);
+            
+            cursor = db.getWritableDatabase().rawQuery(query, null);
+            
+            if (cursor != null && cursor.moveToFirst())
+            {
+                //#region LOOP FOR EXTRACTING DATA FROM DATABASE
+                for (int i = 0; i < cursor.getCount(); i++)
+                {
+                    // setting new instance of the class passed
+                    // for invoking the values returned from database
+                    T instance = tClass.newInstance();
+                    
+                    // getting all column names from cursor
+                    String[] columnNames = cursor.getColumnNames();
+                    Log.e(TAG, "getAllRecordsV2: column names are: " + Arrays.toString(columnNames));
                     
                     //#region LOOP FOR COUNT OF COLUMNS
                     for (int j = 0; j < cursor.getColumnCount(); j++)
