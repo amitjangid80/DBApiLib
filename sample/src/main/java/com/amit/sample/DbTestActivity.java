@@ -8,7 +8,11 @@ import android.util.Log;
 import android.widget.ListView;
 
 import com.amit.db.DBHelper;
+import com.amit.db.DbColumns;
 import com.amit.sample.adapter.UserListCursorAdapter;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -54,6 +58,18 @@ public class DbTestActivity extends AppCompatActivity
         try
         {
             ListView lvUsersList = findViewById(R.id.lvUsersList);
+    
+            // creating user table
+            dbHelper.addColumnForTable(new DbColumns("_id", new String[]{"integer", "primary key", "autoincrement"}))
+                    .addColumnForTable(new DbColumns("firstName", "text"))
+                    .addColumnForTable(new DbColumns("lastName", "text"))
+                    .addColumnForTable(new DbColumns("mobileNo", "text"))
+                    .addColumnForTable(new DbColumns("age", "integer"))
+                    .addColumnForTable(new DbColumns("height", "real"))
+                    .createTable("User");
+            
+            dbHelper.addColumnForTable(new DbColumns("newColumn", "text"))
+                    .alterTable("User");
             
             /*ProgressDialog progressDialog = ProgressDialog.show(this, null, "please wait.....", true, false);
             progressDialog.dismiss();*/
@@ -83,17 +99,8 @@ public class DbTestActivity extends AppCompatActivity
                 Log.e(TAG, "createAndSaveData: data not found.");
             }*/
             
-            // creating user table
-            /*dbHelper.addColumnForTable(new DbColumns("_id", new String[]{"integer", "primary key", "autoincrement"}))
-                    .addColumnForTable(new DbColumns("firstName", "text"))
-                    .addColumnForTable(new DbColumns("lastName", "text"))
-                    .addColumnForTable(new DbColumns("mobileNo", "text"))
-                    .addColumnForTable(new DbColumns("age", "integer"))
-                    .addColumnForTable(new DbColumns("height", "real"))
-                    .createTable("User");*/
-            
             // dbHelper.db.getWritableDatabase().execSQL("DELETE FROM User");
-            /*Log.e(TAG, "createAndSaveData: Transaction for 20000 records");
+            Log.e(TAG, "createAndSaveData: Transaction for 20000 records");
             Log.e(TAG, "createAndSaveData: Db Transaction beginning at: " + System.currentTimeMillis());
             
             JSONObject object = new JSONObject();
@@ -113,7 +120,7 @@ public class DbTestActivity extends AppCompatActivity
             
             object.put("", jsonArray);
             dbHelper.insertDataWithJsonAndTransaction("User", object, 5);
-            Log.e(TAG, "createAndSaveData: Db Transaction ending at: " + System.currentTimeMillis());*/
+            Log.e(TAG, "createAndSaveData: Db Transaction ending at: " + System.currentTimeMillis());
             
             Cursor cursor = dbHelper.executeSelectQuery("SELECT * FROM User");
             UserListCursorAdapter userListCursorAdapter = new UserListCursorAdapter(this, cursor);

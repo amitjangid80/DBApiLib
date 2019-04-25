@@ -992,6 +992,49 @@ public class DBHelper
         return this;
     }
     
+    public DBHelper alterTable(String tableName)
+    {
+        try
+        {
+            if (dbColumnsArrayList == null || dbColumnsArrayList.size() == 0)
+            {
+                Log.e(TAG, "alterTable: No Db Columns were provided.");
+                return this;
+            }
+            
+            for (int i = 0; i < dbColumnsArrayList.size(); i++)
+            {
+                String columnName = dbColumnsArrayList.get(i).mColumnName;
+                String columnDataType = dbColumnsArrayList.get(i).mColumnDataType;
+    
+                String query = "SELECT COUNT(*) FROM pragma_table_info('" + tableName + "') " +
+                        "WHERE name = '" + columnName + "'";
+                
+                int count = db.getRecordCount(query);
+                
+                if (count == 0)
+                {
+                    query = "ALTER TABLE " + tableName + " ADD COLUMN " + columnName + " " + columnDataType;
+                    Log.e(TAG, "alterTable: query for adding new column or altering table is: " + query);
+                    db.getWritableDatabase().execSQL(query);
+                }
+                else
+                {
+                    Log.e(TAG, "alterTable: " + columnName + " already exists in " + tableName);
+                }
+            }
+            
+            return this;
+        }
+        catch (Exception e)
+        {
+            Log.e(TAG, "alterTable: exception while altering table:\n");
+            e.printStackTrace();
+            
+            return null;
+        }
+    }
+    
     public boolean deleteTable(String tableName)
     {
         try

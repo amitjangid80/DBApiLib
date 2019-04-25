@@ -67,7 +67,7 @@ public class Database extends SQLiteOpenHelper
             if (cursor != null)
             {
                 cursor.moveToFirst();
-                count = cursor.getCount();
+                count = cursor.getInt(0);
                 cursor.close();
                 return count;
             }
