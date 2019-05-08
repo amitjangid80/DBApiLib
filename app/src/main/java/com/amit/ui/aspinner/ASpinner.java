@@ -1,4 +1,4 @@
-package com.amit.ui;
+package com.amit.ui.aspinner;
 
 import android.content.Context;
 import android.content.ContextWrapper;
@@ -18,6 +18,7 @@ import androidx.fragment.app.FragmentActivity;
 /**
  * Created by AMIT JANGID on 25/02/2019.
 **/
+@SuppressWarnings({"unchecked", "unused"})
 public class ASpinner extends AppCompatEditText
 {
     private int mExpandTint;

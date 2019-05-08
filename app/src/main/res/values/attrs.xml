@@ -178,6 +178,7 @@
         <attr name="spinner_dialog_title" format="string" />
         <attr name="spinner_dialog_icon_tint" format="color" />
         <attr name="spinner_dialog_title_color" format="color" />
+        <attr name="spinner_dialog_multiple_select" format="boolean" />
     </declare-styleable>
 
     <declare-styleable name="Rotate3dAnimation">

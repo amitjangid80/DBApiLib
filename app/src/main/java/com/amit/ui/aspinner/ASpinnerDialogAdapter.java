@@ -1,4 +1,4 @@
-package com.amit.ui;
+package com.amit.ui.aspinner;
 
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -30,13 +30,8 @@ public class ASpinnerDialogAdapter extends RecyclerView.Adapter<ASpinnerDialogAd
 
     private int mSelected;
 
-    /*@ColorInt
-    private int mDividerColor, mItemTextColor;*/
-
     ASpinnerDialogAdapter(SpinnerDialogListener dialogListener)
     {
-        // this.mDividerColor = dividerColor;
-        // this.mItemTextColor = itemTextColor;
         this.mDialogListener = dialogListener;
     }
 
@@ -55,8 +50,6 @@ public class ASpinnerDialogAdapter extends RecyclerView.Adapter<ASpinnerDialogAd
 
     public void update(String query)
     {
-        // Pair<Integer, String> selectedItem;
-
         for (Pair<Integer, String> item : mAllItems)
         {
             if (item.second.toLowerCase().contains(query.toLowerCase()))
@@ -103,7 +96,6 @@ public class ASpinnerDialogAdapter extends RecyclerView.Adapter<ASpinnerDialogAd
     class SpinnerItemViewHolder extends RecyclerView.ViewHolder
     {
         private TextView label;
-        private View viewDivider;
         private ImageView ivSelected;
 
         SpinnerItemViewHolder(@NonNull View itemView)
@@ -112,10 +104,6 @@ public class ASpinnerDialogAdapter extends RecyclerView.Adapter<ASpinnerDialogAd
 
             label = itemView.findViewById(R.id.label);
             ivSelected = itemView.findViewById(R.id.selected);
-            viewDivider = itemView.findViewById(R.id.viewDivider);
-
-            /*label.setTextColor(mItemTextColor);
-            viewDivider.setBackgroundColor(mDividerColor);*/
         }
 
         void bind(final Pair<Integer, String> item)

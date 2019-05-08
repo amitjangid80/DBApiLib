@@ -1,9 +1,10 @@
-package com.amit.ui;
+package com.amit.ui.aspinner;
 
 import android.app.Dialog;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +28,8 @@ import androidx.recyclerview.widget.RecyclerView;
 **/
 public class ASpinnerDialog extends DialogFragment
 {
+    private final String TAG = ASpinnerDialog.class.getSimpleName();
+    
     private View mRoot;
     private CardView mCard;
     private ASpinner mView;
@@ -108,12 +111,16 @@ public class ASpinnerDialog extends DialogFragment
         super.onStart();
         Dialog dialog = getDialog();
 
-        if (dialog != null)
+        if (dialog != null && dialog.getWindow() != null)
         {
             int width = ViewGroup.LayoutParams.MATCH_PARENT;
             int height = ViewGroup.LayoutParams.MATCH_PARENT;
 
             dialog.getWindow().setLayout(width, height);
+        }
+        else
+        {
+            Log.e(TAG, "onStart: DIALOG OR DIALOG WINDOW IS NULL");
         }
     }
 

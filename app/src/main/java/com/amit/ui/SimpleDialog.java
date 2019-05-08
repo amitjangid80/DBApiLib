@@ -20,10 +20,6 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.amit.dbapilibrary.R;
-import com.bumptech.glide.Glide;
-import com.transitionseverywhere.TransitionManager;
-
 import androidx.annotation.ColorRes;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.IntRange;
@@ -34,6 +30,11 @@ import androidx.annotation.RawRes;
 import androidx.annotation.UiThread;
 import androidx.core.content.ContextCompat;
 
+import com.amit.dbapilibrary.R;
+import com.bumptech.glide.Glide;
+import com.transitionseverywhere.TransitionManager;
+
+@SuppressWarnings("unused")
 public class SimpleDialog extends Dialog implements View.OnClickListener
 {
     private CheckBox checkbox;

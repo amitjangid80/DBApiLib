@@ -10,6 +10,8 @@ android {
         versionCode 1
         versionName "1.0"
         // multiDexEnabled true
+        renderscriptTargetApi 19
+        renderscriptSupportModeEnabled true
     }
 
     buildTypes {
@@ -71,7 +73,7 @@ dependencies {
     /*implementation 'com.sackcentury:shinebutton:0.2.0'*/
     /*implementation 'com.xiaochendev.progressroundbtn:library:2.0.0'*/
     implementation 'com.android.support:design:28.0.0'
-    implementation 'com.squareup.okhttp3:okhttp:3.12.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.14.1'
 
     // segmented button
     implementation 'com.github.RobertApikyan:SegmentedControl:1.0.8'
@@ -101,4 +103,7 @@ dependencies {
     }*/
 
     implementation "com.wajahatkarim3.easyvalidation:easyvalidation-core:1.0.1"
+
+    // MultiShapeBlurView
+    implementation 'com.github.Adnan865:MultiShapeBlurView:1.0.1'
 }

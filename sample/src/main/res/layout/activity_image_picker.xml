@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context=".ImagePickerActivity">
 
-    <jrizani.jrspinner.JRSpinner
+    <!--<jrizani.jrspinner.JRSpinner
         android:id="@+id/spn_my_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,9 +19,9 @@
         app:jrs_title="Choose"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />-->
 
-    <com.amit.ui.ASpinner
+    <com.amit.ui.aspinner.ASpinner
         android:id="@+id/mySpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,7 +29,9 @@
         android:hint="@string/select_gender"
         android:textColor="@color/black_shade"
         app:backgroundTint="@color/colorPrimary"
-        app:layout_constraintTop_toBottomOf="@id/spn_my_spinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:spinner_dialog_icon_tint="@color/colorPrimary"
         app:spinner_dialog_title="@string/select_gender"
         app:spinner_dialog_title_color="@color/colorPrimary" />
